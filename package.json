@@ -1,13 +1,17 @@
 {
-  "name": "hungryhop-app",
+  "name": "hungryhop-pos",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Hungry Hop Restaurant POS System",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "pos",
+    "restaurant",
+    "hungryhop"
+  ],
+  "author": "Nexora Digital",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
