@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Hungry Hop Dashboard</title>
+
+<style>
+
+/* PAGE */
+
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#f5f6fa;
+margin:0;
+padding:40px;
+}
+
+/* DASHBOARD CONTAINER */
+
+.dashboard{
+max-width:1200px;
+margin:auto;
+}
+
+/* TITLE */
+
+h1{
+margin-bottom:30px;
+}
+
+/* STATS LAYOUT */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-bottom:40px;
+}
+
+/* CARDS */
+
+.card{
+padding:30px;
+border-radius:12px;
+color:white;
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+transition:transform 0.2s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+/* CARD COLORS */
+
+.ordersCard{
+background:linear-gradient(135deg,#ff4b2b,#ff416c);
+}
+
+.revenueCard{
+background:linear-gradient(135deg,#11998e,#38ef7d);
+}
+
+.topCard{
+background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+/* CARD TEXT */
+
+.card h2{
+margin:0;
+font-size:32px;
+}
+
+.card p{
+margin-top:10px;
+font-size:14px;
+}
+
+/* RECENT ORDERS SECTION */
+
+.recentOrders{
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th{
+text-align:left;
+padding:12px;
+border-bottom:2px solid #eee;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+/* ROW HOVER */
+
+tr:hover{
+background:#fafafa;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<h1>📊 Hungry Hop Dashboard</h1>
+
+<div class="stats">
+
+<div class="card ordersCard">
+<h2 id="totalOrders">0</h2>
+<p>Total Orders</p>
+</div>
+
+<div class="card revenueCard">
+<h2 id="revenue">₹0</h2>
+<p>Total Revenue</p>
+</div>
+
+<div class="card topCard">
+<h2 id="topItem">-</h2>
+<p>Top Item</p>
+</div>
+
+</div>
+
+<div class="recentOrders">
+
+<h2>🧾 Recent Orders</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Order Number</th>
+<th>Amount</th>
+</tr>
+</thead>
+
+<tbody id="ordersList">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="dashboard.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Hungry Hop POS</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f4f4f4;
+}
+
+/* HEADER */
+
+.header{
+background:#e31837;
+padding:10px 35px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:white;
+}
+
+.search{
+padding:6px 12px;
+border-radius:6px;
+border:none;
+height:32px;
+}
+
+/* HERO */
+
+.hero{
+position:relative;
+height:260px;
+background-image:url("/images/menu/hungryhop-truck.jpg");
+background-size:cover;
+background-position:center 10%;
+display:flex;
+align-items:flex-end;
+padding:40px;
+color:white;
+font-size:32px;
+font-weight:bold;
+}
+
+.hero-text{
+background:rgba(0,0,0,0.45);
+padding:10px 20px;
+border-radius:8px;
+}
+
+/* JAMMU SPECIALS */
+
+.section-title{
+font-size:28px;
+font-weight:700;
+margin:40px;
+}
+
+.popular-items{
+display:flex;
+gap:30px;
+margin:0 40px 40px 40px;
+}
+
+.popular-card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+width:260px;
+transition:0.25s;
+}
+
+.popular-card:hover{
+transform:translateY(-8px);
+box-shadow:0 12px 25px rgba(0,0,0,0.2);
+}
+
+.popular-card img{
+width:100%;
+height:160px;
+object-fit:cover;
+border-radius:10px;
+}
+
+.desc{
+color:#666;
+font-size:14px;
+}
+
+.price{
+color:#e31837;
+font-weight:bold;
+font-size:18px;
+}
+
+/* CATEGORY BAR */
+
+.category-bar{
+display:flex;
+gap:12px;
+padding:10px 25px;
+background:white;
+border-bottom:1px solid #ddd;
+position:sticky;
+top:60px;
+z-index:1000;
+}
+
+.category{
+padding:10px 20px;
+background:#f0f0f0;
+border:none;
+border-radius:30px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.category:hover{
+background:#e31837;
+color:white;
+}
+
+.category.active{
+background:#e31837;
+color:white;
+}
+
+/* MAIN */
+
+.main{
+display:grid;
+grid-template-columns:3fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+/* MENU */
+
+.menu{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+gap:20px;
+}
+
+.food-card{
+background:white;
+border-radius:14px;
+padding:15px;
+text-align:center;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+.food-card:hover{
+transform:translateY(-6px);
+}
+
+.food-img{
+width:100%;
+height:140px;
+object-fit:cover;
+border-radius:10px;
+}
+
+/* QTY */
+
+.qty{
+display:flex;
+justify-content:center;
+gap:10px;
+margin:10px 0;
+}
+
+.qty button{
+background:#ddd;
+border:none;
+padding:5px 10px;
+cursor:pointer;
+}
+
+/* ADD BUTTON */
+
+.add-btn{
+background:#e31837;
+color:white;
+border:none;
+padding:10px;
+width:100%;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* CART */
+
+.cart{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 6px 18px rgba(0,0,0,0.15);
+position:sticky;
+top:20px;
+}
+
+.cart-item{
+margin-bottom:10px;
+}
+
+.place-btn{
+background:#28a745;
+color:white;
+border:none;
+padding:12px;
+width:100%;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* POPUP */
+
+.popup{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#28a745;
+color:white;
+padding:10px 20px;
+border-radius:6px;
+display:none;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:80px;
+background:#111;
+color:white;
+text-align:center;
+padding:50px 20px;
+}
+
+.map-container{
+margin:30px auto;
+max-width:900px;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 6px 20px rgba(0,0,0,0.3);
+}
+
+.footer-info{
+margin-top:25px;
+font-size:16px;
+color:#ddd;
+}
+
+.watermark{
+margin-top:30px;
+font-size:15px;
+color:#888;
+}
+
+.watermark span{
+color:#e31837;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h2>🍔 Hungry Hop POS</h2>
+
+<input type="text" placeholder="Search menu..." onkeyup="searchMenu(this.value)" class="search">
+
+</header>
+
+<div class="hero">
+<div class="hero-text">
+Welcome to Hungry Hop – Kingdom of Momos
+</div>
+</div>
+
+<h2 class="section-title">🔥 Jammu Specials</h2>
+
+<div class="popular-items">
+
+<div class="popular-card">
+
+<img src="/images/menu/rajma-chawal.jpg">
+
+<h3>Rajma Chawal</h3>
+
+<p class="desc">Jammu Special Rajma Chawal</p>
+
+<p class="price">₹70</p>
+
+<button class="add-btn"
+onclick="addToCart({_id:'rajma',name:'Rajma Chawal',price:70})">
+Add to Cart
+</button>
+
+</div>
+
+<div class="popular-card">
+
+<img src="/images/menu/kaladi-kulcha.jpg">
+
+<h3>Kaladi Kulcha</h3>
+
+<p class="desc">Fresh Kaladi</p>
+
+<p class="price">₹70</p>
+
+<button class="add-btn"
+onclick="addToCart({_id:'kaladi',name:'Kaladi Kulcha',price:70})">
+Add to Cart
+</button>
+
+</div>
+
+</div>
+
+<div class="category-bar" id="categoryBar"></div>
+
+<div class="main">
+
+<div class="menu" id="menu"></div>
+
+<div class="cart">
+
+<h2>Cart</h2>
+
+<ul id="cartItems"></ul>
+
+<h3>Total: ₹<span id="total">0</span></h3>
+
+<button class="place-btn" onclick="placeOrder()">
+Place Order
+</button>
+
+</div>
+
+</div>
+
+<div id="popup" class="popup">Item Added</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+let cart=[]
+let total=0
+const quantities={}
+
+const menuDiv=document.getElementById("menu")
+const cartList=document.getElementById("cartItems")
+const totalEl=document.getElementById("total")
+const categoryBar=document.getElementById("categoryBar")
+const popup=document.getElementById("popup")
+
+const categories=["Burgers","Pizzas","Shakes","Mocktails","Momos","Starters","Wraps","Sandwiches","Beverages"]
+
+categories.forEach(cat=>{
+const btn=document.createElement("button")
+btn.className="category"
+btn.innerText=cat
+btn.onclick=()=>loadCategory(cat,btn)
+categoryBar.appendChild(btn)
+})
+
+async function loadCategory(category,btn){
+
+document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"))
+if(btn) btn.classList.add("active")
+
+const res=await fetch(`/menu/category/${category}`)
+const items=await res.json()
+
+menuDiv.innerHTML=""
+
+items.forEach(item=>{
+
+const card=document.createElement("div")
+card.className="food-card"
+
+card.innerHTML=`
+<img src="${item.image}" class="food-img">
+<h4>${item.name}</h4>
+<p class="price">₹${item.price}</p>
+
+<div class="qty">
+<button>-</button>
+<span id="qty-${item._id}">1</span>
+<button>+</button>
+</div>
+
+<button class="add-btn">Add to Cart</button>
+`
+
+menuDiv.appendChild(card)
+
+const minus=card.querySelector(".qty button:first-child")
+const plus=card.querySelector(".qty button:last-child")
+const addBtn=card.querySelector(".add-btn")
+
+minus.onclick=()=>changeQty(item._id,-1)
+plus.onclick=()=>changeQty(item._id,1)
+addBtn.onclick=()=>addToCart(item)
+
+})
+
+}
+
+function changeQty(id,val){
+
+if(!quantities[id]) quantities[id]=1
+quantities[id]+=val
+
+if(quantities[id]<1) quantities[id]=1
+
+const el=document.getElementById(`qty-${id}`)
+if(el) el.innerText=quantities[id]
+
+}
+
+window.addToCart=function(item){
+
+if(!item._id){
+item._id=item.name.replace(/\s/g,"_").toLowerCase()
+}
+
+const qty=quantities[item._id]||1
+
+const existing=cart.find(i=>i._id===item._id)
+
+if(existing){
+existing.qty+=qty
+}else{
+cart.push({_id:item._id,name:item.name,price:item.price,qty})
+}
+
+total+=item.price*qty
+
+renderCart()
+showPopup()
+
+}
+
+function renderCart(){
+
+cartList.innerHTML=""
+
+cart.forEach((item,index)=>{
+
+const li=document.createElement("li")
+
+li.className="cart-item"
+
+li.innerHTML=`
+<b>${item.name}</b><br>
+${item.qty} x ₹${item.price} = ₹${item.price*item.qty}
+<button>❌</button>
+`
+
+li.querySelector("button").onclick=()=>removeItem(index)
+
+cartList.appendChild(li)
+
+})
+
+totalEl.innerText=total
+
+}
+
+function removeItem(index){
+total-=cart[index].price*cart[index].qty
+cart.splice(index,1)
+renderCart()
+}
+
+function showPopup(){
+popup.style.display="block"
+setTimeout(()=>popup.style.display="none",1000)
+}
+
+window.placeOrder=async function(){
+
+if(cart.length===0){
+alert("Cart is empty")
+return
+}
+
+const orderItems=cart.map(i=>({name:i.name,price:i.price,qty:i.qty}))
+
+await fetch("/order",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({items:orderItems,total:total,paymentMode:"Cash"})
+})
+
+cart=[]
+total=0
+renderCart()
+
+alert("Order Sent To Kitchen")
+
+}
+
+window.searchMenu=function(text){
+
+const cards=document.querySelectorAll(".food-card")
+
+cards.forEach(card=>{
+const name=card.querySelector("h4").innerText.toLowerCase()
+card.style.display=name.includes(text.toLowerCase())?"block":"none"
+})
+
+}
+
+loadCategory("Burgers")
+
+})
+
+</script>
+
+<section class="footer">
+
+<h2>📍 Find Us</h2>
+
+<div class="map-container">
+
+<iframe
+src="https://www.google.com/maps?q=Gole%20Market%20Gandhi%20Nagar%20Jammu&output=embed"
+width="100%"
+height="260"
+style="border:0;"
+loading="lazy">
+</iframe>
+
+</div>
+
+<div class="footer-info">
+
+<h3>Hungry Hop – Kingdom of Momos</h3>
+
+<p>
+Gole Market, Gandhi Nagar, Jammu<br>
+Opposite Monika Supermarket
+</p>
+
+</div>
+
+<div class="watermark">
+
+<p>⚡ Designed & Developed by <span>Nexora Digital</span></p>
+
+</div>
+
+</section>
+
+</body>
+
+</html>

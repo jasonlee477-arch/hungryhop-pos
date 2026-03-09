@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Hungry Hop Order Status</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#111;
+color:white;
+text-align:center;
+}
+
+h1{
+background:#e31837;
+margin:0;
+padding:20px;
+}
+
+.board{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+.column{
+background:#222;
+padding:20px;
+border-radius:10px;
+}
+
+.column h2{
+margin-top:0;
+color:#ffcc00;
+}
+
+.order{
+background:#333;
+padding:15px;
+margin:10px 0;
+border-radius:6px;
+font-size:28px;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🍔 Hungry Hop Order Status</h1>
+
+<div class="board">
+
+<div class="column">
+
+<h2>Preparing</h2>
+
+<div id="preparing"></div>
+
+</div>
+
+<div class="column">
+
+<h2>Ready For Pickup</h2>
+
+<div id="ready"></div>
+
+</div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+const socket = io()
+
+async function loadOrders(){
+
+const res = await fetch("/orders")
+
+const orders = await res.json()
+
+const preparingDiv = document.getElementById("preparing")
+const readyDiv = document.getElementById("ready")
+
+preparingDiv.innerHTML=""
+readyDiv.innerHTML=""
+
+orders.forEach(order=>{
+
+if(order.status==="Preparing"){
+
+preparingDiv.innerHTML+=`
+<div class="order">
+#${order.orderNumber}
+</div>
+`
+
+}
+
+if(order.status==="Ready"){
+
+readyDiv.innerHTML+=`
+<div class="order">
+#${order.orderNumber}
+</div>
+`
+
+}
+
+})
+
+}
+
+/* realtime update */
+
+socket.on("new-order", loadOrders)
+socket.on("order-updated", loadOrders)
+
+/* first load */
+
+loadOrders()
+
+</script>
+
+</body>
+
+</html>

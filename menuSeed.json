@@ -1,0 +1,73 @@
+[
+{"name":"Aloo Tikki Burger","category":"Burgers","price":60,"image":"/images/menu/aloo-tikki-burger.png"},
+{"name":"Veg Surprise Burger","category":"Burgers","price":80,"image":"/images/menu/aloo-tikki-burger.png"},
+{"name":"Chilli Lava Burger","category":"Burgers","price":100,"image":"/images/menu/aloo-tikki-burger.png"},
+{"name":"Crunchy Corn Burger","category":"Burgers","price":100,"image":"/images/menu/aloo-tikki-burger.png"},
+{"name":"Premium Paneer Burger","category":"Burgers","price":100,"image":"/images/menu/aloo-tikki-burger.png"},
+{"name":"Maha Veggie Burger","category":"Burgers","price":120,"image":"/images/menu/aloo-tikki-burger.png"},
+
+
+{"name":"Margherita Pizza","category":"Pizzas","price":180,"image":"/images/menu/pizza.jpg"},
+{"name":"Veggie Delight Pizza","category":"Pizzas","price":240,"image":"/images/menu/pizza.jpg"},
+{"name":"Paneer Tikka Pizza","category":"Pizzas","price":280,"image":"/images/menu/pizza.jpg"},
+{"name":"Deluxe Veggie Pizza","category":"Pizzas","price":280,"image":"/images/menu/pizza.jpg"},
+{"name":"Mushroom Delight Pizza","category":"Pizzas","price":280,"image":"/images/menu/pizza.jpg"},
+{"name":"Veg Extravaganza Pizza","category":"Pizzas","price":280,"image":"/images/menu/pizza.jpg"},
+{"name":"Pocket Pizza","category":"Pizzas","price":120,"image":"/images/menu/pizza.jpg"},
+
+
+{"name":"Strawberry Shake","category":"Shakes","price":100,"image":"/images/menu/milkshake.jpg"},
+{"name":"Oreo Shake","category":"Shakes","price":100,"image":"/images/menu/milkshake.jpg"},
+{"name":"KitKat Shake","category":"Shakes","price":100,"image":"/images/menu/milkshake.jpg"},
+{"name":"Vanilla Shake","category":"Shakes","price":100,"image":"/images/menu/milkshake.jpg"},
+{"name":"Chocolate Shake","category":"Shakes","price":100,"image":"/images/menu/milkshake.jpg"},
+{"name":"Mango Shake","category":"Shakes","price":100,"image":"/images/menu/milkshake.jpg"},
+
+
+{"name":"Cold Coffee","category":"Beverages","price":80,"image":"/images/menu/milkshake.jpg"},
+{"name":"Coffee Frappe","category":"Beverages","price":100,"image":"/images/menu/milkshake.jpg"},
+{"name":"Dark Frappe","category":"Beverages","price":100,"image":"/images/menu/milkshake.jpg"},
+{"name":"Hazelnut Frappe","category":"Beverages","price":100,"image":"/images/menu/milkshake.jpg"},
+
+
+{"name":"Ice Tea","category":"Mocktails","price":60,"image":"/images/menu/milkshake.jpg"},
+{"name":"Fresh Lime Soda","category":"Mocktails","price":60,"image":"/images/menu/milkshake.jpg"},
+{"name":"Mojito","category":"Mocktails","price":80,"image":"/images/menu/milkshake.jpg"},
+{"name":"Strawberry Blast","category":"Mocktails","price":80,"image":"/images/menu/milkshake.jpg"},
+{"name":"Mango Delight","category":"Mocktails","price":80,"image":"/images/menu/milkshake.jpg"},
+
+
+{"name":"Veg Classic Momos","category":"Momos","price":70,"image":"/images/menu/veg-momo.jpg"},
+{"name":"Paneer Momos","category":"Momos","price":120,"image":"/images/menu/veg-momo.jpg"},
+{"name":"Veg Classic Momos Kurkure","category":"Momos","price":100,"image":"/images/menu/veg-momo.jpg"},
+{"name":"Paneer Momos Kurkure","category":"Momos","price":140,"image":"/images/menu/veg-momo.jpg"},
+{"name":"Veg Tandoori Momos","category":"Momos","price":120,"image":"/images/menu/veg-momo.jpg"},
+{"name":"Paneer Tandoori Momos","category":"Momos","price":140,"image":"/images/menu/veg-momo.jpg"},
+
+
+{"name":"Chilli Potatoes","category":"Starters","price":80,"image":"/images/menu/fries.jpg"},
+{"name":"Honey Chilli Potatoes","category":"Starters","price":100,"image":"/images/menu/fries.jpg"},
+{"name":"Veg Manchurian Dry","category":"Starters","price":100,"image":"/images/menu/fries.jpg"},
+{"name":"Mushroom Chilli Pepper","category":"Starters","price":130,"image":"/images/menu/fries.jpg"},
+{"name":"Chilli Paneer Dry","category":"Starters","price":150,"image":"/images/menu/fries.jpg"},
+
+
+{"name":"Veg Grilled Sandwich","category":"Sandwiches","price":90,"image":"/images/menu/pizza.jpg"},
+{"name":"Paneer Tikka Sandwich","category":"Sandwiches","price":100,"image":"/images/menu/pizza.jpg"},
+{"name":"Italian Veg Sandwich","category":"Sandwiches","price":100,"image":"/images/menu/pizza.jpg"},
+
+
+{"name":"Crispy Paneer Wrap","category":"Wraps","price":150,"image":"/images/menu/pizza.jpg"},
+{"name":"Kaladi Roll","category":"Wraps","price":150,"image":"/images/menu/pizza.jpg"},
+{"name":"Kaladi Kulcha","category":"Wraps","price":70,"image":"/images/menu/pizza.jpg"},
+{"name":"Paneer Pops","category":"Wraps","price":120,"image":"/images/menu/pizza.jpg"},
+{"name":"Garlic Bread","category":"Wraps","price":100,"image":"/images/menu/pizza.jpg"},
+
+
+{"name":"French Fries Salted","category":"Fries","price":80,"image":"/images/menu/fries.jpg"},
+{"name":"French Fries Peri Peri","category":"Fries","price":100,"image":"/images/menu/fries.jpg"},
+
+
+{"name":"Hot Chocolate Fudge","category":"Dessert","price":140,"image":"/images/menu/milkshake.jpg"},
+{"name":"Fruit Sundae","category":"Dessert","price":140,"image":"/images/menu/milkshake.jpg"}
+]

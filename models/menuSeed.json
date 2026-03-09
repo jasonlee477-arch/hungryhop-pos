@@ -1,0 +1,62 @@
+[
+{
+"name": "Aloo Tikki Burger",
+"price": 60,
+"category": "Burgers",
+"image": "/images/menu/aloo-tikki-burger.png"
+},
+{
+"name": "Veg Surprise Burger",
+"price": 80,
+"category": "Burgers",
+"image": "/images/menu/aloo-tikki-burger.png"
+},
+{
+"name": "Chilli Lava Burger",
+"price": 100,
+"category": "Burgers",
+"image": "/images/menu/aloo-tikki-burger.png"
+},
+{
+"name": "Crunchy Corn Burger",
+"price": 100,
+"category": "Burgers",
+"image": "/images/menu/aloo-tikki-burger.png"
+},
+{
+"name": "Premium Paneer Burger",
+"price": 120,
+"category": "Burgers",
+"image": "/images/menu/aloo-tikki-burger.png"
+},
+{
+"name": "Maha Veggie Burger",
+"price": 120,
+"category": "Burgers",
+"image": "/images/menu/aloo-tikki-burger.png"
+},
+{
+"name": "French Fries",
+"price": 90,
+"category": "Starters",
+"image": "/images/menu/fries.jpg"
+},
+{
+"name": "Veg Momos",
+"price": 120,
+"category": "Momos",
+"image": "/images/menu/veg-momo.jpg"
+},
+{
+"name": "Cheese Pizza",
+"price": 250,
+"category": "Pizzas",
+"image": "/images/menu/pizza.jpg"
+},
+{
+"name": "Chocolate Milkshake",
+"price": 140,
+"category": "Shakes",
+"image": "/images/menu/milkshake.jpg"
+}
+]
