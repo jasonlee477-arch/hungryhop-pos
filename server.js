@@ -19,10 +19,12 @@ app.use(express.static("public"));
 
 /* ================= MONGODB ================= */
 
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>console.log("MongoDB Connected"))
-.catch(err=>console.log(err));
-
+mongoose.connect(process.env.MONGO_URI, {
+  dbName: "hungryhop",
+  serverSelectionTimeoutMS: 30000
+})
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.error("Mongo Error:", err));
 /* ================= SOCKET.IO ================= */
 
 io.on("connection",(socket)=>{
