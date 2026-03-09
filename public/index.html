@@ -565,6 +565,40 @@ Opposite Monika Supermarket
 </div>
 
 </section>
+<script>
+
+async function loadMenu() {
+
+const res = await fetch("/menu")
+const items = await res.json()
+
+const container = document.querySelector(".popular-items")
+
+container.innerHTML = ""
+
+items.forEach(item => {
+
+container.innerHTML += `
+<div class="popular-card">
+
+<h3>${item.name}</h3>
+<p class="desc">${item.description || ""}</p>
+<p class="price">₹${item.price}</p>
+
+<button class="add-btn">
+Add to Cart
+</button>
+
+</div>
+`
+
+})
+
+}
+
+loadMenu()
+
+</script>
 
 </body>
 
