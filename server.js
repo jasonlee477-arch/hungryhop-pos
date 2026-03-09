@@ -19,11 +19,8 @@ app.use(express.static("public"));
 
 /* ================= MONGODB ================= */
 
-mongoose.connect(process.env.MONGO_URI, {
-  dbName: "hungryhop",
-  serverSelectionTimeoutMS: 30000
-})
-.then(() => console.log("MongoDB Connected"))
+mongoose.connect("mongodb+srv://jasonlee477_db_user:Deesanjul23@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority")
+.then(()=> console.log("MongoDB Connected"))
 .catch(err => console.error("Mongo Error:", err));
 /* ================= SOCKET.IO ================= */
 
