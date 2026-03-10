@@ -19,9 +19,10 @@ app.use(express.static("public"));
 
 /* ================= MONGODB ================= */
 
-mongoose.connect("mongodb+srv://jasonlee477_db_user:Deesanjul23@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority")
-.then(()=> console.log("MongoDB Connected"))
-.catch(err => console.error("Mongo Error:", err));
+mongoose.connect(
+  "mongodb+srv://jasonlee477_db_user:Deesanjul23@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true }
+)
 /* ================= SOCKET.IO ================= */
 
 io.on("connection",(socket)=>{
