@@ -23,11 +23,16 @@ mongoose.connect(
 "mongodb+srv://jasonlee477_db_user:Deesanju-1984@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority",
 {
 useNewUrlParser: true,
-useUnifiedTopology: true
+useUnifiedTopology: true,
+serverSelectionTimeoutMS: 5000
 }
 )
-.then(()=>console.log("MongoDB Connected"))
-.catch(err=>console.log(err))
+.then(()=>{
+console.log("✅ MongoDB Atlas Connected")
+})
+.catch((err)=>{
+console.error("❌ MongoDB connection error:",err)
+})
 /* ================= SOCKET.IO ================= */
 
 io.on("connection",(socket)=>{
