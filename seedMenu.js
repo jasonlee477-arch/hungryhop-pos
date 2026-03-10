@@ -4,9 +4,15 @@ const MenuItem = require("./models/MenuItem");
 
 /* CONNECT TO MONGODB */
 
-mongoose.connect("mongodb://127.0.0.1:27017/hungryhop")
+mongoose.connect(
+"mongodb+srv://jasonlee477_db_user:Deesanju-1984@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority",
+{
+useNewUrlParser: true,
+useUnifiedTopology: true
+}
+)
 .then(() => {
-    console.log("MongoDB Connected for Seeding");
+    console.log("MongoDB Atlas Connected for Seeding");
     importMenu();
 })
 .catch(err => console.log(err));
