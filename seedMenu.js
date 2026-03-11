@@ -2,50 +2,36 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const MenuItem = require("./models/MenuItem");
 
-/* CONNECT TO MONGODB */
-
 mongoose.connect(
-"mongodb+srv://jasonlee477_db_user:Deesanju-1984@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority",
-{
-useNewUrlParser: true,
-useUnifiedTopology: true
-}
+"mongodb://jasonlee477_db_user:Firstproject-2026@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority&appName=Cluster0"
 )
-.then(() => {
-    console.log("MongoDB Atlas Connected for Seeding");
-    importMenu();
-})
-.catch(err => console.log(err));
-
-
-/* IMPORT MENU FUNCTION */
+.then(()=>console.log("✅ MongoDB Atlas Connected"))
+.catch(err=>console.log("Mongo Error:",err));
 
 const importMenu = async () => {
 
-    try {
+try {
 
-        const data = fs.readFileSync("./menuSeed.json","utf-8");
+const data = fs.readFileSync("./menuSeed.json","utf-8");
+const menuItems = JSON.parse(data);
 
-        const menuItems = JSON.parse(data);
+console.log("Deleting old menu...");
+await MenuItem.deleteMany({});
 
-        console.log("Deleting old menu...");
+console.log("Importing new menu...");
+await MenuItem.insertMany(menuItems);
 
-        await MenuItem.deleteMany({});
+console.log("✅ Menu Imported Successfully");
 
-        console.log("Importing new menu...");
+process.exit();
 
-        await MenuItem.insertMany(menuItems);
+} catch (error) {
 
-        console.log("✅ Menu Imported Successfully");
+console.error(error);
+process.exit(1);
 
-        process.exit();
-
-    } catch (error) {
-
-        console.error(error);
-
-        process.exit(1);
-
-    }
+}
 
 };
+
+importMenu();

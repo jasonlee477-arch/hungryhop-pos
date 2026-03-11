@@ -19,20 +19,14 @@ app.use(express.static("public"));
 
 /* ================= MONGODB ================= */
 
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
+
 mongoose.connect(
-"mongodb+srv://jasonlee477_db_user:Deesanju-1984@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority",
-{
-useNewUrlParser: true,
-useUnifiedTopology: true,
-serverSelectionTimeoutMS: 5000
-}
+"mongodb://jasonlee477_db_user:Firstproject-2026@cluster0.lhdovlw.mongodb.net/hungryhop?retryWrites=true&w=majority&appName=Cluster0"
 )
-.then(()=>{
-console.log("✅ MongoDB Atlas Connected")
-})
-.catch((err)=>{
-console.error("❌ MongoDB connection error:",err)
-})
+.then(()=>console.log("✅ MongoDB Atlas Connected"))
+.catch(err=>console.log("Mongo Error:",err));
 /* ================= SOCKET.IO ================= */
 
 io.on("connection",(socket)=>{
