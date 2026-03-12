@@ -1,396 +1,373 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<title>Hungry Hop POS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hungry Hop – Kingdom of Momos</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFB800;
+    --yellow-dark: #e6a600;
+    --bg: #0f0f0f;
+    --card: #1a1a1a;
+    --card2: #222;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #888;
+    --green: #22c55e;
+    --red: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 100px; }
 
-<link href="/css/style.css" rel="stylesheet">
+  /* HEADER */
+  .header { background: #0f0f0f; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { width: 36px; height: 36px; background: var(--yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--yellow); letter-spacing: 2px; line-height: 1; }
+  .logo-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+  .open-badge { background: var(--green); color: #fff; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px; letter-spacing: 1px; }
 
+  /* HERO */
+  .hero { position: relative; height: 220px; overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%); }
+  .hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #fff; letter-spacing: 2px; line-height: 1.1; }
+  .hero-title span { color: var(--yellow); }
+  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+  /* SEARCH */
+  .search-wrap { padding: 14px 16px 8px; }
+  .search-input { width: 100%; background: var(--card); border: 1.5px solid var(--border); color: var(--text); border-radius: 12px; padding: 12px 16px; font-size: 14px; font-family: 'Nunito', sans-serif; outline: none; transition: border-color 0.2s; }
+  .search-input:focus { border-color: var(--yellow); }
+  .search-input::placeholder { color: var(--muted); }
+
+  /* JAMMU SPECIALS */
+  .section-label { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; color: var(--yellow); padding: 14px 16px 10px; }
+  .specials-row { display: flex; gap: 12px; padding: 0 16px 14px; overflow-x: auto; scrollbar-width: none; }
+  .specials-row::-webkit-scrollbar { display: none; }
+  .special-card { min-width: 150px; background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); flex-shrink: 0; }
+  .special-card img { width: 100%; height: 100px; object-fit: cover; display: block; }
+  .special-info { padding: 10px; }
+  .special-name { font-size: 13px; font-weight: 800; color: var(--text); }
+  .special-desc { font-size: 11px; color: var(--muted); margin: 2px 0 6px; }
+  .special-row { display: flex; justify-content: space-between; align-items: center; }
+  .special-price { font-size: 15px; font-weight: 800; color: var(--yellow); }
+  .special-btn { background: var(--yellow); color: #111; border: none; border-radius: 8px; padding: 5px 12px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; }
+  .special-btn:active { transform: scale(0.95); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 0 16px 4px; }
+
+  /* CATEGORY TABS */
+  .cat-wrap { padding: 10px 16px 6px; overflow-x: auto; scrollbar-width: none; display: flex; gap: 8px; position: sticky; top: 65px; z-index: 90; background: var(--bg); }
+  .cat-wrap::-webkit-scrollbar { display: none; }
+  .cat-btn { background: var(--card); color: var(--muted); border: 1px solid var(--border); padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; flex-shrink: 0; }
+  .cat-btn.active { background: var(--yellow); color: #111; border-color: var(--yellow); }
+  .cat-btn:active { transform: scale(0.95); }
+
+  /* MENU GRID */
+  .menu-section { padding: 10px 16px; }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .menu-card { background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); transition: transform 0.15s; }
+  .menu-card:active { transform: scale(0.97); }
+  .menu-card img { width: 100%; height: 120px; object-fit: cover; display: block; background: var(--card2); }
+  .menu-info { padding: 10px; }
+  .menu-name { font-size: 13px; font-weight: 800; color: var(--text); line-height: 1.3; margin-bottom: 6px; }
+  .menu-bottom { display: flex; justify-content: space-between; align-items: center; }
+  .menu-price { font-size: 15px; font-weight: 800; color: var(--yellow); }
+  .qty-row { display: flex; align-items: center; gap: 6px; margin: 6px 0; }
+  .qty-btn { background: var(--card2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; width: 26px; height: 26px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .qty-num { font-size: 13px; font-weight: 800; min-width: 18px; text-align: center; }
+  .add-btn { background: var(--yellow); color: #111; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 20px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .add-btn.added { background: var(--green); color: #fff; font-size: 13px; }
+  .add-btn:active { transform: scale(0.9); }
+
+  /* EMPTY STATE */
+  .empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+  .empty-icon { font-size: 48px; margin-bottom: 12px; }
+
+  /* CART BAR */
+  #cartBar { display: none; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--yellow); border-radius: 18px 18px 0 0; padding: 14px 20px; z-index: 200; }
+  .cart-inner { display: flex; justify-content: space-between; align-items: center; }
+  .cart-left { }
+  .cart-count { font-size: 12px; font-weight: 700; color: #111; opacity: 0.7; }
+  .cart-total { font-size: 22px; font-weight: 800; color: #111; font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+  .cart-btn { background: #111; color: var(--yellow); border: none; padding: 12px 22px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; letter-spacing: 0.5px; }
+  .cart-btn:active { transform: scale(0.96); }
+
+  /* POPUP */
+  #popup { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--green); color: #fff; padding: 10px 24px; border-radius: 20px; font-size: 13px; font-weight: 700; display: none; z-index: 300; white-space: nowrap; }
+
+  /* FOOTER */
+  .footer { background: #111; padding: 30px 16px 20px; margin-top: 20px; }
+  .footer-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 6px; }
+  .footer-map { border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+  .footer-addr { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .footer-credit { margin-top: 16px; font-size: 12px; color: #444; text-align: center; }
+  .footer-credit span { color: var(--yellow); font-weight: 800; }
+
+  /* LOADING */
+  .loading { display: flex; justify-content: center; padding: 30px; }
+  .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--yellow); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ANIMATIONS */
+  .menu-card { animation: fadeUp 0.25s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 </head>
+<body>
 
-<body class="bg-gray-100 font-sans">
-
-<header class="bg-red-600 text-white flex justify-between items-center px-8 py-4 shadow">
-
-<h2 class="text-xl font-bold">🍔 Hungry Hop POS</h2>
-
-<input
-type="text"
-placeholder="Search menu..."
-onkeyup="searchMenu(this.value)"
-class="px-3 py-2 rounded text-black"
-/>
-
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">🥟</div>
+    <div>
+      <div class="logo-text">Hungry Hop</div>
+      <div class="logo-sub">KINGDOM OF MOMOS</div>
+    </div>
+  </div>
+  <div class="open-badge">OPEN</div>
 </header>
 
-
-<div class="relative h-64 bg-cover bg-center flex items-end p-10 text-white text-3xl font-bold"
-style="background-image:url('/images/menu/hungryhop-truck.jpg')">
-
-<div class="bg-black/50 px-5 py-2 rounded">
-Welcome to Hungry Hop – Kingdom of Momos
+<!-- HERO -->
+<div class="hero">
+  <img src="/images/menu/hungryhop-truck.jpg" alt="Hungry Hop" onerror="this.style.background='#1a1a1a'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-title">Kingdom of <span>Momos</span></div>
+    <div class="hero-sub">📍 Gole Market, Gandhi Nagar, Jammu</div>
+  </div>
 </div>
 
+<!-- SEARCH -->
+<div class="search-wrap">
+  <input class="search-input" type="text" placeholder="Search momos, burgers, pizza..." onkeyup="searchMenu(this.value)" />
 </div>
 
-
-<h2 class="text-3xl font-bold m-10">🔥 Jammu Specials</h2>
-
-<div class="flex gap-8 mx-10 mb-10">
-
-<div class="bg-white p-5 rounded-xl shadow w-64 hover:shadow-xl transition">
-
-<img src="/images/menu/rajma-chawal.jpg" class="w-full h-40 object-cover rounded">
-
-<h3 class="mt-3 font-bold text-lg">Rajma Chawal</h3>
-
-<p class="text-gray-500 text-sm">Jammu Special Rajma Chawal</p>
-
-<p class="text-red-600 font-bold text-lg">₹70</p>
-
-<button
-class="bg-red-600 text-white w-full py-2 rounded mt-3"
-onclick="addToCart({_id:'rajma',name:'Rajma Chawal',price:70})"
->
-Add to Cart
-</button>
-
+<!-- JAMMU SPECIALS -->
+<div class="section-label">🔥 Jammu Specials</div>
+<div class="specials-row">
+  <div class="special-card">
+    <img src="/images/menu/rajma-chawal.jpg" alt="Rajma Chawal" onerror="this.src='/images/menu/default-food.jpg'">
+    <div class="special-info">
+      <div class="special-name">Rajma Chawal</div>
+      <div class="special-desc">Jammu Special</div>
+      <div class="special-row">
+        <span class="special-price">₹70</span>
+        <button class="special-btn" onclick="addToCart({_id:'rajma',name:'Rajma Chawal',price:70})">Add</button>
+      </div>
+    </div>
+  </div>
+  <div class="special-card">
+    <img src="/images/menu/kaladi-kulcha.jpg" alt="Kaladi Kulcha" onerror="this.src='/images/menu/default-food.jpg'">
+    <div class="special-info">
+      <div class="special-name">Kaladi Kulcha</div>
+      <div class="special-desc">Fresh Kaladi</div>
+      <div class="special-row">
+        <span class="special-price">₹70</span>
+        <button class="special-btn" onclick="addToCart({_id:'kaladi',name:'Kaladi Kulcha',price:70})">Add</button>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div class="divider"></div>
 
-<div class="bg-white p-5 rounded-xl shadow w-64 hover:shadow-xl transition">
+<!-- CATEGORY TABS -->
+<div class="cat-wrap" id="categoryBar"></div>
 
-<img src="/images/menu/kaladi-kulcha.jpg" class="w-full h-40 object-cover rounded">
-
-<h3 class="mt-3 font-bold text-lg">Kaladi Kulcha</h3>
-
-<p class="text-gray-500 text-sm">Fresh Kaladi</p>
-
-<p class="text-red-600 font-bold text-lg">₹70</p>
-
-<button
-class="bg-red-600 text-white w-full py-2 rounded mt-3"
-onclick="addToCart({_id:'kaladi',name:'Kaladi Kulcha',price:70})"
->
-Add to Cart
-</button>
-
+<!-- MENU GRID -->
+<div class="menu-section">
+  <div class="menu-grid" id="menu"></div>
 </div>
 
+<!-- CART BAR -->
+<div id="cartBar">
+  <div class="cart-inner">
+    <div class="cart-left">
+      <div class="cart-count" id="cartCount">0 items</div>
+      <div class="cart-total">₹<span id="total">0</span></div>
+    </div>
+    <button class="cart-btn" onclick="placeOrder()">Place Order ›</button>
+  </div>
 </div>
 
+<!-- POPUP -->
+<div id="popup">✓ Added to cart</div>
 
-<div id="categoryBar"
-class="flex gap-3 px-6 py-3 bg-white sticky top-0 shadow z-50">
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-title">📍 Find Us</div>
+  <div class="footer-map">
+    <iframe src="https://www.google.com/maps?q=Gole%20Market%20Gandhi%20Nagar%20Jammu&output=embed" width="100%" height="200" style="border:0;display:block;" loading="lazy"></iframe>
+  </div>
+  <div class="footer-addr">
+    <strong style="color:var(--text);">Hungry Hop – Kingdom of Momos</strong><br>
+    Gole Market, Gandhi Nagar, Jammu<br>
+    Opposite Monika Supermarket
+  </div>
+  <div class="footer-credit">⚡ Designed & Developed by <span>Nexora Digital</span></div>
 </div>
 
-
-<div class="grid grid-cols-4 gap-6 p-6">
-
-<div id="menu"
-class="grid grid-cols-3 gap-6 col-span-3">
-</div>
-
-
-<div class="bg-white p-5 rounded-xl shadow sticky top-20 h-fit">
-
-<h2 class="text-xl font-bold mb-4">Cart</h2>
-
-<ul id="cartItems" class="space-y-2"></ul>
-
-<h3 class="text-lg font-bold mt-4">
-Total: ₹<span id="total">0</span>
-</h3>
-
-<button
-onclick="placeOrder()"
-class="bg-green-600 text-white w-full py-3 rounded mt-4"
->
-Place Order
-</button>
-
-</div>
-
-</div>
-
-
-<div
-id="popup"
-class="fixed bottom-5 right-5 bg-green-600 text-white px-5 py-2 rounded hidden"
->
-Item Added
-</div>
-
-
-
+<script src="/socket.io/socket.io.js"></script>
 <script>
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-let cart=[]
-let total=0
-const quantities={}
-
-const menuDiv=document.getElementById("menu")
-const cartList=document.getElementById("cartItems")
-const totalEl=document.getElementById("total")
-const categoryBar=document.getElementById("categoryBar")
-const popup=document.getElementById("popup")
-
-const categories=["Burgers","Pizzas","Shakes","Mocktails","Momos","Starters","Wraps","Sandwiches","Beverages"]
-
-categories.forEach(cat=>{
-const btn=document.createElement("button")
-btn.className="bg-gray-200 px-4 py-2 rounded-full font-semibold hover:bg-red-600 hover:text-white"
-btn.innerText=cat
-btn.onclick=()=>loadCategory(cat,btn)
-categoryBar.appendChild(btn)
-})
-
-async function loadCategory(category,btn){
-
-document.querySelectorAll("#categoryBar button").forEach(b=>b.classList.remove("bg-red-600","text-white"))
-if(btn) btn.classList.add("bg-red-600","text-white")
-
-const res=await fetch(`/menu/category/${category}`)
-const items=await res.json()
-
-menuDiv.innerHTML=""
-
-items.forEach(item=>{
-
-const card=document.createElement("div")
-card.className="bg-white p-4 rounded-xl shadow hover:shadow-xl transition text-center"
-
-card.innerHTML=`
-<img src="${item.image || '/images/menu/default-food.jpg'}"
-onerror="this.src='/images/menu/default-food.jpg'"
-class="w-full h-36 object-cover rounded">
-
-<h4 class="mt-2 font-bold">${item.name}</h4>
-
-<p class="text-red-600 font-bold">₹${item.price}</p>
-
-<div class="flex justify-center gap-3 mt-2">
-
-<button class="bg-gray-300 px-2 rounded">-</button>
-
-<span id="qty-${item._id}">1</span>
-
-<button class="bg-gray-300 px-2 rounded">+</button>
-
-</div>
-
-<button class="bg-red-600 text-white w-full py-2 rounded mt-3">
-Add to Cart
-</button>
-`
-
-menuDiv.appendChild(card)
-
-const minus=card.querySelector("button:nth-child(1)")
-const plus=card.querySelector("button:nth-child(3)")
-const addBtn=card.querySelector(".bg-red-600")
-
-minus.onclick=()=>changeQty(item._id,-1)
-plus.onclick=()=>changeQty(item._id,1)
-addBtn.onclick=()=>addToCart(item)
-
-})
-
-}
-
-function changeQty(id,val){
-
-if(!quantities[id]) quantities[id]=1
-quantities[id]+=val
-
-if(quantities[id]<1) quantities[id]=1
-
-const el=document.getElementById(`qty-${id}`)
-if(el) el.innerText=quantities[id]
-
-}
-
-window.addToCart=function(item){
-
-if(!item._id){
-item._id=item.name.replace(/\s/g,"_").toLowerCase()
-}
-
-const qty=quantities[item._id]||1
-
-const existing=cart.find(i=>i._id===item._id)
-
-if(existing){
-existing.qty+=qty
-}else{
-cart.push({_id:item._id,name:item.name,price:item.price,qty})
-}
-
-total+=item.price*qty
-
-renderCart()
-showPopup()
-
-}
-
-function renderCart(){
-
-cartList.innerHTML=""
-
-cart.forEach((item,index)=>{
-
-const li=document.createElement("li")
-
-li.className="border-b pb-2"
-
-li.innerHTML=`
-
-<div class="flex justify-between items-center">
-
-<div>
-
-<b>${item.name}</b>
-
-<div class="flex items-center gap-2 mt-1">
-
-<button class="bg-gray-300 px-2 rounded minus">-</button>
-
-<span>${item.qty}</span>
-
-<button class="bg-gray-300 px-2 rounded plus">+</button>
-
-</div>
-
-</div>
-
-<div>
-
-₹${item.price*item.qty}
-
-<button class="text-red-600 ml-2 remove">❌</button>
-
-</div>
-
-</div>
-
-`
-
-li.querySelector(".minus").onclick=()=>{
-if(item.qty>1){
-item.qty--
-total-=item.price
-renderCart()
-}
-}
-
-li.querySelector(".plus").onclick=()=>{
-item.qty++
-total+=item.price
-renderCart()
-}
-
-li.querySelector(".remove").onclick=()=>removeItem(index)
-
-cartList.appendChild(li)
-
-})
-
-totalEl.innerText=total
-
-}
-
-function removeItem(index){
-total-=cart[index].price*cart[index].qty
-cart.splice(index,1)
-renderCart()
-}
-
-function showPopup(){
-popup.classList.remove("hidden")
-setTimeout(()=>popup.classList.add("hidden"),1000)
-}
-
-window.placeOrder=async function(){
-
-if(cart.length===0){
-alert("Cart is empty")
-return
-}
-
-const orderItems=cart.map(i=>({name:i.name,price:i.price,qty:i.qty}))
-
-await fetch("/order",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({items:orderItems,total:total,paymentMode:"Cash"})
-})
-
-cart=[]
-total=0
-renderCart()
-
-alert("Order Sent To Kitchen")
-
-}
-
-window.searchMenu=function(text){
-
-const cards=document.querySelectorAll("#menu h4")
-
-cards.forEach(card=>{
-const name=card.innerText.toLowerCase()
-card.parentElement.style.display=name.includes(text.toLowerCase())?"block":"none"
-})
-
-}
-
-loadCategory("Burgers")
-
-})
-
+document.addEventListener("DOMContentLoaded", () => {
+
+  const socket = typeof io !== 'undefined' ? io() : null;
+
+  let cart = [];
+  let total = 0;
+  const quantities = {};
+
+  const menuDiv = document.getElementById("menu");
+  const totalEl = document.getElementById("total");
+  const categoryBar = document.getElementById("categoryBar");
+  const popup = document.getElementById("popup");
+  const cartBar = document.getElementById("cartBar");
+  const cartCount = document.getElementById("cartCount");
+
+  const categories = ["Burgers","Pizzas","Shakes","Mocktails","Momos","Starters","Wraps","Sandwiches","Beverages","Fries","Dessert"];
+
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "cat-btn";
+    btn.innerText = cat;
+    btn.onclick = () => loadCategory(cat, btn);
+    categoryBar.appendChild(btn);
+  });
+
+  async function loadCategory(category, btn) {
+    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+
+    menuDiv.innerHTML = `<div class="loading" style="grid-column:span 2"><div class="spinner"></div></div>`;
+
+    try {
+      const res = await fetch(`/menu/category/${category}`);
+      const items = await res.json();
+      menuDiv.innerHTML = "";
+
+      if (!items.length) {
+        menuDiv.innerHTML = `<div class="empty" style="grid-column:span 2"><div class="empty-icon">🍽️</div><div>No items found</div></div>`;
+        return;
+      }
+
+      items.forEach((item, i) => {
+        if (!quantities[item._id]) quantities[item._id] = 1;
+
+        const card = document.createElement("div");
+        card.className = "menu-card";
+        card.style.animationDelay = (i * 0.05) + 's';
+        card.innerHTML = `
+          <img src="${item.image || '/images/menu/default-food.jpg'}" alt="${item.name}" onerror="this.src='/images/menu/default-food.jpg'">
+          <div class="menu-info">
+            <div class="menu-name">${item.name}</div>
+            <div class="qty-row">
+              <button class="qty-btn minus">−</button>
+              <span class="qty-num" id="qty-${item._id}">1</span>
+              <button class="qty-btn plus">+</button>
+            </div>
+            <div class="menu-bottom">
+              <span class="menu-price">₹${item.price}</span>
+              <button class="add-btn" id="addbtn-${item._id}">+</button>
+            </div>
+          </div>
+        `;
+
+        card.querySelector(".minus").onclick = () => changeQty(item._id, -1);
+        card.querySelector(".plus").onclick = () => changeQty(item._id, 1);
+        card.querySelector(".add-btn").onclick = () => addToCart(item);
+
+        menuDiv.appendChild(card);
+      });
+
+    } catch(err) {
+      menuDiv.innerHTML = `<div class="empty" style="grid-column:span 2"><div class="empty-icon">⚠️</div><div>Failed to load menu</div></div>`;
+    }
+  }
+
+  function changeQty(id, val) {
+    if (!quantities[id]) quantities[id] = 1;
+    quantities[id] += val;
+    if (quantities[id] < 1) quantities[id] = 1;
+    const el = document.getElementById(`qty-${id}`);
+    if (el) el.innerText = quantities[id];
+  }
+
+  window.addToCart = function(item) {
+    if (!item._id) item._id = item.name.replace(/\s/g, "_").toLowerCase();
+    const qty = quantities[item._id] || 1;
+    const existing = cart.find(i => i._id === item._id);
+    if (existing) {
+      existing.qty += qty;
+    } else {
+      cart.push({ _id: item._id, name: item.name, price: item.price, qty });
+    }
+    total += item.price * qty;
+    updateCartBar();
+    showPopup();
+
+    const btn = document.getElementById(`addbtn-${item._id}`);
+    if (btn) {
+      const cartItem = cart.find(i => i._id === item._id);
+      btn.textContent = cartItem ? cartItem.qty : qty;
+      btn.classList.add("added");
+    }
+  };
+
+  function updateCartBar() {
+    const count = cart.reduce((a, b) => a + b.qty, 0);
+    cartBar.style.display = count > 0 ? "block" : "none";
+    totalEl.innerText = total;
+    cartCount.innerText = count + (count === 1 ? " item" : " items");
+  }
+
+  function showPopup() {
+    popup.style.display = "block";
+    setTimeout(() => popup.style.display = "none", 1200);
+  }
+
+  window.placeOrder = async function() {
+    if (cart.length === 0) { alert("Cart is empty"); return; }
+    const orderItems = cart.map(i => ({ name: i.name, price: i.price, qty: i.qty }));
+    try {
+      await fetch("/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: orderItems, total: total, paymentMode: "Cash" })
+      });
+      cart = [];
+      total = 0;
+      document.querySelectorAll(".add-btn").forEach(b => { b.textContent = "+"; b.classList.remove("added"); });
+      updateCartBar();
+      alert("✅ Order Sent To Kitchen!");
+    } catch(err) {
+      alert("Failed to place order. Try again.");
+    }
+  };
+
+  window.searchMenu = function(text) {
+    document.querySelectorAll(".menu-card").forEach(card => {
+      const name = card.querySelector(".menu-name")?.innerText.toLowerCase() || "";
+      card.style.display = name.includes(text.toLowerCase()) ? "block" : "none";
+    });
+  };
+
+  if (socket) {
+    socket.on("order-updated", (order) => {
+      console.log("Order updated:", order.orderNumber);
+    });
+  }
+
+  // Load Momos first (their signature item)
+  const firstBtn = categoryBar.querySelector(".cat-btn");
+  if (firstBtn) loadCategory("Burgers", firstBtn);
+
+});
 </script>
-
-
-
-<section class="bg-black text-white text-center py-12 mt-20">
-
-<h2 class="text-2xl font-bold">📍 Find Us</h2>
-
-<div class="max-w-4xl mx-auto mt-6 rounded overflow-hidden shadow-lg">
-
-<iframe
-src="https://www.google.com/maps?q=Gole%20Market%20Gandhi%20Nagar%20Jammu&output=embed"
-width="100%"
-height="260"
-style="border:0;"
-loading="lazy">
-</iframe>
-
-</div>
-
-<div class="mt-6 text-gray-300">
-
-<h3 class="text-xl font-semibold">Hungry Hop – Kingdom of Momos</h3>
-
-<p>
-Gole Market, Gandhi Nagar, Jammu<br>
-Opposite Monika Supermarket
-</p>
-
-</div>
-
-<div class="mt-6 text-gray-400">
-
-⚡ Designed & Developed by
-<span class="text-red-600 font-bold">Nexora Digital</span>
-
-</div>
-
-</section>
-
 </body>
 </html>
