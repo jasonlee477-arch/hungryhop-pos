@@ -197,7 +197,7 @@ ${itemsHTML}
 </ul>
 
 <p class="timer" data-time="${order.createdAt}">
-0 sec
+00:00
 </p>
 
 ${buttonHTML}
@@ -220,7 +220,13 @@ startTimers()
 
 /* TIMER SYSTEM */
 
+let timerInterval
+
 function startTimers(){
+
+clearInterval(timerInterval)
+
+timerInterval=setInterval(()=>{
 
 const timers=document.querySelectorAll(".timer")
 
@@ -228,17 +234,23 @@ timers.forEach(timer=>{
 
 const created=new Date(timer.dataset.time)
 
-setInterval(()=>{
-
 const now=new Date()
 
 const seconds=Math.floor((now-created)/1000)
 
-timer.innerText=seconds+" sec"
+const minutes=Math.floor(seconds/60)
+const remaining=seconds%60
 
-},1000)
+const formatted =
+String(minutes).padStart(2,"0") +
+":" +
+String(remaining).padStart(2,"0")
+
+timer.innerText=formatted
 
 })
+
+},1000)
 
 }
 

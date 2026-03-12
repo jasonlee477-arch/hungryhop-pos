@@ -3,324 +3,77 @@
 
 <head>
 
+<meta charset="UTF-8">
 <title>Hungry Hop POS</title>
 
-<style>
-
-body{
-font-family:Arial;
-margin:0;
-background:#f4f4f4;
-}
-
-/* HEADER */
-
-.header{
-background:#e31837;
-padding:10px 35px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-color:white;
-}
-
-.search{
-padding:6px 12px;
-border-radius:6px;
-border:none;
-height:32px;
-}
-
-/* HERO */
-
-.hero{
-position:relative;
-height:260px;
-background-image:url("/images/menu/hungryhop-truck.jpg");
-background-size:cover;
-background-position:center 10%;
-display:flex;
-align-items:flex-end;
-padding:40px;
-color:white;
-font-size:32px;
-font-weight:bold;
-}
-
-.hero-text{
-background:rgba(0,0,0,0.45);
-padding:10px 20px;
-border-radius:8px;
-}
-
-/* JAMMU SPECIALS */
-
-.section-title{
-font-size:28px;
-font-weight:700;
-margin:40px;
-}
-
-.popular-items{
-display:flex;
-gap:30px;
-margin:0 40px 40px 40px;
-}
-
-.popular-card{
-background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-width:260px;
-transition:0.25s;
-}
-
-.popular-card:hover{
-transform:translateY(-8px);
-box-shadow:0 12px 25px rgba(0,0,0,0.2);
-}
-
-.popular-card img{
-width:100%;
-height:160px;
-object-fit:cover;
-border-radius:10px;
-}
-
-.desc{
-color:#666;
-font-size:14px;
-}
-
-.price{
-color:#e31837;
-font-weight:bold;
-font-size:18px;
-}
-
-/* CATEGORY BAR */
-
-.category-bar{
-display:flex;
-gap:12px;
-padding:10px 25px;
-background:white;
-border-bottom:1px solid #ddd;
-position:sticky;
-top:60px;
-z-index:1000;
-}
-
-.category{
-padding:10px 20px;
-background:#f0f0f0;
-border:none;
-border-radius:30px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.category:hover{
-background:#e31837;
-color:white;
-}
-
-.category.active{
-background:#e31837;
-color:white;
-}
-
-/* MAIN */
-
-.main{
-display:grid;
-grid-template-columns:3fr 1fr;
-gap:20px;
-padding:20px;
-}
-
-/* MENU */
-
-.menu{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-gap:20px;
-}
-
-.food-card{
-background:white;
-border-radius:14px;
-padding:15px;
-text-align:center;
-box-shadow:0 6px 18px rgba(0,0,0,0.12);
-}
-
-.food-card:hover{
-transform:translateY(-6px);
-}
-
-.food-img{
-width:100%;
-height:140px;
-object-fit:cover;
-border-radius:10px;
-}
-
-/* QTY */
-
-.qty{
-display:flex;
-justify-content:center;
-gap:10px;
-margin:10px 0;
-}
-
-.qty button{
-background:#ddd;
-border:none;
-padding:5px 10px;
-cursor:pointer;
-}
-
-/* ADD BUTTON */
-
-.add-btn{
-background:#e31837;
-color:white;
-border:none;
-padding:10px;
-width:100%;
-border-radius:6px;
-cursor:pointer;
-}
-
-/* CART */
-
-.cart{
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 6px 18px rgba(0,0,0,0.15);
-position:sticky;
-top:20px;
-}
-
-.cart-item{
-margin-bottom:10px;
-}
-
-.place-btn{
-background:#28a745;
-color:white;
-border:none;
-padding:12px;
-width:100%;
-border-radius:6px;
-cursor:pointer;
-}
-
-/* POPUP */
-
-.popup{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#28a745;
-color:white;
-padding:10px 20px;
-border-radius:6px;
-display:none;
-}
-
-/* FOOTER */
-
-.footer{
-margin-top:80px;
-background:#111;
-color:white;
-text-align:center;
-padding:50px 20px;
-}
-
-.map-container{
-margin:30px auto;
-max-width:900px;
-border-radius:10px;
-overflow:hidden;
-box-shadow:0 6px 20px rgba(0,0,0,0.3);
-}
-
-.footer-info{
-margin-top:25px;
-font-size:16px;
-color:#ddd;
-}
-
-.watermark{
-margin-top:30px;
-font-size:15px;
-color:#888;
-}
-
-.watermark span{
-color:#e31837;
-font-weight:bold;
-}
-
-</style>
+<link href="/css/style.css" rel="stylesheet">
 
 </head>
 
-<body>
+<body class="bg-gray-100 font-sans">
 
-<header class="header">
+<header class="bg-red-600 text-white flex justify-between items-center px-8 py-4 shadow">
 
-<h2>🍔 Hungry Hop POS</h2>
+<h2 class="text-xl font-bold">🍔 Hungry Hop POS</h2>
 
-<input type="text" placeholder="Search menu..." onkeyup="searchMenu(this.value)" class="search">
+<input
+type="text"
+placeholder="Search menu..."
+onkeyup="searchMenu(this.value)"
+class="px-3 py-2 rounded text-black"
+/>
 
 </header>
 
-<div class="hero">
-<div class="hero-text">
+
+<div class="relative h-64 bg-cover bg-center flex items-end p-10 text-white text-3xl font-bold"
+style="background-image:url('/images/menu/hungryhop-truck.jpg')">
+
+<div class="bg-black/50 px-5 py-2 rounded">
 Welcome to Hungry Hop – Kingdom of Momos
 </div>
+
 </div>
 
-<h2 class="section-title">🔥 Jammu Specials</h2>
 
-<div class="popular-items">
+<h2 class="text-3xl font-bold m-10">🔥 Jammu Specials</h2>
 
-<div class="popular-card">
+<div class="flex gap-8 mx-10 mb-10">
 
-<img src="/images/menu/rajma-chawal.jpg">
+<div class="bg-white p-5 rounded-xl shadow w-64 hover:shadow-xl transition">
 
-<h3>Rajma Chawal</h3>
+<img src="/images/menu/rajma-chawal.jpg" class="w-full h-40 object-cover rounded">
 
-<p class="desc">Jammu Special Rajma Chawal</p>
+<h3 class="mt-3 font-bold text-lg">Rajma Chawal</h3>
 
-<p class="price">₹70</p>
+<p class="text-gray-500 text-sm">Jammu Special Rajma Chawal</p>
 
-<button class="add-btn"
-onclick="addToCart({_id:'rajma',name:'Rajma Chawal',price:70})">
+<p class="text-red-600 font-bold text-lg">₹70</p>
+
+<button
+class="bg-red-600 text-white w-full py-2 rounded mt-3"
+onclick="addToCart({_id:'rajma',name:'Rajma Chawal',price:70})"
+>
 Add to Cart
 </button>
 
 </div>
 
-<div class="popular-card">
 
-<img src="/images/menu/kaladi-kulcha.jpg">
+<div class="bg-white p-5 rounded-xl shadow w-64 hover:shadow-xl transition">
 
-<h3>Kaladi Kulcha</h3>
+<img src="/images/menu/kaladi-kulcha.jpg" class="w-full h-40 object-cover rounded">
 
-<p class="desc">Fresh Kaladi</p>
+<h3 class="mt-3 font-bold text-lg">Kaladi Kulcha</h3>
 
-<p class="price">₹70</p>
+<p class="text-gray-500 text-sm">Fresh Kaladi</p>
 
-<button class="add-btn"
-onclick="addToCart({_id:'kaladi',name:'Kaladi Kulcha',price:70})">
+<p class="text-red-600 font-bold text-lg">₹70</p>
+
+<button
+class="bg-red-600 text-white w-full py-2 rounded mt-3"
+onclick="addToCart({_id:'kaladi',name:'Kaladi Kulcha',price:70})"
+>
 Add to Cart
 </button>
 
@@ -328,21 +81,33 @@ Add to Cart
 
 </div>
 
-<div class="category-bar" id="categoryBar"></div>
 
-<div class="main">
+<div id="categoryBar"
+class="flex gap-3 px-6 py-3 bg-white sticky top-0 shadow z-50">
+</div>
 
-<div class="menu" id="menu"></div>
 
-<div class="cart">
+<div class="grid grid-cols-4 gap-6 p-6">
 
-<h2>Cart</h2>
+<div id="menu"
+class="grid grid-cols-3 gap-6 col-span-3">
+</div>
 
-<ul id="cartItems"></ul>
 
-<h3>Total: ₹<span id="total">0</span></h3>
+<div class="bg-white p-5 rounded-xl shadow sticky top-20 h-fit">
 
-<button class="place-btn" onclick="placeOrder()">
+<h2 class="text-xl font-bold mb-4">Cart</h2>
+
+<ul id="cartItems" class="space-y-2"></ul>
+
+<h3 class="text-lg font-bold mt-4">
+Total: ₹<span id="total">0</span>
+</h3>
+
+<button
+onclick="placeOrder()"
+class="bg-green-600 text-white w-full py-3 rounded mt-4"
+>
 Place Order
 </button>
 
@@ -350,7 +115,15 @@ Place Order
 
 </div>
 
-<div id="popup" class="popup">Item Added</div>
+
+<div
+id="popup"
+class="fixed bottom-5 right-5 bg-green-600 text-white px-5 py-2 rounded hidden"
+>
+Item Added
+</div>
+
+
 
 <script>
 
@@ -370,7 +143,7 @@ const categories=["Burgers","Pizzas","Shakes","Mocktails","Momos","Starters","Wr
 
 categories.forEach(cat=>{
 const btn=document.createElement("button")
-btn.className="category"
+btn.className="bg-gray-200 px-4 py-2 rounded-full font-semibold hover:bg-red-600 hover:text-white"
 btn.innerText=cat
 btn.onclick=()=>loadCategory(cat,btn)
 categoryBar.appendChild(btn)
@@ -378,8 +151,8 @@ categoryBar.appendChild(btn)
 
 async function loadCategory(category,btn){
 
-document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"))
-if(btn) btn.classList.add("active")
+document.querySelectorAll("#categoryBar button").forEach(b=>b.classList.remove("bg-red-600","text-white"))
+if(btn) btn.classList.add("bg-red-600","text-white")
 
 const res=await fetch(`/menu/category/${category}`)
 const items=await res.json()
@@ -389,27 +162,37 @@ menuDiv.innerHTML=""
 items.forEach(item=>{
 
 const card=document.createElement("div")
-card.className="food-card"
+card.className="bg-white p-4 rounded-xl shadow hover:shadow-xl transition text-center"
 
 card.innerHTML=`
-<img src="${item.image}" class="food-img">
-<h4>${item.name}</h4>
-<p class="price">₹${item.price}</p>
+<img src="${item.image || '/images/menu/default-food.jpg'}"
+onerror="this.src='/images/menu/default-food.jpg'"
+class="w-full h-36 object-cover rounded">
 
-<div class="qty">
-<button>-</button>
+<h4 class="mt-2 font-bold">${item.name}</h4>
+
+<p class="text-red-600 font-bold">₹${item.price}</p>
+
+<div class="flex justify-center gap-3 mt-2">
+
+<button class="bg-gray-300 px-2 rounded">-</button>
+
 <span id="qty-${item._id}">1</span>
-<button>+</button>
+
+<button class="bg-gray-300 px-2 rounded">+</button>
+
 </div>
 
-<button class="add-btn">Add to Cart</button>
+<button class="bg-red-600 text-white w-full py-2 rounded mt-3">
+Add to Cart
+</button>
 `
 
 menuDiv.appendChild(card)
 
-const minus=card.querySelector(".qty button:first-child")
-const plus=card.querySelector(".qty button:last-child")
-const addBtn=card.querySelector(".add-btn")
+const minus=card.querySelector("button:nth-child(1)")
+const plus=card.querySelector("button:nth-child(3)")
+const addBtn=card.querySelector(".bg-red-600")
 
 minus.onclick=()=>changeQty(item._id,-1)
 plus.onclick=()=>changeQty(item._id,1)
@@ -462,15 +245,55 @@ cart.forEach((item,index)=>{
 
 const li=document.createElement("li")
 
-li.className="cart-item"
+li.className="border-b pb-2"
 
 li.innerHTML=`
-<b>${item.name}</b><br>
-${item.qty} x ₹${item.price} = ₹${item.price*item.qty}
-<button>❌</button>
+
+<div class="flex justify-between items-center">
+
+<div>
+
+<b>${item.name}</b>
+
+<div class="flex items-center gap-2 mt-1">
+
+<button class="bg-gray-300 px-2 rounded minus">-</button>
+
+<span>${item.qty}</span>
+
+<button class="bg-gray-300 px-2 rounded plus">+</button>
+
+</div>
+
+</div>
+
+<div>
+
+₹${item.price*item.qty}
+
+<button class="text-red-600 ml-2 remove">❌</button>
+
+</div>
+
+</div>
+
 `
 
-li.querySelector("button").onclick=()=>removeItem(index)
+li.querySelector(".minus").onclick=()=>{
+if(item.qty>1){
+item.qty--
+total-=item.price
+renderCart()
+}
+}
+
+li.querySelector(".plus").onclick=()=>{
+item.qty++
+total+=item.price
+renderCart()
+}
+
+li.querySelector(".remove").onclick=()=>removeItem(index)
 
 cartList.appendChild(li)
 
@@ -487,8 +310,8 @@ renderCart()
 }
 
 function showPopup(){
-popup.style.display="block"
-setTimeout(()=>popup.style.display="none",1000)
+popup.classList.remove("hidden")
+setTimeout(()=>popup.classList.add("hidden"),1000)
 }
 
 window.placeOrder=async function(){
@@ -516,11 +339,11 @@ alert("Order Sent To Kitchen")
 
 window.searchMenu=function(text){
 
-const cards=document.querySelectorAll(".food-card")
+const cards=document.querySelectorAll("#menu h4")
 
 cards.forEach(card=>{
-const name=card.querySelector("h4").innerText.toLowerCase()
-card.style.display=name.includes(text.toLowerCase())?"block":"none"
+const name=card.innerText.toLowerCase()
+card.parentElement.style.display=name.includes(text.toLowerCase())?"block":"none"
 })
 
 }
@@ -531,11 +354,13 @@ loadCategory("Burgers")
 
 </script>
 
-<section class="footer">
 
-<h2>📍 Find Us</h2>
 
-<div class="map-container">
+<section class="bg-black text-white text-center py-12 mt-20">
+
+<h2 class="text-2xl font-bold">📍 Find Us</h2>
+
+<div class="max-w-4xl mx-auto mt-6 rounded overflow-hidden shadow-lg">
 
 <iframe
 src="https://www.google.com/maps?q=Gole%20Market%20Gandhi%20Nagar%20Jammu&output=embed"
@@ -547,9 +372,9 @@ loading="lazy">
 
 </div>
 
-<div class="footer-info">
+<div class="mt-6 text-gray-300">
 
-<h3>Hungry Hop – Kingdom of Momos</h3>
+<h3 class="text-xl font-semibold">Hungry Hop – Kingdom of Momos</h3>
 
 <p>
 Gole Market, Gandhi Nagar, Jammu<br>
@@ -558,48 +383,14 @@ Opposite Monika Supermarket
 
 </div>
 
-<div class="watermark">
+<div class="mt-6 text-gray-400">
 
-<p>⚡ Designed & Developed by <span>Nexora Digital</span></p>
+⚡ Designed & Developed by
+<span class="text-red-600 font-bold">Nexora Digital</span>
 
 </div>
 
 </section>
-<script>
-
-async function loadMenu() {
-
-const res = await fetch("/menu")
-const items = await res.json()
-
-const container = document.querySelector(".popular-items")
-
-container.innerHTML = ""
-
-items.forEach(item => {
-
-container.innerHTML += `
-<div class="popular-card">
-
-<h3>${item.name}</h3>
-<p class="desc">${item.description || ""}</p>
-<p class="price">₹${item.price}</p>
-
-<button class="add-btn">
-Add to Cart
-</button>
-
-</div>
-`
-
-})
-
-}
-
-loadMenu()
-
-</script>
 
 </body>
-
 </html>
