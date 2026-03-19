@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const http = require("http");
 const { Server } = require("socket.io");
+const fetch = require("node-fetch"); // 🔥 ADDED
 
 const Order = require("./models/Order");
 const MenuItem = require("./models/MenuItem");
@@ -24,16 +25,15 @@ mongoose.connect(
 )
 .then(()=>console.log("✅ MongoDB Atlas Connected"))
 .catch(err=>console.log("Mongo Error:",err));
+
 /* ================= SOCKET.IO ================= */
 
 io.on("connection",(socket)=>{
+  console.log("⚡ Kitchen/Client connected:",socket.id)
 
-console.log("⚡ Kitchen/Client connected:",socket.id)
-
-socket.on("disconnect",()=>{
-console.log("Client disconnected")
-})
-
+  socket.on("disconnect",()=>{
+    console.log("Client disconnected")
+  })
 })
 
 /* ================= MENU APIs ================= */
@@ -41,62 +41,39 @@ console.log("Client disconnected")
 /* GET ALL MENU */
 
 app.get("/menu", async (req,res)=>{
-
-try{
-
-const items = await MenuItem.find({ available:true })
-
-res.json(items)
-
-}catch(err){
-
-res.status(500).json({error:err.message})
-
-}
-
+  try{
+    const items = await MenuItem.find({ available:true })
+    res.json(items)
+  }catch(err){
+    res.status(500).json({error:err.message})
+  }
 })
 
 /* GET MENU BY CATEGORY */
 
 app.get("/menu/category/:category", async (req,res)=>{
-
-try{
-
-const category = req.params.category
-
-const items = await MenuItem.find({
-category: category,
-available: true
-})
-
-res.json(items)
-
-}catch(err){
-
-res.status(500).json({error:err.message})
-
-}
-
+  try{
+    const category = req.params.category
+    const items = await MenuItem.find({
+      category: category,
+      available: true
+    })
+    res.json(items)
+  }catch(err){
+    res.status(500).json({error:err.message})
+  }
 })
 
 /* CREATE MENU ITEM */
 
 app.post("/menu", async (req,res)=>{
-
-try{
-
-const item = new MenuItem(req.body)
-
-const saved = await item.save()
-
-res.json(saved)
-
-}catch(err){
-
-res.status(400).json({error:err.message})
-
-}
-
+  try{
+    const item = new MenuItem(req.body)
+    const saved = await item.save()
+    res.json(saved)
+  }catch(err){
+    res.status(400).json({error:err.message})
+  }
 })
 
 /* ================= ORDER APIs ================= */
@@ -104,49 +81,59 @@ res.status(400).json({error:err.message})
 /* CREATE ORDER */
 
 app.post("/order", async (req,res)=>{
+  try{
 
-try{
+    const lastOrder = await Order.findOne().sort({orderNumber:-1})
+    const orderNumber = lastOrder ? lastOrder.orderNumber + 1 : 101
 
-const lastOrder = await Order.findOne().sort({orderNumber:-1})
+    const newOrder = new Order({
+      orderNumber,
+      items:req.body.items,
+      total:req.body.total,
+      paymentMode:req.body.paymentMode,
+      status:"Pending"
+    })
 
-const orderNumber = lastOrder ? lastOrder.orderNumber + 1 : 101
+    const savedOrder = await newOrder.save()
 
-const newOrder = new Order({
+    /* REALTIME EVENT */
+    io.emit("new-order",savedOrder)
 
-orderNumber,
-items:req.body.items,
-total:req.body.total,
-paymentMode:req.body.paymentMode,
-status:"Pending"
+    console.log("🔔 New order received:",savedOrder.orderNumber)
 
-})
+    /* ================= n8n WHATSAPP AUTOMATION ================= */
 
-const savedOrder = await newOrder.save()
+    try {
+      await fetch("https://poshungryhop.app.n8n.cloud/webhook/new-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          orderId: savedOrder.orderNumber, // invoice number
+          total: savedOrder.total,
+          items: savedOrder.items.map(i => i.name || i)
+        })
+      });
 
-/* REALTIME EVENT */
+      console.log("📲 Sent to n8n successfully");
 
-io.emit("new-order",savedOrder)
+    } catch (err) {
+      console.log("⚠️ n8n error:", err.message);
+    }
 
-console.log("🔔 New order received:",savedOrder.orderNumber)
+    res.json(savedOrder)
 
-res.json(savedOrder)
-
-}catch(err){
-
-res.status(400).json({error:err.message})
-
-}
-
+  }catch(err){
+    res.status(400).json({error:err.message})
+  }
 })
 
 /* GET ALL ORDERS */
 
 app.get("/orders", async (req,res)=>{
-
-const orders = await Order.find().sort({orderNumber:-1})
-
-res.json(orders)
-
+  const orders = await Order.find().sort({orderNumber:-1})
+  res.json(orders)
 })
 
 /* ================= KITCHEN ================= */
@@ -154,57 +141,41 @@ res.json(orders)
 /* GET KITCHEN ORDERS */
 
 app.get("/kitchen/orders", async (req,res)=>{
+  try{
+    const orders = await Order.find({
+      status:{$ne:"Completed"}
+    }).sort({createdAt:1})
 
-try{
-
-const orders = await Order.find({
-status:{$ne:"Completed"}
-}).sort({createdAt:1})
-
-res.json(orders)
-
-}catch(err){
-
-res.status(500).json({error:err.message})
-
-}
-
+    res.json(orders)
+  }catch(err){
+    res.status(500).json({error:err.message})
+  }
 })
 
 /* UPDATE ORDER STATUS */
 
 app.put("/order/:id/status", async (req,res)=>{
+  try{
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      {status:req.body.status},
+      {new:true}
+    )
 
-try{
+    /* REALTIME UPDATE */
+    io.emit("order-updated",order)
 
-const order = await Order.findByIdAndUpdate(
+    console.log("✔ Order updated:",order.orderNumber)
 
-req.params.id,
-{status:req.body.status},
-{new:true}
+    res.json(order)
 
-)
-
-/* REALTIME UPDATE */
-
-io.emit("order-updated",order)
-
-console.log("✔ Order updated:",order.orderNumber)
-
-res.json(order)
-
-}catch(err){
-
-res.status(500).json({error:err.message})
-
-}
-
+  }catch(err){
+    res.status(500).json({error:err.message})
+  }
 })
 
 /* ================= SERVER ================= */
 
 server.listen(PORT, ()=>{
-
-console.log(`🚀 Server running at http://localhost:${PORT}`)
-
+  console.log(`🚀 Server running at http://localhost:${PORT}`)
 })
