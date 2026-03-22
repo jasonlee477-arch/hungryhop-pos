@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Receipt – Hungry Hop</title>
+<style>
+  /* 80mm thermal printer width = 302px */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .receipt {
+    background: #fff;
+    width: 302px;
+    padding: 16px 14px 24px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  }
+
+  /* ── HEADER ── */
+  .r-logo {
+    text-align: center;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+  .r-logo-icon { font-size: 32px; display: block; margin-bottom: 4px; }
+  .r-name {
+    font-size: 18px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #111;
+  }
+  .r-tagline {
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .r-addr {
+    font-size: 9px;
+    color: #777;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* ── ORDER META ── */
+  .r-meta {
+    font-size: 10px;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.8;
+  }
+  .r-meta-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  .r-meta-row strong { color: #111; }
+
+  /* ── TOKEN ── */
+  .r-token {
+    text-align: center;
+    background: #FFB800;
+    color: #111;
+    font-size: 14px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* ── ITEMS ── */
+  .r-items-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    font-weight: 700;
+    color: #777;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+  }
+  .r-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 11px;
+    padding: 4px 0;
+    border-bottom: 1px dotted #f0f0f0;
+    color: #222;
+    gap: 4px;
+  }
+  .r-item-name { flex: 1; line-height: 1.3; }
+  .r-item-qty  { min-width: 24px; text-align: center; color: #555; }
+  .r-item-price { min-width: 48px; text-align: right; font-weight: 700; }
+
+  /* ── TOTALS ── */
+  .r-totals {
+    margin-top: 10px;
+    border-top: 1px dashed #ccc;
+    padding-top: 8px;
+  }
+  .r-total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+  .r-grand {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+    color: #111;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 2px solid #111;
+  }
+
+  /* ── PAYMENT ── */
+  .r-payment {
+    margin-top: 8px;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    color: #333;
+    padding: 6px 8px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  /* ── FOOTER ── */
+  .r-footer {
+    text-align: center;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed #ccc;
+    font-size: 9px;
+    color: #888;
+    line-height: 1.8;
+  }
+  .r-footer strong { color: #FFB800; font-size: 10px; }
+  .r-thanks {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 4px;
+    letter-spacing: .5px;
+  }
+
+  /* ── BARCODE PLACEHOLDER ── */
+  .r-barcode {
+    text-align: center;
+    margin: 10px 0 6px;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #111;
+    font-family: 'Libre Barcode 39', monospace;
+  }
+  .r-order-num {
+    text-align: center;
+    font-size: 10px;
+    color: #888;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+
+  /* ── PRINT BUTTON (hides on print) ── */
+  .print-btn {
+    display: block;
+    width: 302px;
+    margin: 16px auto 0;
+    background: #FFB800;
+    color: #111;
+    border: none;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    border-radius: 8px;
+    letter-spacing: 1px;
+    transition: background .2s;
+  }
+  .print-btn:hover { background: #e6a600; }
+
+  .close-btn {
+    display: block;
+    width: 302px;
+    margin: 8px auto 0;
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+
+  /* ── LOADING STATE ── */
+  .loading {
+    text-align: center;
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    color: #888;
+  }
+  .loading .spin {
+    width: 32px; height: 32px;
+    border: 3px solid #eee;
+    border-top-color: #FFB800;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── PRINT MEDIA ── */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .receipt { box-shadow: none; }
+    .print-btn, .close-btn { display: none !important; }
+    @page { margin: 0; size: 80mm auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="receipt" id="receipt">
+  <div class="loading">
+    <div class="spin"></div>
+    Loading receipt…
+  </div>
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨️ Print Receipt</button>
+<button class="close-btn" onclick="window.close()">✕ Close</button>
+
+<script>
+// Get order ID from URL: /receipt-print/ORDER_ID
+const pathParts = window.location.pathname.split('/');
+const orderId = pathParts[pathParts.length - 1];
+
+async function loadReceipt() {
+  try {
+    const res  = await fetch(`/receipt/${orderId}`);
+    const order = await res.json();
+    renderReceipt(order);
+  } catch(e) {
+    document.getElementById('receipt').innerHTML =
+      `<div class="loading">⚠️ Could not load receipt.<br><small>${e.message}</small></div>`;
+  }
+}
+
+function formatTime(dateStr) {
+  const d = new Date(dateStr);
+  return d.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', hour12:true });
+}
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+function renderReceipt(order) {
+  const subtotal = order.total;
+  const itemsHTML = order.items.map(item => `
+    <div class="r-item">
+      <span class="r-item-name">${item.name}</span>
+      <span class="r-item-qty">x${item.qty||1}</span>
+      <span class="r-item-price">₹${item.price * (item.qty||1)}</span>
+    </div>
+  `).join('');
+
+  const tokenHTML = order.tokenNumber
+    ? `<div class="r-token">🎫 TOKEN: ${order.tokenNumber}</div>` : '';
+
+  document.getElementById('receipt').innerHTML = `
+    <!-- HEADER -->
+    <div class="r-logo">
+      <span class="r-logo-icon">🥟</span>
+      <div class="r-name">Hungry Hop</div>
+      <div class="r-tagline">Kingdom of Momos</div>
+      <div class="r-addr">
+        Gole Market, Gandhi Nagar, Jammu<br>
+        Opp. Monika Supermarket
+      </div>
+    </div>
+
+    <!-- ORDER META -->
+    <div class="r-meta">
+      <div class="r-meta-row">
+        <span>Order No.</span>
+        <strong>#${order.orderNumber}</strong>
+      </div>
+      <div class="r-meta-row">
+        <span>Date</span>
+        <strong>${formatDate(order.createdAt)}</strong>
+      </div>
+      <div class="r-meta-row">
+        <span>Time</span>
+        <strong>${formatTime(order.createdAt)}</strong>
+      </div>
+      ${order.customerName ? `
+      <div class="r-meta-row">
+        <span>Customer</span>
+        <strong>${order.customerName}</strong>
+      </div>` : ''}
+    </div>
+
+    ${tokenHTML}
+
+    <!-- ITEMS -->
+    <div class="r-items-head">
+      <span>Item</span>
+      <span>Qty</span>
+      <span>Amt</span>
+    </div>
+    ${itemsHTML}
+
+    <!-- TOTALS -->
+    <div class="r-totals">
+      <div class="r-total-row">
+        <span>Subtotal</span>
+        <span>₹${subtotal}</span>
+      </div>
+      <div class="r-total-row">
+        <span>Tax (incl.)</span>
+        <span>₹0</span>
+      </div>
+      <div class="r-grand">
+        <span>TOTAL</span>
+        <span>₹${subtotal}</span>
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="r-payment">
+      <span>Payment Mode</span>
+      <span>${order.paymentMode === 'UPI' ? '📱 UPI' : order.paymentMode === 'Card' ? '💳 Card' : '💵 Cash'}</span>
+    </div>
+
+    <!-- BARCODE-STYLE ORDER NUM -->
+    <div class="r-barcode">||||| |||| |||||</div>
+    <div class="r-order-num">ORDER #${order.orderNumber}</div>
+
+    <!-- FOOTER -->
+    <div class="r-footer">
+      <div class="r-thanks">Thank You! Come Again 🙏</div>
+      Powered by <strong>Aqua Decor</strong><br>
+      Deepak Verma · 7006962007<br>
+      <small>This is a computer generated receipt</small>
+    </div>
+  `;
+
+  // Auto print if ?print=1 in URL
+  if (new URLSearchParams(window.location.search).get('print') === '1') {
+    setTimeout(() => window.print(), 800);
+  }
+}
+
+loadReceipt();
+</script>
+</body>
+</html>

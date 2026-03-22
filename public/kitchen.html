@@ -1,265 +1,621 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-<title>Hungry Hop Kitchen</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍳 Kitchen Display – Hungry Hop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
-
-body{
-font-family:Arial;
-margin:0;
-background:#f4f4f4;
-padding:20px;
+:root{
+  --y:#FFB800;--y2:#ffd966;
+  --bg:#0a0a0a;--bg2:#111;--bg3:#181818;--bg4:#222;
+  --border:#2a2a2a;--text:#f0f0f0;--muted:#888;
+  --green:#22c55e;--red:#ef4444;--blue:#3b82f6;--orange:#f97316;
 }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;}
 
-h1{
-text-align:center;
+/* ── CONNECTION BAR ── */
+#connBar{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  padding:7px 20px;text-align:center;
+  font-size:12px;font-weight:800;letter-spacing:.5px;
+  transition:background .3s;
 }
+.conn-ok{background:#14532d;color:#86efac;}
+.conn-bad{background:#7f1d1d;color:#fca5a5;}
+.conn-wait{background:#78350f;color:#fcd34d;animation:barBlink .8s infinite;}
+@keyframes barBlink{0%,100%{opacity:1;}50%{opacity:.6;}}
 
-/* WORKFLOW BOARD */
+/* ── HEADER ── */
+.hdr{
+  background:#0a0a0a;border-bottom:1px solid var(--border);
+  padding:12px 20px;margin-top:32px;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:10px;
+}
+.hdr-brand{display:flex;align-items:center;gap:12px;}
+.hdr-icon{font-size:26px;}
+.hdr-title{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--y);letter-spacing:2px;line-height:1;}
+.hdr-sub{font-size:10px;color:var(--muted);letter-spacing:1px;}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 
+/* stats */
+.spill{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:7px 14px;text-align:center;min-width:66px;
+}
+.spill-n{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1;}
+.spill-l{font-size:9px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+.sp-pending .spill-n{color:var(--orange);}
+.sp-preparing .spill-n{color:var(--blue);}
+.sp-done .spill-n{color:var(--green);}
+
+/* buttons */
+.hbtn{
+  background:var(--bg3);color:var(--muted);
+  border:1px solid var(--border);
+  border-radius:8px;padding:8px 14px;
+  font-size:12px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:all .15s;
+}
+.hbtn.sound-on{color:var(--y);border-color:var(--y);}
+.hbtn:hover{border-color:var(--y);}
+.dash-btn{background:var(--y);color:#111;border-color:var(--y);}
+.dash-btn:hover{background:var(--y2);}
+
+/* ── FILTER BAR ── */
+.fbar{
+  display:flex;gap:8px;padding:10px 20px;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  overflow-x:auto;scrollbar-width:none;
+}
+.fbar::-webkit-scrollbar{display:none;}
+.ftab{
+  background:var(--bg3);color:var(--muted);
+  border:1px solid var(--border);
+  padding:7px 18px;border-radius:20px;
+  font-size:12px;font-weight:800;
+  cursor:pointer;font-family:'Nunito',sans-serif;
+  white-space:nowrap;transition:all .15s;flex-shrink:0;
+}
+.ftab.active{background:var(--y);color:#111;border-color:var(--y);}
+.ftab:hover:not(.active){border-color:var(--y);color:var(--y);}
+
+/* ── WORKFLOW COLUMNS ── */
 .workflow{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:20px;
-margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  padding:16px 20px;
+  min-height:calc(100vh - 200px);
+}
+.col{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  min-height:400px;
+}
+.col-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+.col-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:2px;
+}
+.col-count{
+  font-size:11px;font-weight:800;
+  padding:3px 10px;border-radius:20px;
+}
+.col-pending .col-title{color:var(--orange);}
+.col-pending .col-count{background:rgba(249,115,22,.15);color:#fb923c;}
+.col-preparing .col-title{color:var(--blue);}
+.col-preparing .col-count{background:rgba(59,130,246,.15);color:#60a5fa;}
+.col-ready .col-title{color:var(--green);}
+.col-ready .col-count{background:rgba(34,197,94,.15);color:#4ade80;}
+
+/* ── ORDER CARD ── */
+.order-card{
+  background:var(--bg3);
+  border:1.5px solid var(--border);
+  border-radius:12px;overflow:hidden;
+  margin-bottom:10px;
+  animation:cardIn .3s ease both;
+  transition:border-color .2s;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+.order-card.Pending{border-left:3px solid var(--orange);}
+.order-card.Preparing{border-left:3px solid var(--blue);}
+.order-card.Ready{border-left:3px solid var(--green);}
+.order-card.new-flash{animation:flashNew .5s ease 3;}
+@keyframes flashNew{0%,100%{box-shadow:none;}50%{box-shadow:0 0 20px rgba(255,184,0,.5);border-color:var(--y);}}
+
+/* card header */
+.oc-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 12px 8px;
+  border-bottom:1px solid var(--border);
+}
+.oc-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;color:var(--y);letter-spacing:1px;
+}
+.oc-token{
+  background:var(--y);color:#111;
+  font-size:10px;font-weight:900;
+  padding:2px 8px;border-radius:10px;margin-left:6px;
+}
+.oc-timer{
+  font-size:11px;font-weight:800;color:var(--muted);
+}
+.oc-timer.urgent{color:var(--red);animation:barBlink .8s infinite;}
+
+/* items */
+.oc-items{padding:8px 12px;}
+.oc-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:5px 0;
+  border-bottom:1px dashed var(--border);
+  font-size:13px;
+}
+.oc-item:last-child{border-bottom:none;}
+.oi-name{font-weight:700;}
+.oi-qty{
+  background:var(--y);color:#111;
+  font-size:10px;font-weight:900;
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
 }
 
-.column{
-background:#eee;
-padding:10px;
-border-radius:10px;
-min-height:400px;
+/* card footer */
+.oc-foot{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 12px;
+  background:rgba(255,184,0,0.03);
+  border-top:1px solid var(--border);
+}
+.oc-pay{font-size:10px;color:var(--muted);font-weight:700;}
+.oc-total{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;color:var(--y);
 }
 
-.column h2{
-text-align:center;
-margin-bottom:10px;
+/* action area */
+.oc-actions{
+  display:flex;gap:6px;
+  padding:8px 12px 10px;
 }
-
-/* ORDER CARD */
-
-.order{
-background:white;
-padding:15px;
-border-radius:10px;
-margin-bottom:10px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+.oa-btn{
+  flex:1;border:none;padding:9px 6px;border-radius:8px;
+  font-size:12px;font-weight:900;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:all .15s;
 }
+.oa-btn:active{transform:scale(.95);}
+.btn-start{background:var(--blue);color:#fff;}
+.btn-start:hover{background:#2563eb;}
+.btn-ready{background:var(--orange);color:#fff;}
+.btn-ready:hover{background:#ea580c;}
+.btn-done{background:var(--green);color:#fff;}
+.btn-done:hover{background:#16a34a;}
+.btn-bill{background:var(--bg4);color:var(--y);border:1px solid var(--border);}
+.btn-bill:hover{border-color:var(--y);}
 
-.order h3{
-margin-top:0;
-color:#e31837;
+/* col empty */
+.col-empty{
+  text-align:center;padding:30px 10px;
+  color:var(--muted);font-size:13px;
 }
+.col-empty span{font-size:28px;display:block;margin-bottom:8px;opacity:.4;}
 
-.order ul{
-padding-left:20px;
+/* ── COMPLETED ROW (bottom) ── */
+.completed-wrap{
+  padding:0 20px 30px;
+  display:none;
 }
-
-.timer{
-margin-top:8px;
-font-weight:bold;
-color:#333;
+.comp-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;color:var(--muted);letter-spacing:2px;
+  margin-bottom:10px;
 }
-
-.order button{
-margin-top:10px;
-padding:8px 12px;
-border:none;
-border-radius:6px;
-background:#e31837;
-color:white;
-cursor:pointer;
-font-weight:bold;
+.comp-row{
+  display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;
+  padding-bottom:4px;
 }
+.comp-row::-webkit-scrollbar{display:none;}
+.comp-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:10px;padding:10px 14px;
+  flex-shrink:0;min-width:200px;opacity:.65;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+}
+.cc-info{}
+.cc-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;color:var(--muted);letter-spacing:1px;
+}
+.cc-items{font-size:11px;color:#555;margin-top:2px;max-width:140px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.cc-bill{
+  background:none;border:1px solid var(--border);
+  color:var(--muted);padding:5px 10px;border-radius:6px;
+  font-size:11px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;white-space:nowrap;
+}
+.cc-bill:hover{border-color:var(--y);color:var(--y);}
 
+/* ── TOAST ── */
+#toast{
+  position:fixed;top:42px;right:16px;z-index:900;
+  background:var(--y);color:#111;
+  padding:12px 18px;border-radius:10px;
+  font-size:14px;font-weight:900;
+  display:none;box-shadow:0 8px 30px rgba(0,0,0,.5);
+  animation:toastIn .25s ease both;
+  font-family:'Nunito',sans-serif;
+}
+@keyframes toastIn{from{opacity:0;transform:translateX(16px);}to{opacity:1;transform:translateX(0);}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .workflow{grid-template-columns:1fr;padding:10px;}
+  .hdr{padding:10px 14px;}
+  .spill{display:none;}
+}
+@media(max-width:1024px){
+  .workflow{grid-template-columns:1fr 1fr;}
+  .col-ready{grid-column:span 2;}
+}
 </style>
-
 </head>
-
 <body>
 
-<h1>🍔 Hungry Hop Kitchen Workflow</h1>
+<!-- CONNECTION STATUS BAR -->
+<div id="connBar" class="conn-wait">⟳ Connecting to kitchen...</div>
 
-<audio id="orderSound">
-<source src="/notification.mp3" type="audio/mpeg">
+<!-- NEW ORDER TOAST -->
+<div id="toast"></div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-brand">
+    <div class="hdr-icon">🍳</div>
+    <div>
+      <div class="hdr-title">Kitchen Display</div>
+      <div class="hdr-sub">Hungry Hop · Live Orders</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="spill sp-pending">
+      <div class="spill-n" id="sPending">0</div>
+      <div class="spill-l">Pending</div>
+    </div>
+    <div class="spill sp-preparing">
+      <div class="spill-n" id="sPreparing">0</div>
+      <div class="spill-l">Preparing</div>
+    </div>
+    <div class="spill sp-done">
+      <div class="spill-n" id="sDone">0</div>
+      <div class="spill-l">Done Today</div>
+    </div>
+    <button class="hbtn sound-on" id="soundBtn" onclick="toggleSound()">🔔</button>
+    <button class="hbtn dash-btn" onclick="location.href='/dashboard.html'">📊 Dashboard</button>
+  </div>
+</header>
+
+<!-- WORKFLOW COLUMNS -->
+<div class="workflow">
+  <div class="col col-pending">
+    <div class="col-head">
+      <div class="col-title">🟠 Pending</div>
+      <span class="col-count" id="cntPending">0</span>
+    </div>
+    <div id="colPending"><div class="col-empty"><span>🟠</span>No pending orders</div></div>
+  </div>
+
+  <div class="col col-preparing">
+    <div class="col-head">
+      <div class="col-title">🔵 Preparing</div>
+      <span class="col-count" id="cntPreparing">0</span>
+    </div>
+    <div id="colPreparing"><div class="col-empty"><span>🔵</span>Nothing preparing</div></div>
+  </div>
+
+  <div class="col col-ready">
+    <div class="col-head">
+      <div class="col-title">🟢 Ready</div>
+      <span class="col-count" id="cntReady">0</span>
+    </div>
+    <div id="colReady"><div class="col-empty"><span>🟢</span>Nothing ready yet</div></div>
+  </div>
+</div>
+
+<!-- COMPLETED TODAY (scrollable row at bottom) -->
+<div class="completed-wrap" id="completedWrap">
+  <div class="comp-title">✅ Completed Today</div>
+  <div class="comp-row" id="compRow"></div>
+</div>
+
+<audio id="orderSound" preload="auto">
+  <source src="/notification.mp3" type="audio/mpeg">
 </audio>
 
-<div class="workflow">
-
-<div class="column">
-<h2>Pending</h2>
-<div id="pending"></div>
-</div>
-
-<div class="column">
-<h2>Preparing</h2>
-<div id="preparing"></div>
-</div>
-
-<div class="column">
-<h2>Ready</h2>
-<div id="ready"></div>
-</div>
-
-<div class="column">
-<h2>Completed</h2>
-<div id="completed"></div>
-</div>
-
-</div>
-
 <script src="/socket.io/socket.io.js"></script>
-
 <script>
+/* ═══════════════════════════════
+   STATE
+═══════════════════════════════ */
+let activeOrders    = [];  // Pending + Preparing + Ready
+let completedToday  = [];
+let soundOn         = true;
+let timerInterval   = null;
 
-const socket = io()
+/* ═══════════════════════════════
+   SOCKET.IO — FIXED REAL-TIME
+═══════════════════════════════ */
+const socket = io({
+  reconnection:           true,
+  reconnectionDelay:      1000,
+  reconnectionDelayMax:   5000,
+  reconnectionAttempts:   Infinity   // ← keep retrying forever
+});
 
-/* SOCKET EVENTS */
+const bar = document.getElementById('connBar');
 
-socket.on("new-order",()=>{
+/* ✅ Connected */
+socket.on('connect', () => {
+  bar.className = 'conn-ok';
+  bar.textContent = '✅ Live — Orders updating in real-time · Socket: ' + socket.id.slice(0,8);
+  // Reload orders on every (re)connect — never miss anything
+  fetchOrders();
+});
 
-document.getElementById("orderSound").play()
+/* ❌ Disconnected */
+socket.on('disconnect', reason => {
+  bar.className = 'conn-bad';
+  bar.textContent = '❌ Disconnected (' + reason + ') — Reconnecting...';
+});
 
-loadOrders()
+/* ⟳ Reconnecting */
+socket.on('connect_error', () => {
+  bar.className = 'conn-wait';
+  bar.textContent = '⟳ Trying to reconnect to server...';
+});
 
-})
+/* 🔔 NEW ORDER — real-time push from server */
+socket.on('new-order', order => {
+  console.log('🔔 new-order received:', order.orderNumber);
 
-socket.on("order-updated",()=>{
+  // Add to local state if not already present
+  if (!activeOrders.find(o => o._id === order._id)) {
+    activeOrders.unshift(order);
+  }
 
-loadOrders()
+  render();
+  updateStats();
+  showToast('🔔 New Order #' + order.orderNumber + (order.tokenNumber ? ' · ' + order.tokenNumber : ''));
+  playSound();
+});
 
-})
+/* ✔ ORDER UPDATED — real-time push from server */
+socket.on('order-updated', order => {
+  console.log('✔ order-updated:', order.orderNumber, '→', order.status);
 
-/* UPDATE ORDER STATUS */
+  if (order.status === 'Completed') {
+    // Remove from active, add to completed
+    activeOrders = activeOrders.filter(o => o._id !== order._id);
+    if (!completedToday.find(o => o._id === order._id)) {
+      completedToday.unshift(order);
+    }
+  } else {
+    // Update status in active list
+    const i = activeOrders.findIndex(o => o._id === order._id);
+    if (i !== -1) { activeOrders[i] = order; }
+    else          { activeOrders.unshift(order); }
+  }
 
-async function updateStatus(id,status){
+  render();
+  updateStats();
+});
 
-await fetch("/order/"+id+"/status",{
+/* ═══════════════════════════════
+   FETCH ORDERS FROM SERVER
+═══════════════════════════════ */
+async function fetchOrders() {
+  try {
+    // GET active orders (non-completed)
+    const activeRes = await fetch('/kitchen/orders');
+    activeOrders    = await activeRes.json();
 
-method:"PUT",
+    // GET today's completed from all orders
+    const allRes  = await fetch('/orders');
+    const allOrds = await allRes.json();
+    const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+    completedToday = allOrds.filter(o =>
+      o.status === 'Completed' && new Date(o.createdAt) >= todayStart
+    );
 
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({status})
-
-})
-
+    render();
+    updateStats();
+  } catch(e) {
+    console.error('fetchOrders error:', e);
+    bar.textContent = '⚠️ Could not load orders — ' + e.message;
+  }
 }
 
-/* LOAD ORDERS */
+/* ═══════════════════════════════
+   RENDER ALL COLUMNS
+═══════════════════════════════ */
+function render() {
+  const pending   = activeOrders.filter(o => o.status === 'Pending');
+  const preparing = activeOrders.filter(o => o.status === 'Preparing');
+  const ready     = activeOrders.filter(o => o.status === 'Ready');
 
-async function loadOrders(){
+  // Update count badges
+  document.getElementById('cntPending').textContent   = pending.length;
+  document.getElementById('cntPreparing').textContent = preparing.length;
+  document.getElementById('cntReady').textContent     = ready.length;
 
-const res = await fetch("/orders")
-
-const orders = await res.json()
-
-document.getElementById("pending").innerHTML=""
-document.getElementById("preparing").innerHTML=""
-document.getElementById("ready").innerHTML=""
-document.getElementById("completed").innerHTML=""
-
-orders.forEach(order=>{
-
-let itemsHTML=""
-
-order.items.forEach(item=>{
-itemsHTML+=`<li>${item.name} x ${item.qty}</li>`
-})
-
-let buttonHTML=""
-
-if(order.status==="Pending"){
-buttonHTML=`<button onclick="updateStatus('${order._id}','Preparing')">Start</button>`
+  renderCol('colPending',   pending,   '🟠', 'No pending orders');
+  renderCol('colPreparing', preparing, '🔵', 'Nothing preparing');
+  renderCol('colReady',     ready,     '🟢', 'Nothing ready yet');
+  renderCompleted();
+  startTimers([...pending, ...preparing, ...ready]);
 }
 
-if(order.status==="Preparing"){
-buttonHTML=`<button onclick="updateStatus('${order._id}','Ready')">Ready</button>`
+function renderCol(id, orders, icon, emptyMsg) {
+  const el = document.getElementById(id);
+  if (!orders.length) {
+    el.innerHTML = `<div class="col-empty"><span>${icon}</span>${emptyMsg}</div>`;
+    return;
+  }
+  el.innerHTML = orders.map(o => cardHTML(o)).join('');
 }
 
-if(order.status==="Ready"){
-buttonHTML=`<button onclick="updateStatus('${order._id}','Completed')">Complete</button>`
+function cardHTML(o) {
+  const payIcon = o.paymentMode === 'UPI' ? '📱' : o.paymentMode === 'Card' ? '💳' : '💵';
+  let btn = '';
+  if (o.status === 'Pending')   btn = `<button class="oa-btn btn-start" onclick="doUpdate('${o._id}','Preparing')">🔵 Start</button>`;
+  if (o.status === 'Preparing') btn = `<button class="oa-btn btn-ready" onclick="doUpdate('${o._id}','Ready')">🟢 Ready</button>`;
+  if (o.status === 'Ready')     btn = `<button class="oa-btn btn-done"  onclick="doUpdate('${o._id}','Completed')">✅ Done</button>`;
+
+  return `
+  <div class="order-card ${o.status}" id="card-${o._id}">
+    <div class="oc-head">
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="oc-num">#${o.orderNumber}</span>
+        ${o.tokenNumber ? `<span class="oc-token">🎫 ${o.tokenNumber}</span>` : ''}
+      </div>
+      <span class="oc-timer" id="timer-${o._id}" data-time="${o.createdAt}">⏱ …</span>
+    </div>
+    <div class="oc-items">
+      ${o.items.map(i => `
+        <div class="oc-item">
+          <span class="oi-name">${i.name}</span>
+          <span class="oi-qty">${i.qty||1}</span>
+        </div>`).join('')}
+    </div>
+    <div class="oc-foot">
+      <span class="oc-pay">${payIcon} ${o.paymentMode||'Cash'}</span>
+      <span class="oc-total">₹${o.total}</span>
+    </div>
+    <div class="oc-actions">
+      ${btn}
+      <button class="oa-btn btn-bill" onclick="printBill('${o._id}')">🖨️ Bill</button>
+    </div>
+  </div>`;
 }
 
-const orderHTML=`
-
-<div class="order">
-
-<h3>Order #${order.orderNumber}</h3>
-
-<ul>
-${itemsHTML}
-</ul>
-
-<p class="timer" data-time="${order.createdAt}">
-00:00
-</p>
-
-${buttonHTML}
-
-</div>
-
-`
-
-const column=document.getElementById(order.status.toLowerCase())
-
-if(column){
-column.innerHTML+=orderHTML
+function renderCompleted() {
+  const wrap = document.getElementById('completedWrap');
+  const row  = document.getElementById('compRow');
+  if (!completedToday.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  row.innerHTML = completedToday.slice(0, 20).map(o => `
+    <div class="comp-card">
+      <div class="cc-info">
+        <div class="cc-num">#${o.orderNumber}${o.tokenNumber ? ' · ' + o.tokenNumber : ''}</div>
+        <div class="cc-items">${o.items.map(i=>i.name).join(', ')}</div>
+      </div>
+      <button class="cc-bill" onclick="printBill('${o._id}')">🖨️ Bill</button>
+    </div>`).join('');
 }
 
-})
+/* ═══════════════════════════════
+   UPDATE STATUS — optimistic UI
+═══════════════════════════════ */
+window.doUpdate = async function(id, status) {
+  // 1. Optimistic update locally first (instant UI)
+  const i = activeOrders.findIndex(o => o._id === id);
+  if (i !== -1) {
+    activeOrders[i].status = status;
+    if (status === 'Completed') {
+      completedToday.unshift(activeOrders[i]);
+      activeOrders.splice(i, 1);
+    }
+  }
+  render();
+  updateStats();
 
-startTimers()
+  // 2. Send to server (Socket.IO will broadcast back to all screens)
+  try {
+    await fetch('/order/' + id + '/status', {
+      method:  'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ status })
+    });
+  } catch(e) {
+    console.error('Status update failed:', e);
+    fetchOrders(); // re-sync if server call fails
+  }
+};
 
+/* ═══════════════════════════════
+   TIMERS
+═══════════════════════════════ */
+function startTimers(orders) {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    orders.forEach(o => {
+      const el = document.getElementById('timer-' + o._id);
+      if (!el) return;
+      const mins = Math.floor((Date.now() - new Date(o.createdAt)) / 60000);
+      const secs = Math.floor((Date.now() - new Date(o.createdAt)) / 1000) % 60;
+      el.textContent = `⏱ ${mins}m ${secs}s`;
+      el.className   = 'oc-timer' + (mins >= 15 ? ' urgent' : '');
+    });
+  }, 1000);
 }
 
-/* TIMER SYSTEM */
-
-let timerInterval
-
-function startTimers(){
-
-clearInterval(timerInterval)
-
-timerInterval=setInterval(()=>{
-
-const timers=document.querySelectorAll(".timer")
-
-timers.forEach(timer=>{
-
-const created=new Date(timer.dataset.time)
-
-const now=new Date()
-
-const seconds=Math.floor((now-created)/1000)
-
-const minutes=Math.floor(seconds/60)
-const remaining=seconds%60
-
-const formatted =
-String(minutes).padStart(2,"0") +
-":" +
-String(remaining).padStart(2,"0")
-
-timer.innerText=formatted
-
-})
-
-},1000)
-
+/* ═══════════════════════════════
+   STATS
+═══════════════════════════════ */
+function updateStats() {
+  document.getElementById('sPending').textContent   = activeOrders.filter(o=>o.status==='Pending').length;
+  document.getElementById('sPreparing').textContent = activeOrders.filter(o=>o.status==='Preparing').length;
+  document.getElementById('sDone').textContent      = completedToday.length;
 }
 
-/* INITIAL LOAD */
+/* ═══════════════════════════════
+   PRINT BILL
+═══════════════════════════════ */
+window.printBill = function(id) {
+  window.open('/receipt-print/' + id + '?print=1', '_blank');
+};
 
-loadOrders()
+/* ═══════════════════════════════
+   SOUND
+═══════════════════════════════ */
+window.toggleSound = function() {
+  soundOn = !soundOn;
+  const btn = document.getElementById('soundBtn');
+  btn.textContent = soundOn ? '🔔' : '🔕';
+  btn.className   = 'hbtn' + (soundOn ? ' sound-on' : '');
+};
+function playSound() {
+  if (!soundOn) return;
+  const a = document.getElementById('orderSound');
+  if (a) { a.currentTime = 0; a.play().catch(()=>{}); }
+}
 
+/* ═══════════════════════════════
+   TOAST
+═══════════════════════════════ */
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.style.display = 'none', 3500);
+}
+
+/* ═══════════════════════════════
+   INIT
+═══════════════════════════════ */
+fetchOrders();
 </script>
-
 </body>
-
 </html>

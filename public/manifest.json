@@ -1,0 +1,23 @@
+{
+  "name": "Hungry Hop POS",
+  "short_name": "HungryHop",
+  "description": "Kingdom of Momos – Smart POS System",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#FFB800",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/menu/hungryhop-truck.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/menu/hungryhop-truck.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

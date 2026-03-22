@@ -4,174 +4,397 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hungry Hop – Kingdom of Momos</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#FFB800">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --yellow: #FFB800;
-    --yellow-dark: #e6a600;
-    --bg: #0f0f0f;
-    --card: #1a1a1a;
-    --card2: #222;
-    --border: #2a2a2a;
-    --text: #f0f0f0;
-    --muted: #888;
-    --green: #22c55e;
-    --red: #ef4444;
+:root{
+  --yellow:#FFB800;--yellow-dark:#e6a600;
+  --bg:#0f0f0f;--card:#1a1a1a;--card2:#222;
+  --border:#2a2a2a;--text:#f0f0f0;--muted:#888;
+  --green:#22c55e;--red:#ef4444;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;}
+
+/* ── OFFLINE BANNER ── */
+#offlineBanner{
+  display:none;position:fixed;top:0;left:0;right:0;z-index:999;
+  background:#b45309;color:#fff;
+  text-align:center;font-size:12px;font-weight:700;
+  padding:8px 16px;letter-spacing:.5px;
+}
+#offlineBanner.show{display:block;}
+
+/* ── HEADER ── */
+.header{background:#0a0a0a;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border);}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:40px;height:40px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.logo-text{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--yellow);letter-spacing:2px;line-height:1;}
+.logo-sub{font-size:10px;color:var(--muted);letter-spacing:1px;}
+.header-right{display:flex;align-items:center;gap:14px;}
+.open-badge{background:var(--green);color:#fff;font-size:10px;font-weight:800;padding:5px 12px;border-radius:20px;letter-spacing:1px;}
+.header-search{display:none;}
+
+/* ── HERO ── */
+.hero{position:relative;height:240px;overflow:hidden;}
+.hero img{width:100%;height:100%;object-fit:cover;display:block;object-position:center top;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.15) 60%);}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:20px 24px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:32px;color:#fff;letter-spacing:3px;line-height:1.1;}
+.hero-title span{color:var(--yellow);}
+.hero-sub{font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;}
+
+/* ── SEARCH ── */
+.search-wrap{padding:14px 16px 8px;}
+.search-input{width:100%;background:var(--card);border:1.5px solid var(--border);color:var(--text);border-radius:12px;padding:12px 16px;font-size:14px;font-family:'Nunito',sans-serif;outline:none;transition:border-color .2s;}
+.search-input:focus{border-color:var(--yellow);}
+.search-input::placeholder{color:var(--muted);}
+
+/* ── SPECIALS ── */
+.section-label{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--yellow);padding:14px 16px 10px;}
+.specials-row{display:flex;gap:12px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none;}
+.specials-row::-webkit-scrollbar{display:none;}
+.special-card{min-width:155px;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border);flex-shrink:0;transition:transform .15s;}
+.special-card:hover{transform:translateY(-3px);}
+.special-card img{width:100%;height:105px;object-fit:cover;display:block;}
+.special-info{padding:10px;}
+.special-name{font-size:13px;font-weight:800;color:var(--text);}
+.special-desc{font-size:11px;color:var(--muted);margin:2px 0 6px;}
+.special-row{display:flex;justify-content:space-between;align-items:center;}
+.special-price{font-size:15px;font-weight:800;color:var(--yellow);}
+.special-btn{background:var(--yellow);color:#111;border:none;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
+.special-btn.added{background:var(--green);color:#fff;}
+
+/* ── CATEGORIES ── */
+.divider{height:1px;background:var(--border);margin:0 16px 4px;}
+.cat-wrap{padding:10px 16px 8px;overflow-x:auto;scrollbar-width:none;display:flex;gap:8px;position:sticky;top:68px;z-index:90;background:var(--bg);border-bottom:1px solid var(--border);}
+.cat-wrap::-webkit-scrollbar{display:none;}
+.cat-btn{background:var(--card);color:var(--muted);border:1px solid var(--border);padding:8px 18px;border-radius:20px;font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;flex-shrink:0;}
+.cat-btn.active{background:var(--yellow);color:#111;border-color:var(--yellow);}
+.cat-btn:hover:not(.active){border-color:var(--yellow);color:var(--yellow);}
+
+/* ── MENU GRID ── */
+.main-layout{display:block;padding-bottom:90px;}
+.menu-section{padding:14px 16px;}
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.menu-card{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border);transition:transform .15s,border-color .15s;animation:fadeUp .25s ease both;}
+.menu-card:hover{transform:translateY(-3px);border-color:#3a3a3a;}
+.menu-card img{width:100%;height:120px;object-fit:cover;display:block;background:var(--card2);}
+.menu-info{padding:10px;}
+.menu-name{font-size:13px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:6px;}
+.menu-bottom{display:flex;justify-content:space-between;align-items:center;}
+.menu-price{font-size:15px;font-weight:800;color:var(--yellow);}
+.qty-row{display:flex;align-items:center;gap:6px;margin:6px 0;}
+.qty-btn{background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:6px;width:26px;height:26px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.qty-btn:hover{border-color:var(--yellow);color:var(--yellow);}
+.qty-num{font-size:13px;font-weight:800;min-width:18px;text-align:center;}
+.add-btn{background:var(--yellow);color:#111;border:none;width:30px;height:30px;border-radius:8px;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.add-btn.added{background:var(--green);color:#fff;font-size:12px;}
+.add-btn:active{transform:scale(.9);}
+
+/* ── DESKTOP CART ── */
+.desktop-cart{display:none;}
+.cart-heading{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--yellow);letter-spacing:2px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.cart-empty-msg{color:var(--muted);font-size:13px;text-align:center;padding:30px 10px;line-height:1.6;}
+#desktopCartItems{flex:1;overflow-y:auto;}
+.cart-item-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);gap:8px;}
+.cart-item-name{font-size:13px;font-weight:700;color:var(--text);}
+.cart-item-controls{display:flex;align-items:center;gap:6px;margin-top:5px;}
+.cart-item-price{font-size:13px;font-weight:800;color:var(--yellow);white-space:nowrap;padding-top:2px;}
+.cqbtn{background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:5px;width:22px;height:22px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cqbtn:hover{border-color:var(--yellow);}
+.cqty{font-size:12px;font-weight:800;min-width:16px;text-align:center;}
+.cremove{background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;padding:0 2px;}
+
+/* ── PAYMENT + TOKEN in desktop cart ── */
+.cart-extras{margin:12px 0 0;padding:12px 0 0;border-top:1px solid var(--border);}
+.cart-extra-label{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.pay-options{display:flex;gap:6px;margin-bottom:10px;}
+.pay-opt{
+  flex:1;background:var(--card2);color:var(--muted);
+  border:1.5px solid var(--border);
+  padding:8px 6px;border-radius:8px;
+  font-size:12px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;text-align:center;
+  transition:all .15s;
+}
+.pay-opt.sel{background:var(--yellow);color:#111;border-color:var(--yellow);}
+.token-input{
+  width:100%;background:var(--card2);
+  border:1.5px solid var(--border);
+  color:var(--text);border-radius:8px;
+  padding:9px 12px;font-size:13px;
+  font-family:'Nunito',sans-serif;outline:none;
+  transition:border-color .2s;
+}
+.token-input:focus{border-color:var(--yellow);}
+.token-input::placeholder{color:var(--muted);}
+
+.cart-footer{border-top:1px solid var(--border);padding-top:16px;margin-top:10px;}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.cart-total-text{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--text);letter-spacing:1px;}
+.cart-total-amount{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--yellow);}
+.place-order-btn{background:var(--yellow);color:#111;border:none;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .15s;}
+.place-order-btn:hover{background:var(--yellow-dark);}
+.place-order-btn:active{transform:scale(.98);}
+
+/* ── MOBILE CART BAR ── */
+#cartBar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--yellow);border-radius:18px 18px 0 0;padding:14px 20px;z-index:200;}
+.cart-inner{display:flex;justify-content:space-between;align-items:center;max-width:480px;margin:0 auto;}
+.cart-count-label{font-size:12px;font-weight:700;color:#111;opacity:.7;}
+.cart-total-label{font-size:22px;font-weight:800;color:#111;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;}
+.cart-btn{background:#111;color:var(--yellow);border:none;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;}
+
+/* ── MOBILE ORDER MODAL ── */
+#orderModal{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,0.7);
+  align-items:flex-end;justify-content:center;
+}
+#orderModal.show{display:flex;}
+.order-modal-box{
+  background:var(--card);
+  border-radius:20px 20px 0 0;
+  padding:22px 20px 32px;
+  width:100%;max-width:500px;
+  animation:slideModalUp .25s ease both;
+}
+@keyframes slideModalUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.om-title{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--yellow);letter-spacing:2px;margin-bottom:16px;}
+.om-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.om-pay-opts{display:flex;gap:8px;margin-bottom:16px;}
+.om-pay-opt{
+  flex:1;background:var(--card2);color:var(--muted);
+  border:1.5px solid var(--border);
+  padding:12px 8px;border-radius:10px;
+  font-size:14px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;text-align:center;
+  transition:all .15s;
+}
+.om-pay-opt.sel{background:var(--yellow);color:#111;border-color:var(--yellow);}
+.om-token-input{
+  width:100%;background:var(--card2);
+  border:1.5px solid var(--border);
+  color:var(--text);border-radius:10px;
+  padding:12px 14px;font-size:14px;
+  font-family:'Nunito',sans-serif;outline:none;
+  margin-bottom:16px;
+  transition:border-color .2s;
+}
+.om-token-input:focus{border-color:var(--yellow);}
+.om-token-input::placeholder{color:var(--muted);}
+.om-summary{
+  background:var(--card2);border-radius:10px;
+  padding:12px 14px;margin-bottom:16px;
+  font-size:13px;color:var(--muted);
+  border:1px solid var(--border);
+}
+.om-summary-total{font-size:18px;font-weight:800;color:var(--yellow);margin-top:4px;}
+.om-confirm-btn{
+  background:var(--yellow);color:#111;
+  border:none;width:100%;padding:15px;border-radius:12px;
+  font-size:16px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  box-shadow:0 4px 16px rgba(255,184,0,0.3);
+  transition:background .15s;margin-bottom:8px;
+}
+.om-confirm-btn:hover{background:var(--yellow-dark);}
+.om-cancel-btn{
+  background:transparent;color:var(--muted);
+  border:none;width:100%;padding:10px;
+  font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;
+}
+/* offline badge in modal */
+.offline-note{
+  background:rgba(180,83,9,0.15);color:#f59e0b;
+  border:1px solid rgba(245,158,11,0.3);
+  border-radius:8px;padding:8px 12px;
+  font-size:11px;font-weight:700;
+  margin-bottom:12px;display:none;
+}
+.offline-note.show{display:block;}
+
+/* ── RECEIPT MODAL ── */
+#receiptModal{
+  display:none;position:fixed;inset:0;z-index:600;
+  background:rgba(0,0,0,0.8);
+  align-items:center;justify-content:center;padding:20px;
+}
+#receiptModal.show{display:flex;}
+.receipt-modal-box{
+  background:#fff;color:#111;
+  border-radius:16px;
+  width:100%;max-width:340px;
+  padding:0;overflow:hidden;
+  animation:popScale .25s cubic-bezier(.34,1.56,.64,1) both;
+  max-height:90vh;overflow-y:auto;
+}
+@keyframes popScale{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+.rm-header{
+  background:var(--yellow);color:#111;
+  padding:16px 20px;text-align:center;
+}
+.rm-header-icon{font-size:28px;}
+.rm-header-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;}
+.rm-header-sub{font-size:11px;opacity:.7;}
+.rm-body{padding:16px 18px;}
+.rm-order-num{
+  text-align:center;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:32px;letter-spacing:2px;color:#111;
+  margin-bottom:4px;
+}
+.rm-order-num span{color:var(--yellow);}
+.rm-token{
+  text-align:center;background:var(--yellow);color:#111;
+  font-size:14px;font-weight:800;
+  padding:6px 12px;border-radius:8px;
+  margin-bottom:12px;display:none;
+}
+.rm-meta{
+  font-size:11px;color:#666;text-align:center;
+  margin-bottom:12px;line-height:1.8;
+}
+.rm-divider{border:none;border-top:1px dashed #ccc;margin:12px 0;}
+.rm-items{font-size:12px;margin-bottom:8px;}
+.rm-item-row{
+  display:flex;justify-content:space-between;
+  padding:4px 0;border-bottom:1px dotted #eee;color:#333;
+}
+.rm-item-name{flex:1;}
+.rm-item-qty{color:#888;margin:0 8px;}
+.rm-item-price{font-weight:800;}
+.rm-total-row{
+  display:flex;justify-content:space-between;
+  font-size:16px;font-weight:900;
+  padding-top:8px;border-top:2px solid #111;color:#111;
+}
+.rm-payment{
+  display:flex;justify-content:space-between;
+  font-size:12px;margin-top:8px;
+  background:#f9f9f9;padding:8px 10px;border-radius:6px;color:#555;
+}
+.rm-payment strong{color:#111;}
+.rm-actions{
+  display:flex;gap:8px;padding:14px 18px;
+  border-top:1px solid #eee;
+}
+.rm-print-btn{
+  flex:1;background:var(--yellow);color:#111;
+  border:none;padding:12px;border-radius:10px;
+  font-size:14px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  transition:background .15s;
+}
+.rm-print-btn:hover{background:var(--yellow-dark);}
+.rm-close-btn{
+  background:var(--card);color:var(--muted);
+  border:1px solid var(--border);padding:12px 16px;
+  border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+}
+
+/* ── PWA INSTALL BANNER ── */
+#pwaBar{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:800;
+  background:#1a1a1a;border-top:1px solid var(--border);
+  padding:12px 16px;
+  flex-direction:row;align-items:center;gap:12px;
+}
+#pwaBar.show{display:flex;}
+.pwa-txt{flex:1;font-size:12px;color:var(--text);line-height:1.4;}
+.pwa-txt strong{color:var(--yellow);display:block;font-size:13px;}
+.pwa-install-btn{
+  background:var(--yellow);color:#111;
+  border:none;padding:9px 16px;border-radius:10px;
+  font-size:13px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;white-space:nowrap;
+}
+.pwa-dismiss{
+  background:none;border:none;color:var(--muted);
+  font-size:18px;cursor:pointer;padding:4px;flex-shrink:0;
+}
+
+/* ── POPUP ── */
+#popup{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:10px 24px;border-radius:20px;font-size:13px;font-weight:700;display:none;z-index:300;white-space:nowrap;}
+
+/* ── STATES ── */
+.empty{text-align:center;padding:40px 20px;color:var(--muted);grid-column:span 2;font-size:14px;}
+.loading{display:flex;justify-content:center;padding:30px;grid-column:span 2;}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--yellow);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── PENDING BADGE ── */
+#pendingBadge{
+  display:none;
+  background:#b45309;color:#fff;
+  font-size:11px;font-weight:800;
+  padding:4px 10px;border-radius:10px;
+  cursor:pointer;
+}
+#pendingBadge.show{display:inline-block;}
+
+/* ── FOOTER ── */
+.footer{background:#111;padding:30px 24px 24px;margin-top:20px;border-top:1px solid var(--border);}
+.footer-title{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--yellow);letter-spacing:2px;margin-bottom:14px;}
+.footer-map{border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.footer-addr{font-size:13px;color:var(--muted);line-height:1.7;}
+.footer-credit{margin-top:16px;font-size:12px;color:#444;text-align:center;}
+.footer-credit span{color:var(--yellow);font-weight:800;}
+
+/* ══ DESKTOP 768px+ ══ */
+@media(min-width:768px){
+  body{padding-bottom:0;}
+  .header{padding:16px 40px;}
+  .header-search{display:block;}
+  .header-search input{width:280px;background:var(--card);border:1.5px solid var(--border);color:var(--text);border-radius:10px;padding:10px 16px;font-size:14px;font-family:'Nunito',sans-serif;outline:none;transition:border-color .2s;}
+  .header-search input:focus{border-color:var(--yellow);}
+  .header-search input::placeholder{color:var(--muted);}
+  .hero{height:380px;}
+  .hero-title{font-size:56px;}
+  .hero-content{padding:32px 40px;}
+  .search-wrap{display:none;}
+  .section-label{padding:20px 40px 12px;font-size:22px;}
+  .specials-row{padding:0 40px 20px;}
+  .special-card{min-width:200px;}
+  .special-card img{height:130px;}
+  .divider{margin:0 40px 4px;}
+  .cat-wrap{padding:14px 40px 10px;top:73px;}
+  .main-layout{display:grid;grid-template-columns:1fr 340px;align-items:start;padding-bottom:0;}
+  .menu-section{padding:18px 40px 30px;}
+  .menu-grid{grid-template-columns:repeat(3,1fr);gap:16px;}
+  .menu-card img{height:150px;}
+  .menu-name{font-size:14px;}
+  #cartBar{display:none!important;}
+  #popup{bottom:24px;}
+  #orderModal{align-items:center;}
+  .order-modal-box{border-radius:20px;max-width:400px;}
+  .desktop-cart{
+    display:flex;flex-direction:column;
+    background:var(--card);border-left:1px solid var(--border);
+    position:sticky;top:73px;
+    height:calc(100vh - 73px);overflow-y:auto;padding:20px;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; min-height: 100vh; }
-
-  .header { background: #0a0a0a; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-icon { width: 40px; height: 40px; background: var(--yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-  .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--yellow); letter-spacing: 2px; line-height: 1; }
-  .logo-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
-  .header-right { display: flex; align-items: center; gap: 14px; }
-  .open-badge { background: var(--green); color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; border-radius: 20px; letter-spacing: 1px; }
-  .header-search { display: none; }
-
-  .hero { position: relative; height: 240px; overflow: hidden; }
-  .hero img { width: 100%; height: 100%; object-fit: cover; display: block; object-position: center top; }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.15) 60%); }
-  .hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 24px; }
-  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #fff; letter-spacing: 3px; line-height: 1.1; }
-  .hero-title span { color: var(--yellow); }
-  .hero-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; }
-
-  .search-wrap { padding: 14px 16px 8px; }
-  .search-input { width: 100%; background: var(--card); border: 1.5px solid var(--border); color: var(--text); border-radius: 12px; padding: 12px 16px; font-size: 14px; font-family: 'Nunito', sans-serif; outline: none; transition: border-color 0.2s; }
-  .search-input:focus { border-color: var(--yellow); }
-  .search-input::placeholder { color: var(--muted); }
-
-  .section-label { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; color: var(--yellow); padding: 14px 16px 10px; }
-  .specials-row { display: flex; gap: 12px; padding: 0 16px 14px; overflow-x: auto; scrollbar-width: none; }
-  .specials-row::-webkit-scrollbar { display: none; }
-  .special-card { min-width: 155px; background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); flex-shrink: 0; transition: transform 0.15s; }
-  .special-card:hover { transform: translateY(-3px); }
-  .special-card img { width: 100%; height: 105px; object-fit: cover; display: block; }
-  .special-info { padding: 10px; }
-  .special-name { font-size: 13px; font-weight: 800; color: var(--text); }
-  .special-desc { font-size: 11px; color: var(--muted); margin: 2px 0 6px; }
-  .special-row { display: flex; justify-content: space-between; align-items: center; }
-  .special-price { font-size: 15px; font-weight: 800; color: var(--yellow); }
-  .special-btn { background: var(--yellow); color: #111; border: none; border-radius: 8px; padding: 5px 12px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; }
-
-  .divider { height: 1px; background: var(--border); margin: 0 16px 4px; }
-
-  .cat-wrap { padding: 10px 16px 8px; overflow-x: auto; scrollbar-width: none; display: flex; gap: 8px; position: sticky; top: 68px; z-index: 90; background: var(--bg); border-bottom: 1px solid var(--border); }
-  .cat-wrap::-webkit-scrollbar { display: none; }
-  .cat-btn { background: var(--card); color: var(--muted); border: 1px solid var(--border); padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; flex-shrink: 0; }
-  .cat-btn.active { background: var(--yellow); color: #111; border-color: var(--yellow); }
-  .cat-btn:hover:not(.active) { border-color: var(--yellow); color: var(--yellow); }
-
-  .main-layout { display: block; padding-bottom: 90px; }
-  .menu-section { padding: 14px 16px; }
-  .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-
-  .menu-card { background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); transition: transform 0.15s, border-color 0.15s; animation: fadeUp 0.25s ease both; }
-  .menu-card:hover { transform: translateY(-3px); border-color: #3a3a3a; }
-  .menu-card img { width: 100%; height: 120px; object-fit: cover; display: block; background: var(--card2); }
-  .menu-info { padding: 10px; }
-  .menu-name { font-size: 13px; font-weight: 800; color: var(--text); line-height: 1.3; margin-bottom: 6px; }
-  .menu-bottom { display: flex; justify-content: space-between; align-items: center; }
-  .menu-price { font-size: 15px; font-weight: 800; color: var(--yellow); }
-  .qty-row { display: flex; align-items: center; gap: 6px; margin: 6px 0; }
-  .qty-btn { background: var(--card2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; width: 26px; height: 26px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-  .qty-btn:hover { border-color: var(--yellow); color: var(--yellow); }
-  .qty-num { font-size: 13px; font-weight: 800; min-width: 18px; text-align: center; }
-  .add-btn { background: var(--yellow); color: #111; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 20px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-  .add-btn.added { background: var(--green); color: #fff; font-size: 12px; }
-  .add-btn:active { transform: scale(0.9); }
-
-  .desktop-cart { display: none; }
-
-  #cartBar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--yellow); border-radius: 18px 18px 0 0; padding: 14px 20px; z-index: 200; }
-  .cart-inner { display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 0 auto; }
-  .cart-count-label { font-size: 12px; font-weight: 700; color: #111; opacity: 0.7; }
-  .cart-total-label { font-size: 22px; font-weight: 800; color: #111; font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
-  .cart-btn { background: #111; color: var(--yellow); border: none; padding: 12px 22px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; }
-
-  #popup { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--green); color: #fff; padding: 10px 24px; border-radius: 20px; font-size: 13px; font-weight: 700; display: none; z-index: 300; white-space: nowrap; }
-
-  .empty { text-align: center; padding: 40px 20px; color: var(--muted); grid-column: span 2; font-size: 14px; }
-  .loading { display: flex; justify-content: center; padding: 30px; grid-column: span 2; }
-  .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--yellow); border-radius: 50%; animation: spin 0.7s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
-  .footer { background: #111; padding: 30px 24px 24px; margin-top: 20px; border-top: 1px solid var(--border); }
-  .footer-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 14px; }
-  .footer-map { border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
-  .footer-addr { font-size: 13px; color: var(--muted); line-height: 1.7; }
-  .footer-credit { margin-top: 16px; font-size: 12px; color: #444; text-align: center; }
-  .footer-credit span { color: var(--yellow); font-weight: 800; }
-
-  /* ======= DESKTOP 768px+ ======= */
-  @media (min-width: 768px) {
-    body { padding-bottom: 0; }
-
-    .header { padding: 16px 40px; }
-    .header-search { display: block; }
-    .header-search input { width: 280px; background: var(--card); border: 1.5px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 16px; font-size: 14px; font-family: 'Nunito', sans-serif; outline: none; transition: border-color 0.2s; }
-    .header-search input:focus { border-color: var(--yellow); }
-    .header-search input::placeholder { color: var(--muted); }
-
-    .hero { height: 380px; }
-    .hero-title { font-size: 56px; }
-    .hero-content { padding: 32px 40px; }
-
-    .search-wrap { display: none; }
-
-    .section-label { padding: 20px 40px 12px; font-size: 22px; }
-    .specials-row { padding: 0 40px 20px; }
-    .special-card { min-width: 200px; }
-    .special-card img { height: 130px; }
-    .divider { margin: 0 40px 4px; }
-
-    .cat-wrap { padding: 14px 40px 10px; top: 73px; }
-
-    .main-layout { display: grid; grid-template-columns: 1fr 340px; align-items: start; padding-bottom: 0; }
-
-    .menu-section { padding: 18px 40px 30px; }
-    .menu-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .menu-card img { height: 150px; }
-    .menu-name { font-size: 14px; }
-
-    #cartBar { display: none !important; }
-    #popup { bottom: 24px; }
-
-    .desktop-cart { display: flex; flex-direction: column; background: var(--card); border-left: 1px solid var(--border); position: sticky; top: 73px; height: calc(100vh - 73px); overflow-y: auto; padding: 20px; }
-    .cart-heading { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--yellow); letter-spacing: 2px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-    .cart-empty-msg { color: var(--muted); font-size: 13px; text-align: center; padding: 30px 10px; line-height: 1.6; }
-    #desktopCartItems { flex: 1; overflow-y: auto; }
-    .cart-item-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 8px; }
-    .cart-item-name { font-size: 13px; font-weight: 700; color: var(--text); }
-    .cart-item-controls { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
-    .cart-item-price { font-size: 13px; font-weight: 800; color: var(--yellow); white-space: nowrap; padding-top: 2px; }
-    .cqbtn { background: var(--card2); color: var(--text); border: 1px solid var(--border); border-radius: 5px; width: 22px; height: 22px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .cqbtn:hover { border-color: var(--yellow); }
-    .cqty { font-size: 12px; font-weight: 800; min-width: 16px; text-align: center; }
-    .cremove { background: none; border: none; color: var(--red); cursor: pointer; font-size: 14px; padding: 0 2px; }
-    .cart-footer { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 10px; }
-    .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .cart-total-text { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--text); letter-spacing: 1px; }
-    .cart-total-amount { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--yellow); }
-    .place-order-btn { background: var(--yellow); color: #111; border: none; width: 100%; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; transition: background 0.15s; }
-    .place-order-btn:hover { background: var(--yellow-dark); }
-    .place-order-btn:active { transform: scale(0.98); }
-
-    .footer { padding: 40px 40px 30px; }
-    .footer-map iframe { height: 280px; }
-  }
-
-  @media (min-width: 1200px) {
-    .menu-grid { grid-template-columns: repeat(4, 1fr); }
-    .main-layout { grid-template-columns: 1fr 380px; }
-  }
+  .footer{padding:40px 40px 30px;}
+  .footer-map iframe{height:280px;}
+}
+@media(min-width:1200px){
+  .menu-grid{grid-template-columns:repeat(4,1fr);}
+  .main-layout{grid-template-columns:1fr 380px;}
+}
 </style>
 </head>
 <body>
 
+<!-- OFFLINE BANNER -->
+<div id="offlineBanner">📵 You are offline — orders will be saved and sent when you reconnect</div>
+
+<!-- ══ HEADER ══ -->
 <header class="header">
   <div class="logo">
     <div class="logo-icon">🥟</div>
@@ -182,12 +405,14 @@
   </div>
   <div class="header-right">
     <div class="header-search">
-      <input type="text" placeholder="Search momos, burgers, pizza..." onkeyup="searchMenu(this.value)" />
+      <input type="text" placeholder="Search momos, burgers, pizza..." onkeyup="searchMenu(this.value)"/>
     </div>
+    <span id="pendingBadge" title="Pending offline orders — click to sync">⏳ <span id="pendingCount">0</span> pending</span>
     <div class="open-badge">OPEN</div>
   </div>
 </header>
 
+<!-- ══ HERO ══ -->
 <div class="hero">
   <img src="/images/menu/hungryhop-truck.jpg" alt="Hungry Hop" onerror="this.style.background='#1a1a1a'">
   <div class="hero-overlay"></div>
@@ -197,10 +422,12 @@
   </div>
 </div>
 
+<!-- ══ MOBILE SEARCH ══ -->
 <div class="search-wrap">
-  <input class="search-input" type="text" placeholder="Search momos, burgers, pizza..." onkeyup="searchMenu(this.value)" />
+  <input class="search-input" type="text" placeholder="Search momos, burgers, pizza..." onkeyup="searchMenu(this.value)"/>
 </div>
 
+<!-- ══ JAMMU SPECIALS ══ -->
 <div class="section-label">🔥 Jammu Specials</div>
 <div class="specials-row">
   <div class="special-card">
@@ -230,16 +457,31 @@
 <div class="divider"></div>
 <div class="cat-wrap" id="categoryBar"></div>
 
+<!-- ══ MAIN LAYOUT ══ -->
 <div class="main-layout">
   <div class="menu-section">
     <div class="menu-grid" id="menu"></div>
   </div>
 
+  <!-- DESKTOP CART -->
   <div class="desktop-cart">
     <div class="cart-heading">🛒 Your Order</div>
     <div id="desktopCartItems">
       <div class="cart-empty-msg">Your cart is empty.<br>Add items to get started!</div>
     </div>
+
+    <!-- PAYMENT + TOKEN (desktop) -->
+    <div class="cart-extras">
+      <div class="cart-extra-label">Payment Mode</div>
+      <div class="pay-options">
+        <button class="pay-opt sel" data-mode="Cash" onclick="selectPay('Cash',this)">💵 Cash</button>
+        <button class="pay-opt" data-mode="UPI" onclick="selectPay('UPI',this)">📱 UPI</button>
+        <button class="pay-opt" data-mode="Card" onclick="selectPay('Card',this)">💳 Card</button>
+      </div>
+      <div class="cart-extra-label">Token / Name <span style="opacity:.5">(optional)</span></div>
+      <input class="token-input" id="desktopToken" type="text" placeholder="e.g. T-01 or Rahul">
+    </div>
+
     <div class="cart-footer">
       <div class="cart-total-row">
         <span class="cart-total-text">Total</span>
@@ -250,18 +492,85 @@
   </div>
 </div>
 
+<!-- ══ MOBILE CART BAR ══ -->
 <div id="cartBar">
   <div class="cart-inner">
     <div>
       <div class="cart-count-label" id="cartCount">0 items</div>
       <div class="cart-total-label">₹<span id="total">0</span></div>
     </div>
-    <button class="cart-btn" onclick="placeOrder()">Place Order ›</button>
+    <button class="cart-btn" onclick="openOrderModal()">Place Order ›</button>
   </div>
+</div>
+
+<!-- ══ MOBILE ORDER MODAL ══ -->
+<div id="orderModal">
+  <div class="order-modal-box">
+    <div class="om-title">Confirm Order</div>
+    <div class="offline-note" id="offlineNote">
+      📵 Offline — order will sync when internet returns
+    </div>
+    <div class="om-label">Payment Mode</div>
+    <div class="om-pay-opts">
+      <button class="om-pay-opt sel" onclick="selectMobilePay('Cash',this)">💵 Cash</button>
+      <button class="om-pay-opt" onclick="selectMobilePay('UPI',this)">📱 UPI</button>
+      <button class="om-pay-opt" onclick="selectMobilePay('Card',this)">💳 Card</button>
+    </div>
+    <div class="om-label">Token / Name <span style="opacity:.5;font-size:10px">(optional)</span></div>
+    <input class="om-token-input" id="mobileToken" type="text" placeholder="e.g. T-01 or Customer name">
+    <div class="om-summary">
+      <div id="omSummaryItems" style="font-size:12px;color:#888;margin-bottom:4px;"></div>
+      <div class="om-summary-total">Total: ₹<span id="omTotal">0</span></div>
+    </div>
+    <button class="om-confirm-btn" onclick="confirmOrder()">✅ Confirm & Send to Kitchen</button>
+    <button class="om-cancel-btn" onclick="closeOrderModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ══ RECEIPT MODAL ══ -->
+<div id="receiptModal">
+  <div class="receipt-modal-box">
+    <div class="rm-header">
+      <div class="rm-header-icon">🥟</div>
+      <div class="rm-header-title">HUNGRY HOP</div>
+      <div class="rm-header-sub">Kingdom of Momos · Gole Market, Jammu</div>
+    </div>
+    <div class="rm-body">
+      <div class="rm-order-num">ORDER <span id="rmOrderNum">#000</span></div>
+      <div class="rm-token" id="rmToken"></div>
+      <div class="rm-meta" id="rmMeta"></div>
+      <hr class="rm-divider">
+      <div class="rm-items" id="rmItems"></div>
+      <hr class="rm-divider">
+      <div class="rm-total-row">
+        <span>TOTAL</span>
+        <span>₹<span id="rmTotal">0</span></span>
+      </div>
+      <div class="rm-payment">
+        <span>Payment</span>
+        <strong id="rmPayment">Cash</strong>
+      </div>
+    </div>
+    <div class="rm-actions">
+      <button class="rm-print-btn" onclick="printReceipt()">🖨️ Print</button>
+      <button class="rm-close-btn" onclick="closeReceipt()">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PWA INSTALL BAR ══ -->
+<div id="pwaBar">
+  <div class="pwa-txt">
+    <strong>📲 Install Hungry Hop App</strong>
+    Add to home screen for offline use!
+  </div>
+  <button class="pwa-install-btn" onclick="installPWA()">Install</button>
+  <button class="pwa-dismiss" onclick="dismissPWA()">✕</button>
 </div>
 
 <div id="popup">✓ Added to cart</div>
 
+<!-- ══ FOOTER ══ -->
 <div class="footer">
   <div class="footer-title">📍 Find Us</div>
   <div class="footer-map">
@@ -278,20 +587,129 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+
+  /* ══════════════════════════════
+     STATE
+  ══════════════════════════════ */
   const socket = typeof io !== 'undefined' ? io() : null;
   let cart = [], total = 0;
   const quantities = {};
+  let selectedPayMode = "Cash";
+  let mobilePay = "Cash";
+  let lastOrder = null;          // store last placed order for receipt
+  let isOffline = !navigator.onLine;
   const isDesktop = () => window.innerWidth >= 768;
+  const $ = id => document.getElementById(id);
 
-  const menuDiv = document.getElementById("menu");
-  const totalEl = document.getElementById("total");
-  const desktopTotalEl = document.getElementById("desktopTotal");
-  const categoryBar = document.getElementById("categoryBar");
-  const popup = document.getElementById("popup");
-  const cartBar = document.getElementById("cartBar");
-  const cartCount = document.getElementById("cartCount");
-  const desktopCartItems = document.getElementById("desktopCartItems");
+  /* ══════════════════════════════
+     PWA — Service Worker + Install
+  ══════════════════════════════ */
+  let deferredPrompt = null;
 
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log("✅ SW registered"))
+      .catch(err => console.log("SW error:", err));
+
+    // Listen for SYNC_ORDERS message from SW
+    navigator.serviceWorker.addEventListener('message', e => {
+      if (e.data?.type === 'SYNC_ORDERS') syncPendingOrders();
+    });
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!localStorage.getItem('pwa-dismissed')) {
+      setTimeout(() => $('pwaBar').classList.add('show'), 3000);
+    }
+  });
+
+  window.installPWA = function() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      $('pwaBar').classList.remove('show');
+    });
+  };
+  window.dismissPWA = function() {
+    $('pwaBar').classList.remove('show');
+    localStorage.setItem('pwa-dismissed', '1');
+  };
+
+  /* ══════════════════════════════
+     OFFLINE DETECTION
+  ══════════════════════════════ */
+  function setOfflineUI(offline) {
+    isOffline = offline;
+    $('offlineBanner').classList.toggle('show', offline);
+    const note = $('offlineNote');
+    if (note) note.classList.toggle('show', offline);
+  }
+
+  window.addEventListener('online',  () => { setOfflineUI(false); syncPendingOrders(); });
+  window.addEventListener('offline', () => setOfflineUI(true));
+  setOfflineUI(!navigator.onLine);
+
+  /* ══════════════════════════════
+     OFFLINE ORDER QUEUE (localStorage)
+  ══════════════════════════════ */
+  function getPendingOrders() {
+    try { return JSON.parse(localStorage.getItem('pendingOrders') || '[]'); }
+    catch { return []; }
+  }
+  function savePendingOrders(orders) {
+    localStorage.setItem('pendingOrders', JSON.stringify(orders));
+  }
+  function updatePendingBadge() {
+    const p = getPendingOrders();
+    const badge = $('pendingBadge');
+    const count = $('pendingCount');
+    if (p.length > 0) {
+      badge.classList.add('show');
+      count.textContent = p.length;
+    } else {
+      badge.classList.remove('show');
+    }
+  }
+
+  async function syncPendingOrders() {
+    const pending = getPendingOrders();
+    if (!pending.length) return;
+    const remaining = [];
+    for (const order of pending) {
+      try {
+        const res = await fetch('/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(order)
+        });
+        if (res.ok) {
+          console.log('✅ Synced offline order');
+        } else {
+          remaining.push(order);
+        }
+      } catch {
+        remaining.push(order);
+      }
+    }
+    savePendingOrders(remaining);
+    updatePendingBadge();
+    if (remaining.length === 0 && pending.length > 0) {
+      showPopupMsg('✅ ' + pending.length + ' offline order(s) synced!');
+    }
+  }
+
+  // Click pending badge to manually sync
+  $('pendingBadge').addEventListener('click', syncPendingOrders);
+  updatePendingBadge();
+
+  /* ══════════════════════════════
+     CATEGORIES
+  ══════════════════════════════ */
+  const categoryBar = $("categoryBar");
+  const menuDiv = $("menu");
   const categories = ["Burgers","Pizzas","Shakes","Mocktails","Momos","Starters","Wraps","Sandwiches","Beverages","Fries","Dessert"];
 
   categories.forEach(cat => {
@@ -308,7 +726,9 @@ document.addEventListener("DOMContentLoaded", () => {
     menuDiv.innerHTML = `<div class="loading"><div class="spinner"></div></div>`;
     try {
       const res = await fetch(`/menu/category/${category}`);
+      if (!res.ok) throw new Error("Server error");
       const items = await res.json();
+      if (items.error === 'offline') throw new Error('offline');
       menuDiv.innerHTML = "";
       if (!items.length) {
         menuDiv.innerHTML = `<div class="empty">🍽️<br><br>No items in this category</div>`;
@@ -334,50 +754,53 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           </div>`;
         card.querySelector(".minus").onclick = () => changeQty(item._id, -1);
-        card.querySelector(".plus").onclick = () => changeQty(item._id, 1);
+        card.querySelector(".plus").onclick  = () => changeQty(item._id, 1);
         card.querySelector(".add-btn").onclick = () => addToCart(item);
         menuDiv.appendChild(card);
       });
     } catch(err) {
-      menuDiv.innerHTML = `<div class="empty">⚠️<br><br>Failed to load menu</div>`;
+      menuDiv.innerHTML = `<div class="empty">⚠️<br><br>${isOffline ? 'You are offline' : 'Failed to load menu'}</div>`;
     }
   }
 
   function changeQty(id, val) {
     if (!quantities[id]) quantities[id] = 1;
     quantities[id] = Math.max(1, quantities[id] + val);
-    const el = document.getElementById(`qty-${id}`);
+    const el = $(`qty-${id}`);
     if (el) el.innerText = quantities[id];
   }
 
+  /* ══════════════════════════════
+     CART
+  ══════════════════════════════ */
   window.addToCart = function(item) {
-    if (!item._id) item._id = item.name.replace(/\s/g, "_").toLowerCase();
+    if (!item._id) item._id = item.name.replace(/\s/g,"_").toLowerCase();
     const qty = quantities[item._id] || 1;
     const existing = cart.find(i => i._id === item._id);
-    if (existing) { existing.qty += qty; } else { cart.push({ _id: item._id, name: item.name, price: item.price, qty }); }
+    if (existing) { existing.qty += qty; } else { cart.push({ _id:item._id, name:item.name, price:item.price, qty }); }
     total += item.price * qty;
     updateCartUI();
-    showPopup();
-    const btn = document.getElementById(`addbtn-${item._id}`);
-    if (btn) { const ci = cart.find(i => i._id === item._id); btn.textContent = ci ? ci.qty : qty; btn.classList.add("added"); }
+    showPopupMsg("✓ Added to cart");
+    const btn = $(`addbtn-${item._id}`);
+    if (btn) { btn.textContent = cart.find(i=>i._id===item._id)?.qty||qty; btn.classList.add("added"); }
   };
 
   function updateCartUI() {
-    const count = cart.reduce((a, b) => a + b.qty, 0);
-    if (totalEl) totalEl.innerText = total;
-    if (desktopTotalEl) desktopTotalEl.innerText = total;
-    if (cartCount) cartCount.innerText = count + (count === 1 ? " item" : " items");
-    if (!isDesktop()) cartBar.style.display = count > 0 ? "block" : "none";
+    const count = cart.reduce((a,b) => a+b.qty, 0);
+    $("total").innerText      = total;
+    $("desktopTotal").innerText = total;
+    $("cartCount").innerText  = count + (count===1?" item":" items");
+    if (!isDesktop()) $("cartBar").style.display = count > 0 ? "block" : "none";
     renderDesktopCart();
   }
 
   function renderDesktopCart() {
-    if (!desktopCartItems) return;
+    const el = $("desktopCartItems"); if(!el) return;
     if (!cart.length) {
-      desktopCartItems.innerHTML = `<div class="cart-empty-msg">Your cart is empty.<br>Add items to get started!</div>`;
+      el.innerHTML = `<div class="cart-empty-msg">Your cart is empty.<br>Add items to get started!</div>`;
       return;
     }
-    desktopCartItems.innerHTML = cart.map((item, idx) => `
+    el.innerHTML = cart.map((item, idx) => `
       <div class="cart-item-row">
         <div style="flex:1">
           <div class="cart-item-name">${item.name}</div>
@@ -393,38 +816,172 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.cartQty = function(idx, val) {
-    if (cart[idx].qty + val < 1) { removeItem(idx); return; }
+    if (cart[idx].qty+val < 1) { removeItem(idx); return; }
     total += cart[idx].price * val;
     cart[idx].qty += val;
     updateCartUI();
   };
-
   window.removeItem = function(idx) {
     total -= cart[idx].price * cart[idx].qty;
     cart.splice(idx, 1);
     updateCartUI();
   };
 
-  function showPopup() {
-    popup.style.display = "block";
-    setTimeout(() => popup.style.display = "none", 1200);
-  }
-
-  window.placeOrder = async function() {
-    if (!cart.length) { alert("Cart is empty"); return; }
-    try {
-      await fetch("/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: cart.map(i => ({ name: i.name, price: i.price, qty: i.qty })), total, paymentMode: "Cash" })
-      });
-      cart = []; total = 0;
-      document.querySelectorAll(".add-btn").forEach(b => { b.textContent = "+"; b.classList.remove("added"); });
-      updateCartUI();
-      alert("✅ Order Sent To Kitchen!");
-    } catch(err) { alert("Failed to place order. Try again."); }
+  /* ══════════════════════════════
+     PAYMENT MODE
+  ══════════════════════════════ */
+  window.selectPay = function(mode, btn) {
+    selectedPayMode = mode;
+    document.querySelectorAll(".pay-opt").forEach(b => b.classList.remove("sel"));
+    btn.classList.add("sel");
+  };
+  window.selectMobilePay = function(mode, btn) {
+    mobilePay = mode;
+    document.querySelectorAll(".om-pay-opt").forEach(b => b.classList.remove("sel"));
+    btn.classList.add("sel");
   };
 
+  /* ══════════════════════════════
+     ORDER MODAL (mobile)
+  ══════════════════════════════ */
+  window.openOrderModal = function() {
+    if (!cart.length) { showPopupMsg("Cart is empty!"); return; }
+    $("omTotal").textContent = total;
+    $("omSummaryItems").textContent = cart.map(i => `${i.name} x${i.qty}`).join(", ");
+    $("orderModal").classList.add("show");
+  };
+  window.closeOrderModal = function() {
+    $("orderModal").classList.remove("show");
+  };
+  window.confirmOrder = function() {
+    closeOrderModal();
+    doPlaceOrder($("mobileToken").value.trim(), mobilePay);
+  };
+
+  /* ══════════════════════════════
+     PLACE ORDER
+  ══════════════════════════════ */
+  window.placeOrder = function() {
+    if (!cart.length) { showPopupMsg("Cart is empty!"); return; }
+    const token = $("desktopToken")?.value.trim() || "";
+    doPlaceOrder(token, selectedPayMode);
+  };
+
+  async function doPlaceOrder(tokenNumber, paymentMode) {
+    if (!cart.length) return;
+
+    const orderPayload = {
+      items:        cart.map(i => ({ name:i.name, price:i.price, qty:i.qty })),
+      total,
+      paymentMode,
+      tokenNumber:  tokenNumber || null,
+      customerName: tokenNumber || ""
+    };
+
+    if (isOffline) {
+      // Save to localStorage for later sync
+      const pending = getPendingOrders();
+      const fakeOrderNum = Date.now();
+      pending.push({ ...orderPayload, _offlineId: fakeOrderNum });
+      savePendingOrders(pending);
+      updatePendingBadge();
+
+      // Show receipt with offline data
+      lastOrder = {
+        orderNumber: "OFFLINE-" + pending.length,
+        items: orderPayload.items,
+        total: orderPayload.total,
+        paymentMode,
+        tokenNumber,
+        createdAt: new Date().toISOString()
+      };
+      resetCart();
+      showReceiptModal(lastOrder);
+      return;
+    }
+
+    try {
+      const res = await fetch("/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload)
+      });
+      const savedOrder = await res.json();
+      lastOrder = savedOrder;
+      resetCart();
+      showReceiptModal(savedOrder);
+    } catch(err) {
+      // If fetch fails (went offline mid-request), save pending
+      const pending = getPendingOrders();
+      pending.push(orderPayload);
+      savePendingOrders(pending);
+      updatePendingBadge();
+      showPopupMsg("⚠️ Saved offline. Will sync when online.");
+      resetCart();
+    }
+  }
+
+  function resetCart() {
+    cart = []; total = 0;
+    document.querySelectorAll(".add-btn").forEach(b => { b.textContent = "+"; b.classList.remove("added"); });
+    if ($("desktopToken")) $("desktopToken").value = "";
+    if ($("mobileToken"))  $("mobileToken").value  = "";
+    updateCartUI();
+  }
+
+  /* ══════════════════════════════
+     RECEIPT MODAL
+  ══════════════════════════════ */
+  function showReceiptModal(order) {
+    $("rmOrderNum").textContent = "#" + order.orderNumber;
+
+    // Token
+    const tokenEl = $("rmToken");
+    if (order.tokenNumber) {
+      tokenEl.textContent = "🎫 TOKEN: " + order.tokenNumber;
+      tokenEl.style.display = "block";
+    } else {
+      tokenEl.style.display = "none";
+    }
+
+    // Meta
+    const d = new Date(order.createdAt || Date.now());
+    $("rmMeta").textContent =
+      d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}) +
+      " · " +
+      d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit",hour12:true});
+
+    // Items
+    $("rmItems").innerHTML = order.items.map(i => `
+      <div class="rm-item-row">
+        <span class="rm-item-name">${i.name}</span>
+        <span class="rm-item-qty">x${i.qty||1}</span>
+        <span class="rm-item-price">₹${i.price*(i.qty||1)}</span>
+      </div>`).join("");
+
+    $("rmTotal").textContent   = order.total;
+    $("rmPayment").textContent = order.paymentMode === "UPI" ? "📱 UPI" : order.paymentMode === "Card" ? "💳 Card" : "💵 Cash";
+
+    $("receiptModal").classList.add("show");
+  }
+
+  window.closeReceipt = function() {
+    $("receiptModal").classList.remove("show");
+  };
+
+  window.printReceipt = function() {
+    if (lastOrder?._id) {
+      // Open full thermal receipt in new tab
+      window.open(`/receipt-print/${lastOrder._id}?print=1`, "_blank");
+    } else {
+      // Offline — print the modal itself
+      window.print();
+    }
+  };
+
+  /* ══════════════════════════════
+     SEARCH
+  ══════════════════════════════ */
   window.searchMenu = function(text) {
     document.querySelectorAll(".menu-card").forEach(card => {
       const name = card.querySelector(".menu-name")?.innerText.toLowerCase() || "";
@@ -432,10 +989,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  /* ══════════════════════════════
+     POPUP
+  ══════════════════════════════ */
+  let popTimer;
+  function showPopupMsg(msg) {
+    const p = $("popup");
+    p.textContent = msg;
+    p.style.display = "block";
+    clearTimeout(popTimer);
+    popTimer = setTimeout(() => p.style.display = "none", 1400);
+  }
+
+  /* ══════════════════════════════
+     SOCKET
+  ══════════════════════════════ */
   if (socket) socket.on("order-updated", o => console.log("Order updated:", o.orderNumber));
 
+  /* ══════════════════════════════
+     INIT
+  ══════════════════════════════ */
   const firstBtn = categoryBar.querySelector(".cat-btn");
   if (firstBtn) loadCategory("Burgers", firstBtn);
+
+  // Try to sync any pending orders on load
+  if (navigator.onLine) syncPendingOrders();
 });
 </script>
 </body>
