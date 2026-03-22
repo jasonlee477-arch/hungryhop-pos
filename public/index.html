@@ -24,965 +24,236 @@ img{display:block;max-width:100%;}
 ::-webkit-scrollbar{width:3px;height:3px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--y);border-radius:3px;}
-
-/* ════════════════════════
-   SERVICE MODAL (BK style)
-════════════════════════ */
-#serviceModal{
-  position:fixed;inset:0;z-index:1000;
-  background:rgba(0,0,0,0.7);
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;
-  backdrop-filter:blur(4px);
-}
-.sm-box{
-  background:var(--bg2);
-  border:1px solid var(--border2);
-  border-radius:20px;
-  padding:32px 28px;
-  width:100%;max-width:420px;
-  text-align:center;
-  animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;
-}
+#serviceModal{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.sm-box{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px 28px;width:100%;max-width:420px;text-align:center;animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;}
 @keyframes popIn{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
 .sm-logo{font-size:40px;margin-bottom:12px;}
-.sm-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:28px;color:var(--text);
-  letter-spacing:2px;margin-bottom:6px;
-}
+.sm-title{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text);letter-spacing:2px;margin-bottom:6px;}
 .sm-sub{font-size:13px;color:var(--muted);margin-bottom:28px;}
 .sm-options{display:flex;gap:14px;}
-.sm-opt{
-  flex:1;background:var(--bg3);
-  border:2px solid var(--border2);
-  border-radius:14px;padding:22px 14px;
-  cursor:pointer;transition:all .2s;
-  text-align:center;
-}
-.sm-opt:hover,.sm-opt.sel{
-  border-color:var(--y);
-  background:var(--ydim);
-  transform:translateY(-3px);
-  box-shadow:0 8px 24px rgba(255,184,0,0.2);
-}
+.sm-opt{flex:1;background:var(--bg3);border:2px solid var(--border2);border-radius:14px;padding:22px 14px;cursor:pointer;transition:all .2s;text-align:center;}
+.sm-opt:hover,.sm-opt.sel{border-color:var(--y);background:var(--ydim);transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,184,0,0.2);}
 .sm-opt-icon{font-size:38px;margin-bottom:10px;display:block;}
 .sm-opt-name{font-size:14px;font-weight:800;color:var(--text);letter-spacing:.5px;}
 .sm-opt-desc{font-size:11px;color:var(--muted);margin-top:3px;}
-.sm-confirm{
-  background:var(--y);color:#111;
-  border:none;width:100%;padding:14px;
-  border-radius:30px;
-  font-size:15px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-  margin-top:24px;
-  box-shadow:0 4px 20px rgba(255,184,0,0.35);
-  transition:all .2s;
-}
+.sm-confirm{background:var(--y);color:#111;border:none;width:100%;padding:14px;border-radius:30px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:24px;box-shadow:0 4px 20px rgba(255,184,0,0.35);transition:all .2s;}
 .sm-confirm:hover{background:var(--y2);transform:translateY(-2px);}
-
-/* ════════════════════════
-   OFFLINE BANNER
-════════════════════════ */
-#offlineBanner{
-  display:none;position:fixed;top:0;left:0;right:0;z-index:900;
-  background:#92400e;color:#fef3c7;
-  text-align:center;font-size:12px;font-weight:800;
-  padding:8px 16px;letter-spacing:.3px;
-}
+#offlineBanner{display:none;position:fixed;top:0;left:0;right:0;z-index:900;background:#92400e;color:#fef3c7;text-align:center;font-size:12px;font-weight:800;padding:8px 16px;letter-spacing:.3px;}
 #offlineBanner.show{display:block;}
-
-/* ════════════════════════
-   NAV — BK style sticky
-════════════════════════ */
-.nav{
-  position:sticky;top:0;z-index:500;
-  background:rgba(10,10,10,0.97);
-  border-bottom:1px solid var(--border);
-  backdrop-filter:blur(16px);
-  height:60px;
-  display:flex;align-items:center;
-  padding:0 16px;
-  gap:10px;
-  justify-content:space-between;
-  transition:box-shadow .3s;
-}
+.nav{position:sticky;top:0;z-index:500;background:rgba(10,10,10,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(16px);height:60px;display:flex;align-items:center;padding:0 16px;gap:10px;justify-content:space-between;transition:box-shadow .3s;}
 .nav.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.6);}
-/* service toggle pill — like BK */
-.nav-service-toggle{
-  display:flex;align-items:center;
-  background:var(--bg3);
-  border:1px solid var(--border2);
-  border-radius:30px;
-  padding:4px;
-  gap:2px;
-  flex-shrink:0;
-}
-.nst-opt{
-  padding:6px 12px;border-radius:24px;
-  font-size:11px;font-weight:800;
-  cursor:pointer;transition:all .2s;
-  color:var(--muted);letter-spacing:.5px;
-  text-transform:uppercase;
-}
+.nav-service-toggle{display:flex;align-items:center;background:var(--bg3);border:1px solid var(--border2);border-radius:30px;padding:4px;gap:2px;flex-shrink:0;}
+.nst-opt{padding:6px 12px;border-radius:24px;font-size:11px;font-weight:800;cursor:pointer;transition:all .2s;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
 .nst-opt.active{background:var(--y);color:#111;}
-/* brand */
 .nav-brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.nav-icon{
-  width:36px;height:36px;
-  background:var(--y);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;flex-shrink:0;
-  box-shadow:0 0 12px rgba(255,184,0,0.3);
-}
-.nav-name{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:20px;color:var(--y);letter-spacing:2px;
-  display:none;
-}
-/* location */
-.nav-location{
-  display:flex;align-items:center;gap:6px;
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:20px;padding:6px 12px;
-  font-size:11px;color:var(--muted2);
-  cursor:pointer;flex-shrink:0;
-  transition:border-color .2s;
-  display:none;
-}
+.nav-icon{width:36px;height:36px;background:var(--y);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 0 12px rgba(255,184,0,0.3);}
+.nav-name{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--y);letter-spacing:2px;display:none;}
+.nav-location{display:none;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-size:11px;color:var(--muted2);cursor:pointer;flex-shrink:0;transition:border-color .2s;}
 .nav-location:hover{border-color:var(--y);}
-/* nav right */
 .nav-right{display:flex;align-items:center;gap:8px;}
-.nav-search-btn{
-  background:var(--bg3);border:1px solid var(--border);
-  color:var(--muted);
-  width:36px;height:36px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:16px;transition:all .2s;
-}
+.nav-search-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .2s;}
 .nav-search-btn:hover{border-color:var(--y);color:var(--y);}
-.nav-cart-pill{
-  display:none;
-  background:var(--y);color:#111;
-  border:none;padding:8px 16px;border-radius:20px;
-  font-size:13px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-  align-items:center;gap:6px;
-  transition:all .2s;
-}
+.nav-cart-pill{display:none;background:var(--y);color:#111;border:none;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;align-items:center;gap:6px;transition:all .2s;}
 .nav-cart-pill:hover{background:var(--y2);}
-.ncp-count{
-  background:rgba(0,0,0,0.2);
-  border-radius:10px;padding:1px 7px;
-  font-size:11px;font-weight:900;
-}
-.open-dot{
-  display:flex;align-items:center;gap:5px;
-  font-size:10px;color:var(--green);font-weight:800;
-  letter-spacing:.5px;text-transform:uppercase;
-}
-.od-circle{
-  width:7px;height:7px;background:var(--green);
-  border-radius:50%;animation:pulse 2s infinite;
-}
+.ncp-count{background:rgba(0,0,0,0.2);border-radius:10px;padding:1px 7px;font-size:11px;font-weight:900;}
+.open-dot{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--green);font-weight:800;letter-spacing:.5px;text-transform:uppercase;}
+.od-circle{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:.5;}}
-
-/* ════════════════════════
-   HERO BANNER — BK wide
-════════════════════════ */
-.hero{
-  position:relative;
-  height:220px;overflow:hidden;
-  background:var(--bg2);
-}
-.hero img{
-  width:100%;height:100%;
-  object-fit:cover;object-position:center top;
-  display:block;opacity:.55;
-}
-.hero-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to right,rgba(0,0,0,.9) 0%,rgba(0,0,0,.3) 60%,transparent 100%);
-}
-.hero-content{
-  position:absolute;top:50%;left:0;
-  transform:translateY(-50%);
-  padding:0 24px;
-}
-.hero-eyebrow{
-  display:inline-block;
-  background:var(--y);color:#111;
-  font-size:9px;font-weight:900;
-  padding:3px 10px;border-radius:20px;
-  letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:8px;
-}
-.hero-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(32px,7vw,64px);
-  color:#fff;letter-spacing:2px;
-  line-height:.95;margin-bottom:6px;
-  text-shadow:0 2px 20px rgba(0,0,0,.5);
-}
+.hero{position:relative;height:220px;overflow:hidden;background:var(--bg2);}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;opacity:.55;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.9) 0%,rgba(0,0,0,.3) 60%,transparent 100%);}
+.hero-content{position:absolute;top:50%;left:0;transform:translateY(-50%);padding:0 24px;}
+.hero-eyebrow{display:inline-block;background:var(--y);color:#111;font-size:9px;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,7vw,64px);color:#fff;letter-spacing:2px;line-height:.95;margin-bottom:6px;text-shadow:0 2px 20px rgba(0,0,0,.5);}
 .hero-title span{color:var(--y);}
-.hero-sub{
-  font-size:12px;color:rgba(255,255,255,.65);
-  margin-bottom:14px;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.2);
-  backdrop-filter:blur(8px);
-  color:#fff;font-size:11px;font-weight:700;
-  padding:5px 12px;border-radius:20px;
-}
-/* service label strip */
-.service-strip{
-  background:var(--y);
-  padding:8px 16px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.ss-label{
-  font-size:11px;font-weight:900;color:#111;
-  letter-spacing:1px;text-transform:uppercase;
-}
-.ss-change{
-  font-size:11px;font-weight:800;color:#111;
-  text-decoration:underline;cursor:pointer;opacity:.7;
-}
-
-/* ════════════════════════
-   CATEGORY RAIL — BK image tiles
-════════════════════════ */
-.cat-section{
-  background:var(--bg2);
-  padding:16px 0 0;
-  border-bottom:1px solid var(--border);
-}
-.cat-section-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:16px;color:var(--text);letter-spacing:2px;
-  padding:0 16px 12px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.cat-see-all{
-  font-size:11px;font-weight:800;color:var(--y);
-  cursor:pointer;letter-spacing:.5px;
-  display:flex;align-items:center;gap:4px;
-}
-.cat-rail{
-  display:flex;gap:0;overflow-x:auto;scrollbar-width:none;
-  padding:0 8px 14px;
-}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:14px;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;}
+.service-strip{background:var(--y);padding:8px 16px;display:flex;align-items:center;justify-content:space-between;}
+.ss-label{font-size:11px;font-weight:900;color:#111;letter-spacing:1px;text-transform:uppercase;}
+.ss-change{font-size:11px;font-weight:800;color:#111;text-decoration:underline;cursor:pointer;opacity:.7;}
+.cat-section{background:var(--bg2);padding:16px 0 0;border-bottom:1px solid var(--border);}
+.cat-section-title{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--text);letter-spacing:2px;padding:0 16px 12px;display:flex;align-items:center;justify-content:space-between;}
+.cat-see-all{font-size:11px;font-weight:800;color:var(--y);cursor:pointer;letter-spacing:.5px;display:flex;align-items:center;gap:4px;}
+.cat-rail{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 8px 14px;}
 .cat-rail::-webkit-scrollbar{display:none;}
-.cat-tile{
-  flex-shrink:0;
-  width:80px;
-  display:flex;flex-direction:column;align-items:center;
-  padding:6px;cursor:pointer;
-  border-bottom:3px solid transparent;
-  transition:all .2s;
-  position:relative;
-}
+.cat-tile{flex-shrink:0;width:80px;display:flex;flex-direction:column;align-items:center;padding:6px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;position:relative;}
 .cat-tile.active{border-bottom-color:var(--y);}
-.cat-tile-img{
-  width:64px;height:64px;border-radius:12px;
-  background:var(--bg4);
-  overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-  font-size:28px;
-  border:2px solid transparent;
-  transition:all .2s;
-  margin-bottom:5px;
-}
+.cat-tile-img{width:64px;height:64px;border-radius:12px;background:var(--bg4);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:28px;border:2px solid transparent;transition:all .2s;margin-bottom:5px;}
 .cat-tile.active .cat-tile-img{border-color:var(--y);box-shadow:0 0 12px rgba(255,184,0,0.3);}
 .cat-tile:hover .cat-tile-img{border-color:rgba(255,184,0,.4);}
 .cat-tile-img img{width:100%;height:100%;object-fit:cover;}
-.cat-tile-name{
-  font-size:10px;font-weight:800;
-  color:var(--muted2);text-align:center;
-  line-height:1.2;letter-spacing:.3px;
-}
+.cat-tile-name{font-size:10px;font-weight:800;color:var(--muted2);text-align:center;line-height:1.2;letter-spacing:.3px;}
 .cat-tile.active .cat-tile-name{color:var(--y);}
-
-/* sticky category nav (shows when scrolling) */
-.cat-sticky{
-  position:sticky;top:60px;z-index:400;
-  background:rgba(10,10,10,0.97);
-  border-bottom:1px solid var(--border);
-  backdrop-filter:blur(12px);
-  padding:10px 16px;
-  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
-}
+.cat-sticky{position:sticky;top:60px;z-index:400;background:rgba(10,10,10,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);padding:10px 16px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;}
 .cat-sticky::-webkit-scrollbar{display:none;}
-.cst-btn{
-  background:var(--bg3);color:var(--muted);
-  border:1px solid var(--border);
-  padding:7px 16px;border-radius:20px;
-  font-size:12px;font-weight:800;
-  white-space:nowrap;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-  transition:all .2s;flex-shrink:0;
-}
+.cst-btn{background:var(--bg3);color:var(--muted);border:1px solid var(--border);padding:7px 16px;border-radius:20px;font-size:12px;font-weight:800;white-space:nowrap;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;flex-shrink:0;}
 .cst-btn.active{background:var(--y);color:#111;border-color:var(--y);}
 .cst-btn:hover:not(.active){border-color:var(--y);color:var(--y);}
-
-/* ════════════════════════
-   MENU SECTION
-════════════════════════ */
-.menu-section{
-  padding:0 16px;
-  max-width:1200px;margin:0 auto;
-}
-.menu-section-header{
-  display:flex;align-items:baseline;justify-content:space-between;
-  padding:18px 0 12px;
-}
-.msh-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:22px;color:var(--text);letter-spacing:2px;
-}
+.menu-section{padding:0 16px;max-width:1200px;margin:0 auto;}
+.menu-section-header{display:flex;align-items:baseline;justify-content:space-between;padding:18px 0 12px;}
+.msh-title{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--text);letter-spacing:2px;}
 .msh-count{font-size:11px;color:var(--muted);font-weight:700;}
-
-/* search bar */
-.menu-search{
-  position:relative;margin-bottom:16px;
-}
-.menu-search input{
-  width:100%;
-  background:var(--bg3);
-  border:1.5px solid var(--border);
-  color:var(--text);
-  border-radius:30px;
-  padding:12px 18px 12px 44px;
-  font-size:14px;font-weight:600;
-  font-family:'Nunito',sans-serif;
-  outline:none;
-  transition:border-color .2s,box-shadow .2s;
-}
-.menu-search input:focus{
-  border-color:var(--y);
-  box-shadow:0 0 0 4px var(--ydim);
-}
+.menu-search{position:relative;margin-bottom:16px;}
+.menu-search input{width:100%;background:var(--bg3);border:1.5px solid var(--border);color:var(--text);border-radius:30px;padding:12px 18px 12px 44px;font-size:14px;font-weight:600;font-family:'Nunito',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;}
+.menu-search input:focus{border-color:var(--y);box-shadow:0 0 0 4px var(--ydim);}
 .menu-search input::placeholder{color:var(--muted);}
-.ms-icon{
-  position:absolute;left:16px;top:50%;
-  transform:translateY(-50%);
-  font-size:17px;pointer-events:none;
-}
-
-/* ════════════════════════
-   ITEM CARDS — BK style
-════════════════════════ */
-.items-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  padding-bottom:20px;
-}
-.icard{
-  background:var(--bg3);
-  border:1.5px solid var(--border);
-  border-radius:var(--r2);
-  overflow:hidden;
-  transition:all .25s;
-  animation:fadeUp .3s ease both;
-  position:relative;
-  display:flex;flex-direction:column;
-}
+.ms-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:17px;pointer-events:none;}
+.items-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:20px;}
+.icard{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:all .25s;animation:fadeUp .3s ease both;position:relative;display:flex;flex-direction:column;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.icard:hover{
-  border-color:rgba(255,184,0,.4);
-  transform:translateY(-3px);
-  box-shadow:0 10px 36px rgba(0,0,0,.5);
-}
-/* new badge */
-.icard-new{
-  position:absolute;top:8px;left:8px;z-index:2;
-  background:var(--y);color:#111;
-  font-size:8px;font-weight:900;
-  padding:2px 8px;border-radius:10px;
-  letter-spacing:1px;text-transform:uppercase;
-}
-/* bestseller */
-.icard-best{
-  position:absolute;top:8px;right:8px;z-index:2;
-  background:var(--green);color:#fff;
-  font-size:8px;font-weight:900;
-  padding:2px 8px;border-radius:10px;
-  letter-spacing:.5px;
-}
-.icard-img{
-  width:100%;
-  aspect-ratio:4/3;
-  background:var(--bg4);
-  overflow:hidden;
-  position:relative;
-}
-.icard-img img{
-  width:100%;height:100%;
-  object-fit:cover;display:block;
-  transition:transform .4s;
-}
+.icard:hover{border-color:rgba(255,184,0,.4);transform:translateY(-3px);box-shadow:0 10px 36px rgba(0,0,0,.5);}
+.icard-best{position:absolute;top:8px;right:8px;z-index:2;background:var(--green);color:#fff;font-size:8px;font-weight:900;padding:2px 8px;border-radius:10px;letter-spacing:.5px;}
+.icard-img{width:100%;aspect-ratio:4/3;background:var(--bg4);overflow:hidden;position:relative;}
+.icard-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
 .icard:hover .icard-img img{transform:scale(1.06);}
-.icard-body{
-  padding:10px 10px 12px;
-  flex:1;display:flex;flex-direction:column;
-  justify-content:space-between;
-}
-.icard-name{
-  font-size:13px;font-weight:800;
-  color:var(--text);line-height:1.3;
-  margin-bottom:4px;
-}
-.icard-desc{
-  font-size:10px;color:var(--muted);
-  line-height:1.4;margin-bottom:8px;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-.icard-foot{
-  display:flex;align-items:center;
-  justify-content:space-between;
-  gap:6px;
-}
-.icard-price-wrap{}
-.icard-price{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:20px;color:var(--y);letter-spacing:.5px;
-  line-height:1;
-}
+.icard-body{padding:10px 10px 12px;flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+.icard-name{font-size:13px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:4px;}
+.icard-desc{font-size:10px;color:var(--muted);line-height:1.4;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.icard-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;}
+.icard-price{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--y);letter-spacing:.5px;line-height:1;}
 .icard-price sup{font-size:11px;vertical-align:super;margin-right:1px;}
-/* ADD+ button BK style */
-.icard-add{
-  background:var(--y);color:#111;
-  border:none;border-radius:20px;
-  padding:8px 16px;
-  font-size:12px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-  transition:all .2s;white-space:nowrap;
-  box-shadow:0 2px 8px rgba(255,184,0,0.25);
-  flex-shrink:0;
-}
+.icard-add{background:var(--y);color:#111;border:none;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap;box-shadow:0 2px 8px rgba(255,184,0,0.25);flex-shrink:0;}
 .icard-add:hover{background:var(--y2);transform:scale(1.05);}
 .icard-add.added{background:var(--green);color:#fff;}
 .icard-add:active{transform:scale(.93);}
-/* qty controls — appear when added */
-.icard-qty{
-  display:none;align-items:center;gap:4px;
-}
+.icard-qty{display:none;align-items:center;gap:4px;}
 .icard-qty.show{display:flex;}
-.iqb{
-  background:var(--bg5);color:var(--muted2);
-  border:1.5px solid var(--border2);
-  border-radius:50%;width:26px;height:26px;
-  font-size:16px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .15s;
-}
+.iqb{background:var(--bg5);color:var(--muted2);border:1.5px solid var(--border2);border-radius:50%;width:26px;height:26px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .iqb:hover{background:var(--y);color:#111;border-color:var(--y);}
 .iqn{font-size:13px;font-weight:900;min-width:18px;text-align:center;}
-
-/* loader */
-.items-loader{
-  grid-column:span 2;
-  display:flex;flex-direction:column;
-  align-items:center;gap:12px;padding:50px;
-}
-.il-spin{
-  width:34px;height:34px;
-  border:3px solid var(--border);
-  border-top-color:var(--y);
-  border-radius:50%;animation:spin .8s linear infinite;
-}
+.items-loader{grid-column:span 2;display:flex;flex-direction:column;align-items:center;gap:12px;padding:50px;}
+.il-spin{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--y);border-radius:50%;animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .il-txt{font-size:12px;color:var(--muted);letter-spacing:.5px;}
-.items-empty{
-  grid-column:span 2;
-  text-align:center;padding:50px 20px;
-  color:var(--muted);font-size:14px;
-}
-
-/* ════════════════════════
-   JAMMU SPECIALS — horizontal
-════════════════════════ */
-.specials-section{
-  background:var(--bg2);
-  padding:16px 0;
-  border-bottom:1px solid var(--border);
-  margin-bottom:0;
-}
-.ss-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 16px 10px;
-}
-.ss-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:18px;color:var(--y);letter-spacing:2px;
-}
-.ss-scroll{
-  display:flex;gap:12px;
-  padding:0 16px 4px;
-  overflow-x:auto;scrollbar-width:none;
-}
+.items-empty{grid-column:span 2;text-align:center;padding:50px 20px;color:var(--muted);font-size:14px;}
+.specials-section{background:var(--bg2);padding:16px 0;border-bottom:1px solid var(--border);}
+.ss-head{display:flex;align-items:center;justify-content:space-between;padding:0 16px 10px;}
+.ss-title{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--y);letter-spacing:2px;}
+.ss-scroll{display:flex;gap:12px;padding:0 16px 4px;overflow-x:auto;scrollbar-width:none;}
 .ss-scroll::-webkit-scrollbar{display:none;}
-.sc{
-  flex-shrink:0;width:160px;
-  background:var(--bg3);
-  border:1.5px solid var(--border);
-  border-radius:var(--r);
-  overflow:hidden;transition:all .2s;
-}
+.sc{flex-shrink:0;width:160px;background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .2s;}
 .sc:hover{border-color:var(--y);transform:translateY(-3px);}
-.sc-img{
-  width:100%;height:100px;
-  background:var(--bg4);overflow:hidden;
-}
+.sc-img{width:100%;height:100px;background:var(--bg4);overflow:hidden;}
 .sc-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
 .sc:hover .sc-img img{transform:scale(1.06);}
 .sc-body{padding:8px 10px;}
 .sc-name{font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px;}
 .sc-tag{font-size:10px;color:var(--muted);}
 .sc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
-.sc-price{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:18px;color:var(--y);
-}
-.sc-btn{
-  background:var(--y);color:#111;
-  border:none;border-radius:12px;
-  padding:5px 12px;font-size:11px;font-weight:900;
-  cursor:pointer;font-family:'Nunito',sans-serif;
-  transition:all .15s;
-}
+.sc-price{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--y);}
+.sc-btn{background:var(--y);color:#111;border:none;border-radius:12px;padding:5px 12px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
 .sc-btn:hover{background:var(--y2);}
 .sc-btn.added{background:var(--green);color:#fff;}
-
-/* ════════════════════════
-   MAIN LAYOUT
-════════════════════════ */
-.main-layout{
-  display:block;
-  padding-bottom:100px;
-  max-width:1400px;margin:0 auto;
-}
-
-/* ════════════════════════
-   DESKTOP CART DRAWER
-════════════════════════ */
-#cartOverlay{
-  position:fixed;inset:0;z-index:640;
-  background:rgba(0,0,0,0);pointer-events:none;
-  transition:background .3s;
-}
+.main-layout{display:block;padding-bottom:100px;max-width:1400px;margin:0 auto;}
+#cartOverlay{position:fixed;inset:0;z-index:640;background:rgba(0,0,0,0);pointer-events:none;transition:background .3s;}
 #cartOverlay.show{background:rgba(0,0,0,.6);pointer-events:all;}
-#cartDrawer{
-  position:fixed;top:0;right:0;bottom:0;z-index:650;
-  width:320px;
-  background:var(--bg2);
-  border-left:1.5px solid var(--border);
-  box-shadow:-6px 0 40px rgba(0,0,0,.6);
-  display:flex;flex-direction:column;
-  transform:translateX(100%);
-  transition:transform .3s cubic-bezier(.4,0,.2,1);
-}
+#cartDrawer{position:fixed;top:0;right:0;bottom:0;z-index:650;width:320px;background:var(--bg2);border-left:1.5px solid var(--border);box-shadow:-6px 0 40px rgba(0,0,0,.6);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);}
 #cartDrawer.open{transform:translateX(0);}
-.cd-head{
-  padding:18px 18px 14px;
-  border-bottom:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-  flex-shrink:0;
-  background:var(--bg3);
-}
-.cd-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:22px;color:var(--y);letter-spacing:2px;
-}
+.cd-head{padding:18px 18px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:var(--bg3);}
+.cd-title{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--y);letter-spacing:2px;}
 .cd-service{font-size:11px;color:var(--muted);margin-top:2px;}
-.cd-close{
-  background:var(--bg4);border:1.5px solid var(--border);
-  width:30px;height:30px;border-radius:50%;
-  cursor:pointer;font-size:14px;color:var(--muted);
-  display:flex;align-items:center;justify-content:center;
-  transition:all .15s;
-}
+.cd-close{background:var(--bg4);border:1.5px solid var(--border);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .cd-close:hover{background:var(--border2);color:var(--text);}
 #cdItems{flex:1;overflow-y:auto;padding:10px 16px;}
-.cd-empty{
-  text-align:center;padding:40px 10px;
-  color:var(--muted);font-size:13px;line-height:2;
-}
-.cd-item{
-  display:flex;justify-content:space-between;
-  align-items:flex-start;
-  padding:12px 0;border-bottom:1px solid var(--border);gap:8px;
-}
+.cd-empty{text-align:center;padding:40px 10px;color:var(--muted);font-size:13px;line-height:2;}
+.cd-item{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);gap:8px;}
 .cd-item:last-child{border-bottom:none;}
 .cd-iname{font-size:13px;font-weight:800;color:var(--text);margin-bottom:5px;}
 .cd-ictrl{display:flex;align-items:center;gap:5px;}
-.cd-iprice{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:17px;color:var(--y);white-space:nowrap;
-}
-.cdqb{
-  background:var(--bg4);color:var(--muted2);
-  border:1.5px solid var(--border);
-  border-radius:50%;width:22px;height:22px;
-  font-size:13px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .15s;
-}
+.cd-iprice{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--y);white-space:nowrap;}
+.cdqb{background:var(--bg4);color:var(--muted2);border:1.5px solid var(--border);border-radius:50%;width:22px;height:22px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .cdqb:hover{background:var(--y);color:#111;border-color:var(--y);}
 .cdqty{font-size:12px;font-weight:900;min-width:16px;text-align:center;}
 .cdrm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0 2px;transition:color .15s;}
 .cdrm:hover{color:var(--red);}
-/* cart extras */
-.cd-extras{
-  padding:14px 16px 0;
-  border-top:1px solid var(--border);
-  flex-shrink:0;
-}
+.cd-extras{padding:14px 16px 0;border-top:1px solid var(--border);flex-shrink:0;}
 .cd-extra-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
 .pay-opts{display:flex;gap:6px;margin-bottom:10px;}
-.pay-opt{
-  flex:1;background:var(--bg4);color:var(--muted);
-  border:1.5px solid var(--border);
-  padding:8px 4px;border-radius:8px;
-  font-size:11px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;text-align:center;
-  transition:all .15s;
-}
+.pay-opt{flex:1;background:var(--bg4);color:var(--muted);border:1.5px solid var(--border);padding:8px 4px;border-radius:8px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;text-align:center;transition:all .15s;}
 .pay-opt.sel{background:var(--y);color:#111;border-color:var(--y);}
-.token-inp{
-  width:100%;background:var(--bg4);
-  border:1.5px solid var(--border);
-  color:var(--text);border-radius:8px;
-  padding:9px 12px;font-size:13px;
-  font-family:'Nunito',sans-serif;outline:none;
-  transition:border-color .2s;
-}
+.token-inp{width:100%;background:var(--bg4);border:1.5px solid var(--border);color:var(--text);border-radius:8px;padding:9px 12px;font-size:13px;font-family:'Nunito',sans-serif;outline:none;transition:border-color .2s;}
 .token-inp:focus{border-color:var(--y);}
 .token-inp::placeholder{color:var(--muted);}
-.cd-foot{
-  padding:14px 16px 20px;flex-shrink:0;
-  border-top:1.5px solid var(--border);
-}
-.cd-total-row{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:12px;
-}
+.cd-foot{padding:14px 16px 20px;flex-shrink:0;border-top:1.5px solid var(--border);}
+.cd-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
 .cd-total-lbl{font-size:12px;color:var(--muted);font-weight:700;}
-.cd-total-amt{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:26px;color:var(--y);letter-spacing:1px;
-}
-.cd-order-btn{
-  background:var(--y);color:#111;
-  border:none;width:100%;padding:14px;border-radius:12px;
-  font-size:15px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-  box-shadow:0 4px 16px rgba(255,184,0,0.3);
-  transition:all .2s;
-}
+.cd-total-amt{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--y);letter-spacing:1px;}
+.cd-order-btn{background:var(--y);color:#111;border:none;width:100%;padding:14px;border-radius:12px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 16px rgba(255,184,0,0.3);transition:all .2s;}
 .cd-order-btn:hover{background:var(--y2);}
 .cd-order-btn:active{transform:scale(.98);}
-
-/* ════════════════════════
-   MOBILE CART BAR
-════════════════════════ */
-#mCartBar{
-  display:none;
-  position:fixed;bottom:0;left:0;right:0;z-index:700;
-  background:var(--y);
-  border-radius:18px 18px 0 0;
-  padding:14px 20px;
-  box-shadow:0 -6px 30px rgba(255,184,0,.3);
-  animation:barUp .25s ease both;
-}
+#mCartBar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:700;background:var(--y);border-radius:18px 18px 0 0;padding:14px 20px;box-shadow:0 -6px 30px rgba(255,184,0,.3);animation:barUp .25s ease both;}
 @keyframes barUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.mcb-inner{
-  display:flex;justify-content:space-between;
-  align-items:center;max-width:500px;margin:0 auto;
-}
+.mcb-inner{display:flex;justify-content:space-between;align-items:center;max-width:500px;margin:0 auto;}
 .mcb-lbl{font-size:10px;color:rgba(0,0,0,.5);letter-spacing:1px;text-transform:uppercase;font-weight:800;}
-.mcb-total{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:24px;color:#111;letter-spacing:1px;
-}
-.mcb-btn{
-  background:#111;color:var(--y);
-  border:none;padding:11px 22px;border-radius:12px;
-  font-size:14px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-}
-
-/* ════════════════════════
-   ORDER MODAL (mobile)
-════════════════════════ */
-#orderModal{
-  display:none;position:fixed;inset:0;z-index:800;
-  background:rgba(0,0,0,.7);
-  align-items:flex-end;justify-content:center;
-}
+.mcb-total{font-family:'Bebas Neue',sans-serif;font-size:24px;color:#111;letter-spacing:1px;}
+.mcb-btn{background:#111;color:var(--y);border:none;padding:11px 22px;border-radius:12px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;}
+#orderModal{display:none;position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.7);align-items:flex-end;justify-content:center;}
 #orderModal.show{display:flex;}
-.om-box{
-  background:var(--bg2);
-  border-radius:20px 20px 0 0;
-  padding:22px 20px 32px;
-  width:100%;max-width:500px;
-  animation:slideUp .25s ease both;
-}
+.om-box{background:var(--bg2);border-radius:20px 20px 0 0;padding:22px 20px 32px;width:100%;max-width:500px;animation:slideUp .25s ease both;}
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
-.om-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:22px;color:var(--y);letter-spacing:2px;margin-bottom:16px;
-}
+.om-title{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--y);letter-spacing:2px;margin-bottom:16px;}
 .om-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
 .om-pay-opts{display:flex;gap:8px;margin-bottom:14px;}
-.om-pay-opt{
-  flex:1;background:var(--bg3);color:var(--muted);
-  border:1.5px solid var(--border2);
-  padding:12px 6px;border-radius:10px;
-  font-size:13px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;text-align:center;
-  transition:all .15s;
-}
+.om-pay-opt{flex:1;background:var(--bg3);color:var(--muted);border:1.5px solid var(--border2);padding:12px 6px;border-radius:10px;font-size:13px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;text-align:center;transition:all .15s;}
 .om-pay-opt.sel{background:var(--y);color:#111;border-color:var(--y);}
-.om-token{
-  width:100%;background:var(--bg3);
-  border:1.5px solid var(--border2);
-  color:var(--text);border-radius:10px;
-  padding:12px 14px;font-size:14px;
-  font-family:'Nunito',sans-serif;outline:none;
-  margin-bottom:14px;transition:border-color .2s;
-}
+.om-token{width:100%;background:var(--bg3);border:1.5px solid var(--border2);color:var(--text);border-radius:10px;padding:12px 14px;font-size:14px;font-family:'Nunito',sans-serif;outline:none;margin-bottom:14px;transition:border-color .2s;}
 .om-token:focus{border-color:var(--y);}
 .om-token::placeholder{color:var(--muted);}
-.om-summary{
-  background:var(--bg3);border-radius:10px;
-  padding:12px 14px;margin-bottom:16px;
-  border:1px solid var(--border);
-}
+.om-summary{background:var(--bg3);border-radius:10px;padding:12px 14px;margin-bottom:16px;border:1px solid var(--border);}
 .om-sum-items{font-size:12px;color:var(--muted);margin-bottom:4px;}
-.om-sum-total{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:22px;color:var(--y);letter-spacing:1px;
-}
-.om-confirm{
-  background:var(--y);color:#111;
-  border:none;width:100%;padding:15px;border-radius:12px;
-  font-size:16px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-  box-shadow:0 4px 16px rgba(255,184,0,.3);
-  transition:background .15s;margin-bottom:8px;
-}
+.om-sum-total{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--y);letter-spacing:1px;}
+.om-confirm{background:var(--y);color:#111;border:none;width:100%;padding:15px;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 16px rgba(255,184,0,.3);transition:background .15s;margin-bottom:8px;}
 .om-confirm:hover{background:var(--y2);}
-.om-cancel{
-  background:none;border:none;
-  color:var(--muted);width:100%;padding:10px;
-  font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;
-}
-.om-offline{
-  background:rgba(146,64,14,.15);color:#fcd34d;
-  border:1px solid rgba(252,211,77,.2);
-  border-radius:8px;padding:8px 12px;
-  font-size:11px;font-weight:700;
-  margin-bottom:12px;display:none;
-}
+.om-cancel{background:none;border:none;color:var(--muted);width:100%;padding:10px;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;}
+.om-offline{background:rgba(146,64,14,.15);color:#fcd34d;border:1px solid rgba(252,211,77,.2);border-radius:8px;padding:8px 12px;font-size:11px;font-weight:700;margin-bottom:12px;display:none;}
 .om-offline.show{display:block;}
-
-/* ════════════════════════
-   RECEIPT MODAL
-════════════════════════ */
-#receiptModal{
-  display:none;position:fixed;inset:0;z-index:900;
-  background:rgba(0,0,0,.8);
-  align-items:center;justify-content:center;padding:20px;
-}
+#receiptModal{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.8);align-items:center;justify-content:center;padding:20px;}
 #receiptModal.show{display:flex;}
-.rm-box{
-  background:#fff;color:#111;
-  border-radius:16px;
-  width:100%;max-width:330px;
-  overflow:hidden;
-  animation:popIn .25s ease both;
-  max-height:90vh;overflow-y:auto;
-}
+.rm-box{background:#fff;color:#111;border-radius:16px;width:100%;max-width:330px;overflow:hidden;animation:popIn .25s ease both;max-height:90vh;overflow-y:auto;}
 .rm-hdr{background:var(--y);color:#111;padding:16px;text-align:center;}
 .rm-hdr-icon{font-size:28px;}
-.rm-hdr-name{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:22px;letter-spacing:2px;margin-top:2px;
-}
+.rm-hdr-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;margin-top:2px;}
 .rm-hdr-sub{font-size:10px;opacity:.65;letter-spacing:.5px;}
 .rm-body{padding:16px;}
-.rm-onum{
-  text-align:center;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:32px;letter-spacing:2px;color:#111;
-}
+.rm-onum{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:#111;}
 .rm-onum span{color:var(--y);}
-.rm-token{
-  text-align:center;background:var(--y);color:#111;
-  font-size:13px;font-weight:900;
-  padding:5px 12px;border-radius:8px;
-  margin:6px auto 10px;display:none;width:fit-content;
-}
+.rm-token{text-align:center;background:var(--y);color:#111;font-size:13px;font-weight:900;padding:5px 12px;border-radius:8px;margin:6px auto 10px;display:none;width:fit-content;}
 .rm-meta{font-size:11px;color:#666;text-align:center;margin-bottom:10px;line-height:1.8;}
 .rm-divider{border:none;border-top:1px dashed #ccc;margin:10px 0;}
 .rm-items{font-size:12px;}
-.rm-item-row{
-  display:flex;justify-content:space-between;
-  padding:4px 0;border-bottom:1px dotted #eee;
-}
+.rm-item-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dotted #eee;}
 .rm-iname{flex:1;}
 .rm-iqty{color:#888;margin:0 8px;}
 .rm-iprice{font-weight:900;}
-.rm-total{
-  display:flex;justify-content:space-between;
-  font-size:16px;font-weight:900;
-  padding-top:8px;border-top:2px solid #111;
-}
-.rm-pay{
-  display:flex;justify-content:space-between;
-  font-size:12px;margin-top:8px;
-  background:#f9f9f9;padding:8px 10px;border-radius:6px;
-}
-.rm-actions{
-  display:flex;gap:8px;padding:12px 16px 18px;
-  border-top:1px solid #eee;
-}
-.rm-print{
-  flex:1;background:var(--y);color:#111;
-  border:none;padding:12px;border-radius:10px;
-  font-size:13px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-}
-.rm-close{
-  background:#f0f0f0;color:#333;border:none;
-  padding:12px 16px;border-radius:10px;
-  font-size:13px;font-weight:700;cursor:pointer;
-  font-family:'Nunito',sans-serif;
-}
-
-/* ════════════════════════
-   PWA INSTALL BAR
-════════════════════════ */
-#pwaBar{
-  display:none;
-  position:fixed;bottom:0;left:0;right:0;z-index:600;
-  background:var(--bg3);border-top:1px solid var(--border);
-  padding:12px 16px;
-  flex-direction:row;align-items:center;gap:12px;
-}
+.rm-total{display:flex;justify-content:space-between;font-size:16px;font-weight:900;padding-top:8px;border-top:2px solid #111;}
+.rm-pay{display:flex;justify-content:space-between;font-size:12px;margin-top:8px;background:#f9f9f9;padding:8px 10px;border-radius:6px;}
+.rm-actions{display:flex;gap:8px;padding:12px 16px 18px;border-top:1px solid #eee;}
+.rm-print{flex:1;background:var(--y);color:#111;border:none;padding:12px;border-radius:10px;font-size:13px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;}
+.rm-close{background:#f0f0f0;color:#333;border:none;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;}
+#pwaBar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:600;background:var(--bg3);border-top:1px solid var(--border);padding:12px 16px;flex-direction:row;align-items:center;gap:12px;}
 #pwaBar.show{display:flex;}
 .pwa-txt{flex:1;font-size:12px;color:var(--text);line-height:1.4;}
 .pwa-txt strong{color:var(--y);display:block;font-size:13px;}
-.pwa-install{
-  background:var(--y);color:#111;
-  border:none;padding:9px 16px;border-radius:10px;
-  font-size:13px;font-weight:900;cursor:pointer;
-  font-family:'Nunito',sans-serif;white-space:nowrap;
-}
-.pwa-dismiss{
-  background:none;border:none;
-  color:var(--muted);font-size:18px;cursor:pointer;padding:4px;
-}
-
-/* ════════════════════════
-   TOAST
-════════════════════════ */
-#toast{
-  position:fixed;z-index:950;
-  bottom:90px;left:50%;transform:translateX(-50%);
-  background:var(--bg4);color:var(--y);
-  border:1.5px solid rgba(255,184,0,.3);
-  padding:10px 22px;border-radius:30px;
-  font-size:13px;font-weight:800;
-  display:none;white-space:nowrap;
-  box-shadow:var(--shadow2);
-}
-
-/* ════════════════════════
-   FOOTER
-════════════════════════ */
-.footer{
-  background:#0a0a0a;
-  border-top:1px solid var(--border);
-  padding:28px 16px 20px;
-}
-.footer-top{
-  display:flex;flex-direction:column;
-  align-items:center;text-align:center;
-  gap:4px;margin-bottom:16px;
-  padding-bottom:16px;
-  border-bottom:1px solid var(--border);
-}
-.footer-name{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:20px;color:var(--y);letter-spacing:2px;
-}
+.pwa-install{background:var(--y);color:#111;border:none;padding:9px 16px;border-radius:10px;font-size:13px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap;}
+.pwa-dismiss{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px;}
+#toast{position:fixed;z-index:950;bottom:90px;left:50%;transform:translateX(-50%);background:var(--bg4);color:var(--y);border:1.5px solid rgba(255,184,0,.3);padding:10px 22px;border-radius:30px;font-size:13px;font-weight:800;display:none;white-space:nowrap;box-shadow:var(--shadow2);}
+.footer{background:#0a0a0a;border-top:1px solid var(--border);padding:28px 16px 20px;}
+.footer-top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.footer-name{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--y);letter-spacing:2px;}
 .footer-sub{font-size:11px;color:var(--muted);letter-spacing:1px;}
 .footer-info{font-size:12px;color:var(--muted);line-height:2;text-align:center;margin-bottom:14px;}
 .footer-map{border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px;}
 .footer-credit{font-size:11px;color:#444;text-align:center;line-height:2;}
 .footer-credit span{color:var(--y);font-weight:800;}
-
-/* ════════════════════════
-   PENDING BADGE
-════════════════════════ */
-#pendingBadge{
-  display:none;
-  background:#92400e;color:#fef3c7;
-  font-size:10px;font-weight:900;
-  padding:4px 10px;border-radius:10px;
-  cursor:pointer;letter-spacing:.3px;
-}
+#pendingBadge{display:none;background:#92400e;color:#fef3c7;font-size:10px;font-weight:900;padding:4px 10px;border-radius:10px;cursor:pointer;letter-spacing:.3px;}
 #pendingBadge.show{display:inline-block;}
-
-/* ════════════════════════
-   DESKTOP BREAKPOINTS
-════════════════════════ */
-@media(min-width:640px){
-  .nav-name{display:block;}
-  .nav-location{display:flex;}
-  .items-grid{grid-template-columns:repeat(3,1fr);}
-}
-@media(min-width:768px){
-  body{padding-bottom:0;}
-  .nav{padding:0 28px;}
-  .nav-cart-pill{display:flex;}
-  .hero{height:300px;}
-  .cat-section{padding:20px 0 0;}
-  .cat-rail{padding:0 20px 14px;}
-  .cat-sticky{padding:12px 28px;}
-  .menu-section{padding:0 28px;}
-  .specials-section{padding:20px 0;}
-  .ss-head{padding:0 28px 10px;}
-  .ss-scroll{padding:0 28px 4px;}
-  .items-grid{grid-template-columns:repeat(3,1fr);gap:16px;}
-  #mCartBar{display:none!important;}
-  #toast{bottom:24px;}
-  #orderModal{align-items:center;}
-  .om-box{border-radius:20px;max-width:400px;}
-  .footer{padding:36px 28px 24px;}
-}
-@media(min-width:1024px){
-  .items-grid{grid-template-columns:repeat(4,1fr);}
-  .nav{padding:0 40px;}
-  .menu-section{padding:0 40px;}
-  .cat-sticky{padding:12px 40px;}
-  .ss-head{padding:0 40px 10px;}
-  .ss-scroll{padding:0 40px 4px;}
-}
+@media(min-width:640px){.nav-name{display:block;}.nav-location{display:flex;}.items-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:768px){body{padding-bottom:0;}.nav{padding:0 28px;}.nav-cart-pill{display:flex;}.hero{height:300px;}.cat-section{padding:20px 0 0;}.cat-rail{padding:0 20px 14px;}.cat-sticky{padding:12px 28px;}.menu-section{padding:0 28px;}.specials-section{padding:20px 0;}.ss-head{padding:0 28px 10px;}.ss-scroll{padding:0 28px 4px;}.items-grid{grid-template-columns:repeat(3,1fr);gap:16px;}#mCartBar{display:none!important;}#toast{bottom:24px;}#orderModal{align-items:center;}.om-box{border-radius:20px;max-width:400px;}.footer{padding:36px 28px 24px;}}
+@media(min-width:1024px){.items-grid{grid-template-columns:repeat(4,1fr);}.nav{padding:0 40px;}.menu-section{padding:0 40px;}.cat-sticky{padding:12px 40px;}.ss-head{padding:0 40px 10px;}.ss-scroll{padding:0 40px 4px;}}
 </style>
 </head>
 <body>
 
-<!-- SERVICE MODAL -->
 <div id="serviceModal">
   <div class="sm-box">
     <div class="sm-logo">🥟</div>
@@ -1004,13 +275,10 @@ img{display:block;max-width:100%;}
   </div>
 </div>
 
-<!-- OFFLINE BANNER -->
 <div id="offlineBanner">📵 You are offline — orders save locally & sync when reconnected</div>
 
-<!-- NAV -->
 <nav class="nav" id="mainNav">
   <div style="display:flex;align-items:center;gap:10px;">
-    <!-- service toggle -->
     <div class="nav-service-toggle">
       <div class="nst-opt active" id="nstDine" onclick="switchService('Dine-in')">Dine-in</div>
       <div class="nst-opt" id="nstTake" onclick="switchService('Takeaway')">Takeaway</div>
@@ -1025,13 +293,10 @@ img{display:block;max-width:100%;}
     <span id="pendingBadge" onclick="syncPending()">⏳ <span id="pendingCount">0</span> pending</span>
     <div class="open-dot"><span class="od-circle"></span>Open</div>
     <div class="nav-search-btn" onclick="focusSearch()">🔍</div>
-    <button class="nav-cart-pill" onclick="openCart()">
-      🛒 Cart <span class="ncp-count" id="navCount">0</span>
-    </button>
+    <button class="nav-cart-pill" onclick="openCart()">🛒 Cart <span class="ncp-count" id="navCount">0</span></button>
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <img src="/images/menu/hungryhop-truck.jpg" alt="Hungry Hop" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
@@ -1039,89 +304,63 @@ img{display:block;max-width:100%;}
     <div class="hero-eyebrow">Now Open</div>
     <h1 class="hero-title">KINGDOM<br>OF <span>MOMOS</span></h1>
     <div class="hero-sub">📍 Gole Market, Gandhi Nagar, Jammu</div>
-    <div class="hero-badge">🔥 50+ Fresh Items Daily</div>
+    <div class="hero-badge">🔥 59 Fresh Items Daily</div>
   </div>
 </div>
 
-<!-- SERVICE STRIP -->
 <div class="service-strip">
   <span class="ss-label" id="ssLabel">🪑 Dine-in · Gandhi Nagar</span>
   <span class="ss-change" onclick="showServiceModal()">Change</span>
 </div>
 
-<!-- CATEGORY RAIL -->
 <div class="cat-section">
-  <div class="cat-section-title">
-    OUR MENU
-    <span class="cat-see-all">See All ›</span>
-  </div>
+  <div class="cat-section-title">OUR MENU <span class="cat-see-all">See All ›</span></div>
   <div class="cat-rail" id="catRail"></div>
 </div>
 
-<!-- STICKY CAT NAV -->
 <div class="cat-sticky" id="catSticky"></div>
 
-<!-- JAMMU SPECIALS -->
 <div class="specials-section">
-  <div class="ss-head">
-    <div class="ss-title">🔥 Jammu Specials</div>
-  </div>
+  <div class="ss-head"><div class="ss-title">🔥 Jammu Specials</div></div>
   <div class="ss-scroll">
     <div class="sc">
-      <div class="sc-img"><img src="/images/menu/rajma-chawal.jpg" onerror="this.parentElement.style.fontSize='32px';this.parentElement.innerHTML='🍛'"></div>
+      <div class="sc-img"><img src="https://source.unsplash.com/300x200/?rajma,chawal,indian+food&sig=rc" onerror="this.parentElement.innerHTML='🍛'" loading="lazy"></div>
       <div class="sc-body">
-        <div class="sc-name">Rajma Chawal</div>
-        <div class="sc-tag">🌶️ Jammu's Pride</div>
-        <div class="sc-foot">
-          <span class="sc-price">₹70</span>
-          <button class="sc-btn" id="scb-rajma" onclick="addSpecial({_id:'rajma',name:'Rajma Chawal',price:70},'scb-rajma')">ADD +</button>
-        </div>
+        <div class="sc-name">Rajma Chawal</div><div class="sc-tag">🌶️ Jammu's Pride</div>
+        <div class="sc-foot"><span class="sc-price">₹90</span><button class="sc-btn" id="scb-rajma" onclick="addSpecial({_id:'rajma',name:'Rajma Chawal',price:90},'scb-rajma')">ADD +</button></div>
       </div>
     </div>
     <div class="sc">
-      <div class="sc-img"><img src="/images/menu/kaladi-kulcha.jpg" onerror="this.parentElement.style.fontSize='32px';this.parentElement.innerHTML='🫓'"></div>
+      <div class="sc-img"><img src="https://source.unsplash.com/300x200/?kulcha,bread,indian&sig=kk" onerror="this.parentElement.innerHTML='🫓'" loading="lazy"></div>
       <div class="sc-body">
-        <div class="sc-name">Kaladi Kulcha</div>
-        <div class="sc-tag">🧀 Fresh Daily</div>
-        <div class="sc-foot">
-          <span class="sc-price">₹70</span>
-          <button class="sc-btn" id="scb-kaladi" onclick="addSpecial({_id:'kaladi',name:'Kaladi Kulcha',price:70},'scb-kaladi')">ADD +</button>
-        </div>
+        <div class="sc-name">Kaladi Kulcha</div><div class="sc-tag">🧀 Fresh Daily</div>
+        <div class="sc-foot"><span class="sc-price">₹80</span><button class="sc-btn" id="scb-kaladi" onclick="addSpecial({_id:'kaladi',name:'Kaladi Kulcha',price:80},'scb-kaladi')">ADD +</button></div>
       </div>
     </div>
     <div class="sc">
-      <div class="sc-img" style="display:flex;align-items:center;justify-content:center;font-size:36px;background:var(--bg4);">🥟</div>
+      <div class="sc-img"><img src="https://source.unsplash.com/300x200/?momo,dumpling,steam&sig=vm" onerror="this.parentElement.innerHTML='🥟'" loading="lazy"></div>
       <div class="sc-body">
-        <div class="sc-name">Veg Momo Platter</div>
-        <div class="sc-tag">⭐ Bestseller</div>
-        <div class="sc-foot">
-          <span class="sc-price">₹80</span>
-          <button class="sc-btn" id="scb-momo" onclick="addSpecial({_id:'momo_platter',name:'Veg Momo Platter',price:80},'scb-momo')">ADD +</button>
-        </div>
+        <div class="sc-name">Veg Classic Momos</div><div class="sc-tag">⭐ Bestseller</div>
+        <div class="sc-foot"><span class="sc-price">₹80</span><button class="sc-btn" id="scb-momo" onclick="addSpecial({_id:'veg_momo_steam',name:'Veg Classic Momos (Steam)',price:80},'scb-momo')">ADD +</button></div>
       </div>
     </div>
     <div class="sc">
-      <div class="sc-img" style="display:flex;align-items:center;justify-content:center;font-size:36px;background:var(--bg4);">🍔</div>
+      <div class="sc-img"><img src="https://source.unsplash.com/300x200/?burger,aloo,tikki&sig=atb" onerror="this.parentElement.innerHTML='🍔'" loading="lazy"></div>
       <div class="sc-body">
-        <div class="sc-name">Aloo Tikki Burger</div>
-        <div class="sc-tag">🔥 Most Ordered</div>
-        <div class="sc-foot">
-          <span class="sc-price">₹60</span>
-          <button class="sc-btn" id="scb-atb" onclick="addSpecial({_id:'aloo_tikki_burger',name:'Aloo Tikki Burger',price:60},'scb-atb')">ADD +</button>
-        </div>
+        <div class="sc-name">Aloo Tikki Burger</div><div class="sc-tag">🔥 Most Ordered</div>
+        <div class="sc-foot"><span class="sc-price">₹70</span><button class="sc-btn" id="scb-atb" onclick="addSpecial({_id:'aloo_tikki_burger',name:'Aloo Tikki Burger',price:70},'scb-atb')">ADD +</button></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MAIN LAYOUT -->
 <div class="main-layout">
   <div class="menu-section">
     <div class="menu-section-header">
       <div class="msh-title" id="menuTitle">BURGERS</div>
       <div class="msh-count" id="menuCount"></div>
     </div>
-    <div class="menu-search" id="searchWrap">
+    <div class="menu-search">
       <span class="ms-icon">🔍</span>
       <input type="text" id="searchInput" placeholder="Search momos, burgers, shakes…" onkeyup="filterItems(this.value)">
     </div>
@@ -1129,49 +368,31 @@ img{display:block;max-width:100%;}
   </div>
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
   <div class="footer-top">
     <div class="footer-name">Hungry Hop</div>
     <div class="footer-sub">Kingdom of Momos · Gandhi Nagar, Jammu</div>
   </div>
-  <div class="footer-info">
-    Gole Market, Gandhi Nagar, Jammu<br>
-    Opposite Monika Supermarket<br>
-    Open: 4 PM – 11 PM Daily
-  </div>
-  <div class="footer-map">
-    <iframe src="https://www.google.com/maps?q=Gole+Market+Gandhi+Nagar+Jammu&output=embed" width="100%" height="200" style="border:0;display:block;" loading="lazy"></iframe>
-  </div>
+  <div class="footer-info">Gole Market, Gandhi Nagar, Jammu<br>Opposite Monika Supermarket<br>Open: 4 PM – 11 PM Daily</div>
+  <div class="footer-map"><iframe src="https://www.google.com/maps?q=Gole+Market+Gandhi+Nagar+Jammu&output=embed" width="100%" height="200" style="border:0;display:block;" loading="lazy"></iframe></div>
   <div class="footer-credit">Designed &amp; Developed by <span>Aqua Decor</span><br>Deepak Verma</div>
 </div>
 
-<!-- MOBILE CART BAR -->
 <div id="mCartBar">
   <div class="mcb-inner">
-    <div>
-      <div class="mcb-lbl" id="mcbLbl">0 items</div>
-      <div class="mcb-total">₹<span id="mcbTotal">0</span></div>
-    </div>
+    <div><div class="mcb-lbl" id="mcbLbl">0 items</div><div class="mcb-total">₹<span id="mcbTotal">0</span></div></div>
     <button class="mcb-btn" onclick="openOrderModal()">Place Order ›</button>
   </div>
 </div>
 
-<!-- CART OVERLAY -->
 <div id="cartOverlay" onclick="closeCart()"></div>
 
-<!-- CART DRAWER (desktop) -->
 <div id="cartDrawer">
   <div class="cd-head">
-    <div>
-      <div class="cd-title">🛒 Your Order</div>
-      <div class="cd-service" id="cdService">Dine-in · Gandhi Nagar</div>
-    </div>
+    <div><div class="cd-title">🛒 Your Order</div><div class="cd-service" id="cdService">Dine-in · Gandhi Nagar</div></div>
     <button class="cd-close" onclick="closeCart()">✕</button>
   </div>
-  <div id="cdItems">
-    <div class="cd-empty">Your cart is empty.<br>Browse the menu to begin 🥟</div>
-  </div>
+  <div id="cdItems"><div class="cd-empty">Your cart is empty.<br>Browse the menu to begin 🥟</div></div>
   <div class="cd-extras">
     <div class="cd-extra-lbl">Payment Mode</div>
     <div class="pay-opts">
@@ -1183,15 +404,11 @@ img{display:block;max-width:100%;}
     <input class="token-inp" id="deskToken" type="text" placeholder="e.g. T-01 or Rahul">
   </div>
   <div class="cd-foot">
-    <div class="cd-total-row">
-      <span class="cd-total-lbl">Total</span>
-      <span class="cd-total-amt">₹<span id="cdTotal">0</span></span>
-    </div>
+    <div class="cd-total-row"><span class="cd-total-lbl">Total</span><span class="cd-total-amt">₹<span id="cdTotal">0</span></span></div>
     <button class="cd-order-btn" onclick="placeOrder()">Place Order →</button>
   </div>
 </div>
 
-<!-- ORDER MODAL (mobile) -->
 <div id="orderModal">
   <div class="om-box">
     <div class="om-title">Confirm Order</div>
@@ -1213,14 +430,9 @@ img{display:block;max-width:100%;}
   </div>
 </div>
 
-<!-- RECEIPT MODAL -->
 <div id="receiptModal">
   <div class="rm-box">
-    <div class="rm-hdr">
-      <div class="rm-hdr-icon">🥟</div>
-      <div class="rm-hdr-name">HUNGRY HOP</div>
-      <div class="rm-hdr-sub">Kingdom of Momos · Gole Market, Jammu</div>
-    </div>
+    <div class="rm-hdr"><div class="rm-hdr-icon">🥟</div><div class="rm-hdr-name">HUNGRY HOP</div><div class="rm-hdr-sub">Kingdom of Momos · Gole Market, Jammu</div></div>
     <div class="rm-body">
       <div class="rm-onum">ORDER <span id="rmNum">#000</span></div>
       <div class="rm-token" id="rmToken"></div>
@@ -1238,45 +450,142 @@ img{display:block;max-width:100%;}
   </div>
 </div>
 
-<!-- PWA INSTALL -->
 <div id="pwaBar">
   <div class="pwa-txt"><strong>📲 Install Hungry Hop</strong>Add to home screen!</div>
   <button class="pwa-install" onclick="installPWA()">Install</button>
   <button class="pwa-dismiss" onclick="dismissPWA()">✕</button>
 </div>
 
-<!-- TOAST -->
 <div id="toast">✓ Added</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
+/* ══ SMART IMAGE FUNCTION ══ */
+function getImg(item) {
+  if (item.image && !item.image.includes('default-food')) return item.image;
+  const n = (item.name||'').toLowerCase();
+  const c = (item.category||'').toLowerCase();
+  const t = n + ' ' + c;
+  const rules = [
+    [['veg classic momos','steam'],     'momo,dumpling,steam,food'],
+    [['fried','momo'],                  'fried,dumpling,crispy'],
+    [['kurkure','crunchy momo'],        'crispy,momo,coated'],
+    [['paneer momo'],                   'paneer,momo,dumpling'],
+    [['momo','dumpling'],               'momo,steam,dumpling'],
+    [['sweet corn soup'],               'sweet,corn,soup'],
+    [['manchow'],                       'manchow,soup,noodle'],
+    [['soup'],                          'hot,soup,bowl'],
+    [['hakka noodle'],                  'hakka,noodles,chinese'],
+    [['chilli garlic noodle'],          'chilli,garlic,noodles'],
+    [['paneer noodle'],                 'paneer,noodles,food'],
+    [['noodle'],                        'noodles,stir+fry'],
+    [['fried rice'],                    'fried,rice,wok'],
+    [['chilli paneer'],                 'chilli,paneer,dry'],
+    [['honey chilli'],                  'honey,chilli,potato'],
+    [['chilli potato'],                 'chilli,potato,starter'],
+    [['veg manchurian'],                'manchurian,veg,starter'],
+    [['mushroom chilli'],               'mushroom,chilli,food'],
+    [['starter'],                       'appetizer,starter,food'],
+    [['rajma'],                         'rajma,kidney+beans,indian'],
+    [['kaladi roll'],                   'roll,cheese,wrap,indian'],
+    [['kaladi kulcha'],                 'kulcha,bread,indian'],
+    [['crispy paneer wrap'],            'paneer,wrap,crispy'],
+    [['paneer pop'],                    'paneer,crispy,bites'],
+    [['garlic bread'],                  'garlic,bread,toasted'],
+    [['wrap'],                          'wrap,roll,food'],
+    [['peri peri fries'],               'peri+peri,fries,spicy'],
+    [['french fries','fries'],          'french,fries,crispy'],
+    [['hot chocolate fudge'],           'chocolate,fudge,dessert'],
+    [['fruit sundae'],                  'fruit,sundae,dessert'],
+    [['dessert'],                       'dessert,sweet,food'],
+    [['cold coffee'],                   'cold,coffee,cafe'],
+    [['hazelnut frappe'],               'hazelnut,frappe,coffee'],
+    [['dark frappe'],                   'dark,frappe,coffee'],
+    [['frappe'],                        'frappe,cold,coffee'],
+    [['beverage','coffee'],             'coffee,drink,cafe'],
+    [['strawberry shake'],              'strawberry,milkshake,pink'],
+    [['oreo'],                          'oreo,milkshake,cookie'],
+    [['kitkat'],                        'chocolate,milkshake,wafer'],
+    [['vanilla'],                       'vanilla,milkshake,white'],
+    [['chocolate shake'],               'chocolate,milkshake,dark'],
+    [['shake','milkshake'],             'milkshake,cold,drink'],
+    [['ice tea'],                       'iced,tea,cold'],
+    [['lime soda'],                     'lime,soda,fresh'],
+    [['mojito'],                        'mojito,mint,mocktail'],
+    [['strawberry blast'],              'strawberry,mocktail,drink'],
+    [['mango delight'],                 'mango,mocktail,tropical'],
+    [['mocktail'],                      'mocktail,colorful,drink'],
+    [['margherita'],                    'margherita,pizza,cheese'],
+    [['paneer tikka pizza'],            'paneer,tikka,pizza'],
+    [['mushroom','pizza'],              'mushroom,pizza,food'],
+    [['pocket pizza'],                  'mini,pizza,pocket'],
+    [['pizza'],                         'pizza,cheesy,food'],
+    [['aloo tikki burger'],             'aloo+tikki,burger,indian'],
+    [['chilli lava'],                   'spicy,burger,hot'],
+    [['crunchy corn burger'],           'corn,burger,crunchy'],
+    [['paneer burger'],                 'paneer,burger,grill'],
+    [['maha veggie','veg surprise'],    'veggie,burger,loaded'],
+    [['burger'],                        'burger,fast+food'],
+    [['grilled sandwich'],              'grilled,sandwich,food'],
+    [['paneer tikka sandwich'],         'paneer,sandwich,grilled'],
+    [['italian','sandwich'],            'italian,sandwich,herb'],
+    [['sandwich'],                      'sandwich,grilled,food'],
+  ];
+  for (const [kws, q] of rules) {
+    if (kws.some(kw => t.includes(kw))) {
+      return `https://source.unsplash.com/400x300/?${q}&sig=${encodeURIComponent(item.name||'food')}`;
+    }
+  }
+  const cats = {
+    'burgers':'burger,fast+food','momos':'momo,dumpling',
+    'pizzas':'pizza,food','starters':'appetizer,snack',
+    'noodles':'noodles,food','rice':'fried+rice,wok',
+    'soups':'soup,hot,bowl','wraps':'wrap,roll',
+    'sandwiches':'sandwich,grilled','fries':'fries,crispy',
+    'shakes':'milkshake,cold','beverages':'coffee,cold+drink',
+    'mocktails':'mocktail,drink','jammu special':'indian,food',
+    'dessert':'dessert,sweet',
+  };
+  for (const [k,q] of Object.entries(cats)) {
+    if (c.includes(k)||n.includes(k))
+      return `https://source.unsplash.com/400x300/?${q}&sig=${encodeURIComponent(item.name||k)}`;
+  }
+  return `https://source.unsplash.com/400x300/?food,indian&sig=${encodeURIComponent(item.name||'food')}`;
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
-const socket = typeof io!=='undefined'?io({reconnection:true,reconnectionAttempts:Infinity}):null;
+const socket=typeof io!=='undefined'?io({reconnection:true,reconnectionAttempts:Infinity}):null;
 let cart=[],total=0,selPayMode='Cash',mobilePayMode='Cash',serviceMode='Dine-in',lastOrder=null,isOffline=!navigator.onLine;
 const qtys={};
 const isMobile=()=>window.innerWidth<768;
 const $=id=>document.getElementById(id);
 
-/* ── CATEGORIES with emoji icons ── */
+/* ── UPDATED CATEGORIES matching real menu ── */
 const cats=[
-  {name:'Burgers',icon:'🍔'},{name:'Pizzas',icon:'🍕'},
-  {name:'Shakes',icon:'🥤'},{name:'Mocktails',icon:'🍹'},
-  {name:'Momos',icon:'🥟'},{name:'Starters',icon:'🍟'},
-  {name:'Wraps',icon:'🌯'},{name:'Sandwiches',icon:'🥪'},
-  {name:'Beverages',icon:'☕'},{name:'Fries',icon:'🍟'},
-  {name:'Dessert',icon:'🍨'}
+  {name:'Burgers',        icon:'🍔'},
+  {name:'Momos',          icon:'🥟'},
+  {name:'Pizzas',         icon:'🍕'},
+  {name:'Starters',       icon:'🍢'},
+  {name:'Noodles',        icon:'🍜'},
+  {name:'Rice',           icon:'🍚'},
+  {name:'Soups',          icon:'🥣'},
+  {name:'Wraps',          icon:'🌯'},
+  {name:'Sandwiches',     icon:'🥪'},
+  {name:'Fries',          icon:'🍟'},
+  {name:'Shakes',         icon:'🥤'},
+  {name:'Beverages',      icon:'☕'},
+  {name:'Mocktails',      icon:'🍹'},
+  {name:'Jammu Special',  icon:'⭐'},
+  {name:'Dessert',        icon:'🍨'},
 ];
 
-/* Build category rail tiles */
-const rail=$('catRail'), sticky=$('catSticky');
+const rail=$('catRail'),sticky=$('catSticky');
 cats.forEach(c=>{
-  /* tile */
   const tile=document.createElement('div');
   tile.className='cat-tile';
   tile.innerHTML=`<div class="cat-tile-img">${c.icon}</div><div class="cat-tile-name">${c.name}</div>`;
   tile.onclick=()=>loadCat(c.name,tile,null);
   rail.appendChild(tile);
-  /* sticky btn */
   const btn=document.createElement('button');
   btn.className='cst-btn';btn.textContent=c.name;
   btn.onclick=()=>loadCat(c.name,null,btn);
@@ -1284,12 +593,10 @@ cats.forEach(c=>{
 });
 
 async function loadCat(cat,tile,btn){
-  /* update active states */
   document.querySelectorAll('.cat-tile').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.cst-btn').forEach(b=>b.classList.remove('active'));
   if(tile)tile.classList.add('active');
   if(btn)btn.classList.add('active');
-  /* sync both */
   const tileMatch=rail.querySelectorAll('.cat-tile');
   const btnMatch=sticky.querySelectorAll('.cst-btn');
   cats.forEach((c,i)=>{
@@ -1304,16 +611,17 @@ async function loadCat(cat,tile,btn){
     $('itemsGrid').innerHTML='';
     $('menuCount').textContent=items.length?`${items.length} items`:'';
     if(!items.length){$('itemsGrid').innerHTML=`<div class="items-empty">No items yet 🍽</div>`;return;}
-    const bestNames=['aloo tikki','veg momo','cold coffee','shake','pizza'];
+    const bestNames=['aloo tikki','veg classic momo','cold coffee','oreo','margherita','chilli paneer'];
     items.forEach((item,i)=>{
       if(!qtys[item._id])qtys[item._id]=1;
       const isBest=bestNames.some(b=>item.name.toLowerCase().includes(b));
+      const imgSrc=getImg(item);
       const card=document.createElement('div');
       card.className='icard';card.style.animationDelay=(i*.04)+'s';
       card.innerHTML=`
         ${isBest?'<div class="icard-best">★ Popular</div>':''}
         <div class="icard-img">
-          <img src="${item.image||'/images/menu/default-food.jpg'}" alt="${item.name}" onerror="this.src='/images/menu/default-food.jpg'">
+          <img src="${imgSrc}" alt="${item.name}" loading="lazy" onerror="this.src='https://source.unsplash.com/400x300/?food&sig=${encodeURIComponent(item.name)}'">
         </div>
         <div class="icard-body">
           <div>
@@ -1321,9 +629,7 @@ async function loadCat(cat,tile,btn){
             <div class="icard-desc">${item.description||'Made fresh, served hot'}</div>
           </div>
           <div class="icard-foot">
-            <div class="icard-price-wrap">
-              <div class="icard-price"><sup>₹</sup>${item.price}</div>
-            </div>
+            <div class="icard-price"><sup>₹</sup>${item.price}</div>
             <div style="display:flex;align-items:center;gap:6px;">
               <div class="icard-qty" id="iqw-${item._id}">
                 <button class="iqb" onclick="cartQtyDirect('${item._id}',-1,${item.price})">−</button>
@@ -1337,72 +643,47 @@ async function loadCat(cat,tile,btn){
       $('itemsGrid').appendChild(card);
     });
   }catch(e){
-    $('itemsGrid').innerHTML=`<div class="items-empty">⚠️ ${isOffline?'You are offline':'Failed to load'}</div>`;
+    $('itemsGrid').innerHTML=`<div class="items-empty">⚠️ ${isOffline?'You are offline':'Failed to load menu'}</div>`;
   }
 }
 
-/* ── SERVICE MODE ── */
 let serviceSelected='Dine-in';
-window.selectService=function(mode,el){
-  serviceSelected=mode;
-  document.querySelectorAll('.sm-opt').forEach(o=>o.classList.remove('sel'));
-  el.classList.add('sel');
-};
-window.confirmService=function(){
-  serviceMode=serviceSelected;
-  $('serviceModal').style.display='none';
-  updateServiceUI();
-};
+window.selectService=function(mode,el){serviceSelected=mode;document.querySelectorAll('.sm-opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');};
+window.confirmService=function(){serviceMode=serviceSelected;$('serviceModal').style.display='none';updateServiceUI();};
 window.showServiceModal=function(){$('serviceModal').style.display='flex';};
-window.switchService=function(mode){
-  serviceMode=mode;
-  updateServiceUI();
-  $('nstDine').classList.toggle('active',mode==='Dine-in');
-  $('nstTake').classList.toggle('active',mode==='Takeaway');
-};
+window.switchService=function(mode){serviceMode=mode;updateServiceUI();};
 function updateServiceUI(){
-  const label=serviceMode==='Dine-in'?'🪑 Dine-in · Gandhi Nagar':'🛍️ Takeaway · Gandhi Nagar';
-  $('ssLabel').textContent=label;
+  $('ssLabel').textContent=serviceMode==='Dine-in'?'🪑 Dine-in · Gandhi Nagar':'🛍️ Takeaway · Gandhi Nagar';
   $('cdService').textContent=serviceMode+' · Gandhi Nagar';
   $('nstDine').classList.toggle('active',serviceMode==='Dine-in');
   $('nstTake').classList.toggle('active',serviceMode==='Takeaway');
 }
-
-/* ── NAV SCROLL ── */
 window.addEventListener('scroll',()=>$('mainNav').classList.toggle('scrolled',scrollY>30));
 
-/* ── ADD TO CART ── */
 window.addToCart=function(item){
   const id=item._id||item.name.replace(/\s+/g,'_').toLowerCase();
   const qty=qtys[id]||1;
   const ex=cart.find(i=>i._id===id);
   if(ex){ex.qty+=qty;}else{cart.push({_id:id,name:item.name,price:item.price,qty});}
-  total+=item.price*qty;
-  syncUI();showToast(item.name+' added!');
+  total+=item.price*qty;syncUI();showToast(item.name+' added!');
   const btn=$(`iad-${id}`),qw=$(`iqw-${id}`),qn=$(`iqn-${id}`);
   if(btn){btn.textContent=cart.find(i=>i._id===id)?.qty||qty;btn.classList.add('added');}
   if(qw)qw.classList.add('show');
   if(qn)qn.textContent=cart.find(i=>i._id===id)?.qty||qty;
 };
-
 window.addSpecial=function(item,btnId){
-  const id=item._id;
-  const ex=cart.find(i=>i._id===id);
+  const id=item._id;const ex=cart.find(i=>i._id===id);
   if(ex){ex.qty++;}else{cart.push({_id:id,name:item.name,price:item.price,qty:1});}
   total+=item.price;syncUI();showToast(item.name+' added!');
-  const btn=$(btnId);
-  if(btn){btn.textContent=cart.find(i=>i._id===id)?.qty||1;btn.classList.add('added');}
+  const btn=$(btnId);if(btn){btn.textContent=cart.find(i=>i._id===id)?.qty||1;btn.classList.add('added');}
 };
-
 window.cartQtyDirect=function(id,v,price){
-  const ci=cart.find(i=>i._id===id);
-  if(!ci)return;
+  const ci=cart.find(i=>i._id===id);if(!ci)return;
   if(ci.qty+v<1){
     total-=ci.price*ci.qty;cart=cart.filter(i=>i._id!==id);
     const btn=$(`iad-${id}`),qw=$(`iqw-${id}`),qn=$(`iqn-${id}`);
     if(btn){btn.textContent='ADD +';btn.classList.remove('added');}
-    if(qw)qw.classList.remove('show');
-    if(qn)qn.textContent=1;
+    if(qw)qw.classList.remove('show');if(qn)qn.textContent=1;
     syncUI();return;
   }
   total+=price*v;ci.qty+=v;
@@ -1410,11 +691,9 @@ window.cartQtyDirect=function(id,v,price){
   const btn=$(`iad-${id}`);if(btn)btn.textContent=ci.qty;
   syncUI();
 };
-
 function syncUI(){
   const count=cart.reduce((a,b)=>a+b.qty,0);
-  $('mcbTotal').textContent=total;
-  $('cdTotal').textContent=total;
+  $('mcbTotal').textContent=total;$('cdTotal').textContent=total;
   $('mcbLbl').textContent=count+(count===1?' item':' items');
   const nc=$('navCount');if(nc)nc.textContent=count;
   if(isMobile())$('mCartBar').style.display=count>0?'block':'none';
@@ -1439,16 +718,10 @@ function renderCartDrawer(){
 }
 window.dQty=(idx,v)=>{if(cart[idx].qty+v<1){dRm(idx);return;}total+=cart[idx].price*v;cart[idx].qty+=v;syncUI();};
 window.dRm=idx=>{total-=cart[idx].price*cart[idx].qty;cart.splice(idx,1);syncUI();};
-
-/* ── PAYMENT ── */
 window.selPay=(mode,btn)=>{selPayMode=mode;document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');};
 window.selMobilePay=(mode,btn)=>{mobilePayMode=mode;document.querySelectorAll('.om-pay-opt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');};
-
-/* ── CART OPEN/CLOSE ── */
 window.openCart=()=>{$('cartDrawer').classList.add('open');$('cartOverlay').classList.add('show');};
 window.closeCart=()=>{$('cartDrawer').classList.remove('open');$('cartOverlay').classList.remove('show');};
-
-/* ── ORDER MODAL ── */
 window.openOrderModal=()=>{
   if(!cart.length){showToast('Cart is empty!');return;}
   $('omTotal').textContent=total;
@@ -1459,14 +732,9 @@ window.openOrderModal=()=>{
 window.closeOrderModal=()=>$('orderModal').classList.remove('show');
 window.confirmOrder=()=>{closeOrderModal();doPlaceOrder($('mobileToken').value.trim(),mobilePayMode);};
 window.placeOrder=()=>{if(!cart.length){showToast('Cart is empty!');return;}doPlaceOrder($('deskToken')?.value.trim()||'',selPayMode);};
-
-/* ── OFFLINE QUEUE ── */
 const getPending=()=>{try{return JSON.parse(localStorage.getItem('pendingOrders')||'[]');}catch{return[];}};
 const savePending=o=>localStorage.setItem('pendingOrders',JSON.stringify(o));
-function updatePendingBadge(){
-  const p=getPending(),b=$('pendingBadge'),c=$('pendingCount');
-  b.classList.toggle('show',p.length>0);if(c)c.textContent=p.length;
-}
+function updatePendingBadge(){const p=getPending(),b=$('pendingBadge'),c=$('pendingCount');b.classList.toggle('show',p.length>0);if(c)c.textContent=p.length;}
 window.syncPending=async function(){
   const pending=getPending();if(!pending.length)return;
   const rem=[];
@@ -1478,8 +746,6 @@ window.addEventListener('online',()=>{isOffline=false;$('offlineBanner').classLi
 window.addEventListener('offline',()=>{isOffline=true;$('offlineBanner').classList.add('show');});
 if(isOffline)$('offlineBanner').classList.add('show');
 updatePendingBadge();
-
-/* ── PLACE ORDER ── */
 async function doPlaceOrder(token,payMode){
   if(!cart.length)return;
   const payload={items:cart.map(i=>({name:i.name,price:i.price,qty:i.qty})),total,paymentMode:payMode,tokenNumber:token||null,serviceMode};
@@ -1504,8 +770,6 @@ function resetCart(){
   if($('mobileToken'))$('mobileToken').value='';
   closeCart();syncUI();
 }
-
-/* ── RECEIPT ── */
 function showReceiptModal(order){
   $('rmNum').textContent='#'+order.orderNumber;
   const tok=$('rmToken');
@@ -1519,8 +783,6 @@ function showReceiptModal(order){
 }
 window.closeReceipt=()=>$('receiptModal').classList.remove('show');
 window.printReceipt=()=>{if(lastOrder?._id)window.open(`/receipt-print/${lastOrder._id}?print=1`,'_blank');else window.print();};
-
-/* ── SEARCH ── */
 window.filterItems=text=>{
   const q=text.toLowerCase();
   document.querySelectorAll('.icard').forEach(c=>{
@@ -1529,23 +791,15 @@ window.filterItems=text=>{
   });
 };
 window.focusSearch=()=>$('searchInput')?.focus();
-
-/* ── TOAST ── */
 let toastT;
 function showToast(msg){const t=$('toast');t.textContent='✓  '+msg;t.style.display='block';clearTimeout(toastT);toastT=setTimeout(()=>t.style.display='none',2000);}
-
-/* ── PWA ── */
 let deferredPrompt=null;
 if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js');
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(!localStorage.getItem('pwa-dismissed'))setTimeout(()=>$('pwaBar').classList.add('show'),4000);});
 window.installPWA=()=>{if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;$('pwaBar').classList.remove('show');});};
 window.dismissPWA=()=>{$('pwaBar').classList.remove('show');localStorage.setItem('pwa-dismissed','1');};
-
-/* ── SOCKET ── */
 if(socket)socket.on('order-updated',o=>console.log('Updated:',o.orderNumber));
 if(navigator.onLine)syncPending();
-
-/* ── INIT ── */
 const firstTile=rail.querySelector('.cat-tile');
 if(firstTile){firstTile.classList.add('active');const firstSt=sticky.querySelector('.cst-btn');if(firstSt)firstSt.classList.add('active');loadCat('Burgers',firstTile,firstSt);}
 });
