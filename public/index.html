@@ -324,28 +324,28 @@ img{display:block;max-width:100%;}
   <div class="ss-head"><div class="ss-title">🔥 Jammu Specials</div></div>
   <div class="ss-scroll">
     <div class="sc">
-      <div class="sc-img"><img src="https://source.unsplash.com/300x200/?rajma,chawal,indian+food&sig=rc" onerror="this.parentElement.innerHTML='🍛'" loading="lazy"></div>
+      <div class="sc-img"><img src="https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?w=300&h=200&fit=crop" onerror="this.parentElement.innerHTML='🍛'" loading="lazy"></div>
       <div class="sc-body">
         <div class="sc-name">Rajma Chawal</div><div class="sc-tag">🌶️ Jammu's Pride</div>
         <div class="sc-foot"><span class="sc-price">₹90</span><button class="sc-btn" id="scb-rajma" onclick="addSpecial({_id:'rajma',name:'Rajma Chawal',price:90},'scb-rajma')">ADD +</button></div>
       </div>
     </div>
     <div class="sc">
-      <div class="sc-img"><img src="https://source.unsplash.com/300x200/?kulcha,bread,indian&sig=kk" onerror="this.parentElement.innerHTML='🫓'" loading="lazy"></div>
+      <div class="sc-img"><img src="https://images.pexels.com/photos/2611917/pexels-photo-2611917.jpeg?w=300&h=200&fit=crop" onerror="this.parentElement.innerHTML='🫓'" loading="lazy"></div>
       <div class="sc-body">
         <div class="sc-name">Kaladi Kulcha</div><div class="sc-tag">🧀 Fresh Daily</div>
         <div class="sc-foot"><span class="sc-price">₹80</span><button class="sc-btn" id="scb-kaladi" onclick="addSpecial({_id:'kaladi',name:'Kaladi Kulcha',price:80},'scb-kaladi')">ADD +</button></div>
       </div>
     </div>
     <div class="sc">
-      <div class="sc-img"><img src="https://source.unsplash.com/300x200/?momo,dumpling,steam&sig=vm" onerror="this.parentElement.innerHTML='🥟'" loading="lazy"></div>
+      <div class="sc-img"><img src="https://images.pexels.com/photos/4409288/pexels-photo-4409288.jpeg?w=300&h=200&fit=crop" onerror="this.parentElement.innerHTML='🥟'" loading="lazy"></div>
       <div class="sc-body">
         <div class="sc-name">Veg Classic Momos</div><div class="sc-tag">⭐ Bestseller</div>
         <div class="sc-foot"><span class="sc-price">₹80</span><button class="sc-btn" id="scb-momo" onclick="addSpecial({_id:'veg_momo_steam',name:'Veg Classic Momos (Steam)',price:80},'scb-momo')">ADD +</button></div>
       </div>
     </div>
     <div class="sc">
-      <div class="sc-img"><img src="https://source.unsplash.com/300x200/?burger,aloo,tikki&sig=atb" onerror="this.parentElement.innerHTML='🍔'" loading="lazy"></div>
+      <div class="sc-img"><img src="https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?w=300&h=200&fit=crop" onerror="this.parentElement.innerHTML='🍔'" loading="lazy"></div>
       <div class="sc-body">
         <div class="sc-name">Aloo Tikki Burger</div><div class="sc-tag">🔥 Most Ordered</div>
         <div class="sc-foot"><span class="sc-price">₹70</span><button class="sc-btn" id="scb-atb" onclick="addSpecial({_id:'aloo_tikki_burger',name:'Aloo Tikki Burger',price:70},'scb-atb')">ADD +</button></div>
@@ -462,95 +462,66 @@ img{display:block;max-width:100%;}
 <script>
 /* ══ SMART IMAGE FUNCTION ══ */
 function getImg(item) {
-  if (item.image && !item.image.includes('default-food')) return item.image;
-  const n = (item.name||'').toLowerCase();
-  const c = (item.category||'').toLowerCase();
+  // Use database image first — already set to Pexels URLs
+  if (item.image &&
+      !item.image.includes('default-food') &&
+      !item.image.includes('/images/menu/') &&
+      !item.image.includes('source.unsplash.com')) {
+    return item.image;
+  }
+
+  // Pexels fallback images by category/keyword
+  const n = (item.name || '').toLowerCase();
+  const c = (item.category || '').toLowerCase();
   const t = n + ' ' + c;
+
   const rules = [
-    [['veg classic momos','steam'],     'momo,dumpling,steam,food'],
-    [['fried','momo'],                  'fried,dumpling,crispy'],
-    [['kurkure','crunchy momo'],        'crispy,momo,coated'],
-    [['paneer momo'],                   'paneer,momo,dumpling'],
-    [['momo','dumpling'],               'momo,steam,dumpling'],
-    [['sweet corn soup'],               'sweet,corn,soup'],
-    [['manchow'],                       'manchow,soup,noodle'],
-    [['soup'],                          'hot,soup,bowl'],
-    [['hakka noodle'],                  'hakka,noodles,chinese'],
-    [['chilli garlic noodle'],          'chilli,garlic,noodles'],
-    [['paneer noodle'],                 'paneer,noodles,food'],
-    [['noodle'],                        'noodles,stir+fry'],
-    [['fried rice'],                    'fried,rice,wok'],
-    [['chilli paneer'],                 'chilli,paneer,dry'],
-    [['honey chilli'],                  'honey,chilli,potato'],
-    [['chilli potato'],                 'chilli,potato,starter'],
-    [['veg manchurian'],                'manchurian,veg,starter'],
-    [['mushroom chilli'],               'mushroom,chilli,food'],
-    [['starter'],                       'appetizer,starter,food'],
-    [['rajma'],                         'rajma,kidney+beans,indian'],
-    [['kaladi roll'],                   'roll,cheese,wrap,indian'],
-    [['kaladi kulcha'],                 'kulcha,bread,indian'],
-    [['crispy paneer wrap'],            'paneer,wrap,crispy'],
-    [['paneer pop'],                    'paneer,crispy,bites'],
-    [['garlic bread'],                  'garlic,bread,toasted'],
-    [['wrap'],                          'wrap,roll,food'],
-    [['peri peri fries'],               'peri+peri,fries,spicy'],
-    [['french fries','fries'],          'french,fries,crispy'],
-    [['hot chocolate fudge'],           'chocolate,fudge,dessert'],
-    [['fruit sundae'],                  'fruit,sundae,dessert'],
-    [['dessert'],                       'dessert,sweet,food'],
-    [['cold coffee'],                   'cold,coffee,cafe'],
-    [['hazelnut frappe'],               'hazelnut,frappe,coffee'],
-    [['dark frappe'],                   'dark,frappe,coffee'],
-    [['frappe'],                        'frappe,cold,coffee'],
-    [['beverage','coffee'],             'coffee,drink,cafe'],
-    [['strawberry shake'],              'strawberry,milkshake,pink'],
-    [['oreo'],                          'oreo,milkshake,cookie'],
-    [['kitkat'],                        'chocolate,milkshake,wafer'],
-    [['vanilla'],                       'vanilla,milkshake,white'],
-    [['chocolate shake'],               'chocolate,milkshake,dark'],
-    [['shake','milkshake'],             'milkshake,cold,drink'],
-    [['ice tea'],                       'iced,tea,cold'],
-    [['lime soda'],                     'lime,soda,fresh'],
-    [['mojito'],                        'mojito,mint,mocktail'],
-    [['strawberry blast'],              'strawberry,mocktail,drink'],
-    [['mango delight'],                 'mango,mocktail,tropical'],
-    [['mocktail'],                      'mocktail,colorful,drink'],
-    [['margherita'],                    'margherita,pizza,cheese'],
-    [['paneer tikka pizza'],            'paneer,tikka,pizza'],
-    [['mushroom','pizza'],              'mushroom,pizza,food'],
-    [['pocket pizza'],                  'mini,pizza,pocket'],
-    [['pizza'],                         'pizza,cheesy,food'],
-    [['aloo tikki burger'],             'aloo+tikki,burger,indian'],
-    [['chilli lava'],                   'spicy,burger,hot'],
-    [['crunchy corn burger'],           'corn,burger,crunchy'],
-    [['paneer burger'],                 'paneer,burger,grill'],
-    [['maha veggie','veg surprise'],    'veggie,burger,loaded'],
-    [['burger'],                        'burger,fast+food'],
-    [['grilled sandwich'],              'grilled,sandwich,food'],
-    [['paneer tikka sandwich'],         'paneer,sandwich,grilled'],
-    [['italian','sandwich'],            'italian,sandwich,herb'],
-    [['sandwich'],                      'sandwich,grilled,food'],
+    [['momo','dumpling'],               'https://images.pexels.com/photos/4409288/pexels-photo-4409288.jpeg?w=400&h=300&fit=crop'],
+    [['burger'],                         'https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?w=400&h=300&fit=crop'],
+    [['pizza'],                          'https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg?w=400&h=300&fit=crop'],
+    [['noodle','hakka'],                 'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=400&h=300&fit=crop'],
+    [['fried rice','rice'],              'https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg?w=400&h=300&fit=crop'],
+    [['soup'],                           'https://images.pexels.com/photos/1346347/pexels-photo-1346347.jpeg?w=400&h=300&fit=crop'],
+    [['chilli potato','honey chilli','manchurian','chilli paneer','mushroom'], 'https://images.pexels.com/photos/2313686/pexels-photo-2313686.jpeg?w=400&h=300&fit=crop'],
+    [['wrap','paneer pop','garlic bread'],'https://images.pexels.com/photos/2955819/pexels-photo-2955819.jpeg?w=400&h=300&fit=crop'],
+    [['sandwich'],                       'https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?w=400&h=300&fit=crop'],
+    [['fries','french fries'],           'https://images.pexels.com/photos/1893555/pexels-photo-1893555.jpeg?w=400&h=300&fit=crop'],
+    [['cold coffee','frappe'],           'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?w=400&h=300&fit=crop'],
+    [['shake','milkshake'],              'https://images.pexels.com/photos/1187317/pexels-photo-1187317.jpeg?w=400&h=300&fit=crop'],
+    [['mojito','mocktail','ice tea','lime soda','blast','mango delight'], 'https://images.pexels.com/photos/1028637/pexels-photo-1028637.jpeg?w=400&h=300&fit=crop'],
+    [['rajma'],                          'https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?w=400&h=300&fit=crop'],
+    [['kaladi'],                         'https://images.pexels.com/photos/2611917/pexels-photo-2611917.jpeg?w=400&h=300&fit=crop'],
+    [['chocolate fudge','sundae'],       'https://images.pexels.com/photos/1352278/pexels-photo-1352278.jpeg?w=400&h=300&fit=crop'],
   ];
-  for (const [kws, q] of rules) {
-    if (kws.some(kw => t.includes(kw))) {
-      return `https://source.unsplash.com/400x300/?${q}&sig=${encodeURIComponent(item.name||'food')}`;
-    }
+
+  for (const [keywords, url] of rules) {
+    if (keywords.some(kw => t.includes(kw))) return url;
   }
-  const cats = {
-    'burgers':'burger,fast+food','momos':'momo,dumpling',
-    'pizzas':'pizza,food','starters':'appetizer,snack',
-    'noodles':'noodles,food','rice':'fried+rice,wok',
-    'soups':'soup,hot,bowl','wraps':'wrap,roll',
-    'sandwiches':'sandwich,grilled','fries':'fries,crispy',
-    'shakes':'milkshake,cold','beverages':'coffee,cold+drink',
-    'mocktails':'mocktail,drink','jammu special':'indian,food',
-    'dessert':'dessert,sweet',
+
+  // Category fallback
+  const catMap = {
+    'burgers':       'https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?w=400&h=300&fit=crop',
+    'momos':         'https://images.pexels.com/photos/4409288/pexels-photo-4409288.jpeg?w=400&h=300&fit=crop',
+    'pizzas':        'https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg?w=400&h=300&fit=crop',
+    'starters':      'https://images.pexels.com/photos/2313686/pexels-photo-2313686.jpeg?w=400&h=300&fit=crop',
+    'noodles':       'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=400&h=300&fit=crop',
+    'rice':          'https://images.pexels.com/photos/723198/pexels-photo-723198.jpeg?w=400&h=300&fit=crop',
+    'soups':         'https://images.pexels.com/photos/1346347/pexels-photo-1346347.jpeg?w=400&h=300&fit=crop',
+    'wraps':         'https://images.pexels.com/photos/2955819/pexels-photo-2955819.jpeg?w=400&h=300&fit=crop',
+    'sandwiches':    'https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?w=400&h=300&fit=crop',
+    'fries':         'https://images.pexels.com/photos/1893555/pexels-photo-1893555.jpeg?w=400&h=300&fit=crop',
+    'shakes':        'https://images.pexels.com/photos/1187317/pexels-photo-1187317.jpeg?w=400&h=300&fit=crop',
+    'beverages':     'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?w=400&h=300&fit=crop',
+    'mocktails':     'https://images.pexels.com/photos/1028637/pexels-photo-1028637.jpeg?w=400&h=300&fit=crop',
+    'jammu special': 'https://images.pexels.com/photos/5410400/pexels-photo-5410400.jpeg?w=400&h=300&fit=crop',
+    'dessert':       'https://images.pexels.com/photos/1352278/pexels-photo-1352278.jpeg?w=400&h=300&fit=crop',
   };
-  for (const [k,q] of Object.entries(cats)) {
-    if (c.includes(k)||n.includes(k))
-      return `https://source.unsplash.com/400x300/?${q}&sig=${encodeURIComponent(item.name||k)}`;
+
+  for (const [key, url] of Object.entries(catMap)) {
+    if (c.includes(key) || n.includes(key)) return url;
   }
-  return `https://source.unsplash.com/400x300/?food,indian&sig=${encodeURIComponent(item.name||'food')}`;
+
+  return 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?w=400&h=300&fit=crop';
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
@@ -621,7 +592,7 @@ async function loadCat(cat,tile,btn){
       card.innerHTML=`
         ${isBest?'<div class="icard-best">★ Popular</div>':''}
         <div class="icard-img">
-          <img src="${imgSrc}" alt="${item.name}" loading="lazy" onerror="this.src='https://source.unsplash.com/400x300/?food&sig=${encodeURIComponent(item.name)}'">
+          <img src="${imgSrc}" alt="${item.name}" loading="lazy" onerror="this.src='https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?w=400&h=300&fit=crop'">
         </div>
         <div class="icard-body">
           <div>
