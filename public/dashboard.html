@@ -1,171 +1,581 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-<title>Hungry Hop Dashboard</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 Dashboard – Hungry Hop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+:root{
+  --y:#FFB800;--y2:#ffd060;--ydim:rgba(255,184,0,0.1);--yborder:rgba(255,184,0,0.25);
+  --bg:#090909;--bg2:#111;--bg3:#171717;--bg4:#1e1e1e;--bg5:#242424;
+  --text:#f2f2f2;--muted:#777;--muted2:#aaa;
+  --green:#22c55e;--red:#ef4444;--blue:#3b82f6;--orange:#f97316;--purple:#a855f7;
+  --border:#252525;--border2:#2e2e2e;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;}
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--y);border-radius:3px;}
 
-/* PAGE */
+/* ── NAV ── */
+.nav{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:0 24px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-icon{
+  width:36px;height:36px;background:var(--y);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:0 0 12px rgba(255,184,0,0.3);flex-shrink:0;
+}
+.nav-name{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--y);letter-spacing:2px;}
+.nav-sub{font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:1px;}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-btn{
+  background:var(--bg3);color:var(--muted2);
+  border:1px solid var(--border2);
+  padding:7px 14px;border-radius:8px;
+  font-size:12px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  transition:all .15s;text-decoration:none;
+  display:flex;align-items:center;gap:5px;
+}
+.nav-btn:hover{border-color:var(--y);color:var(--y);}
+.nav-btn.active{background:var(--y);color:#111;border-color:var(--y);}
+.live-dot{
+  display:flex;align-items:center;gap:5px;
+  font-size:10px;color:var(--green);font-weight:800;letter-spacing:.5px;
+}
+.ld{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:.5;}}
 
-body{
-font-family:Arial, Helvetica, sans-serif;
-background:#f5f6fa;
-margin:0;
-padding:40px;
+/* ── BODY WRAP ── */
+.body{padding:20px 24px;max-width:1400px;margin:0 auto;}
+
+/* ── DATE FILTER BAR ── */
+.filter-bar{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:24px;flex-wrap:wrap;
+}
+.filter-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:26px;color:var(--text);letter-spacing:1px;
+}
+.filter-tabs{display:flex;gap:6px;margin-left:auto;}
+.ftab{
+  background:var(--bg3);color:var(--muted2);
+  border:1px solid var(--border2);
+  padding:7px 16px;border-radius:20px;
+  font-size:12px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;transition:all .15s;
+}
+.ftab.active{background:var(--y);color:#111;border-color:var(--y);}
+.ftab:hover:not(.active){border-color:var(--y);color:var(--y);}
+.refresh-btn{
+  background:var(--bg3);color:var(--muted2);
+  border:1px solid var(--border2);
+  width:36px;height:36px;border-radius:50%;
+  cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.refresh-btn:hover{border-color:var(--y);color:var(--y);}
+.refresh-btn.spinning{animation:spin .6s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── STAT CARDS ── */
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-bottom:24px;
+}
+.stat-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px 16px;
+  position:relative;overflow:hidden;
+  transition:all .25s;
+}
+.stat-card:hover{border-color:var(--yborder);transform:translateY(-2px);}
+.stat-card::before{
+  content:'';position:absolute;
+  top:-30px;right:-30px;
+  width:100px;height:100px;
+  border-radius:50%;opacity:.06;
+}
+.sc-orders::before{background:var(--blue);}
+.sc-revenue::before{background:var(--y);}
+.sc-cash::before{background:var(--green);}
+.sc-upi::before{background:var(--purple);}
+.sc-pending::before{background:var(--orange);}
+.sc-done::before{background:var(--green);}
+.stat-icon{font-size:22px;margin-bottom:8px;}
+.stat-value{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:32px;letter-spacing:1px;line-height:1;
+  margin-bottom:4px;
+}
+.sc-orders .stat-value{color:var(--blue);}
+.sc-revenue .stat-value{color:var(--y);}
+.sc-cash .stat-value{color:var(--green);}
+.sc-upi .stat-value{color:var(--purple);}
+.sc-pending .stat-value{color:var(--orange);}
+.sc-done .stat-value{color:var(--green);}
+.stat-label{font-size:11px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;font-weight:700;}
+.stat-sub{font-size:11px;color:var(--muted2);margin-top:3px;}
+
+/* ── WEEK CHART ── */
+.chart-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:14px;padding:18px 16px;
+  margin-bottom:20px;
+}
+.cc-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
+}
+.cc-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;color:var(--text);letter-spacing:1.5px;
+}
+.cc-legend{display:flex;gap:12px;}
+.cc-leg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted2);}
+.cc-leg-dot{width:8px;height:8px;border-radius:50%;}
+/* Bar chart */
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding-top:10px;}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-wrap{width:100%;flex:1;display:flex;align-items:flex-end;}
+.bar{
+  width:100%;border-radius:6px 6px 0 0;
+  min-height:4px;
+  transition:height .6s ease;
+  position:relative;cursor:pointer;
+}
+.bar:hover::after{
+  content:attr(data-tip);
+  position:absolute;bottom:calc(100%+6px);left:50%;
+  transform:translateX(-50%);
+  background:var(--bg5);color:var(--text);
+  font-size:10px;padding:4px 8px;border-radius:6px;
+  white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:700;
+  border:1px solid var(--border2);
+  pointer-events:none;
+}
+.bar-rev{background:linear-gradient(to top,var(--y),var(--y2));}
+.bar-ord{background:linear-gradient(to top,var(--blue),#60a5fa);}
+.bar-label{font-size:9px;color:var(--muted);text-align:center;letter-spacing:.3px;}
+
+/* ── TOP ITEMS ── */
+.two-col{
+  display:grid;grid-template-columns:1fr;
+  gap:16px;margin-bottom:20px;
+}
+.panel{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:14px;padding:16px;
+}
+.panel-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;color:var(--text);letter-spacing:1.5px;
+  margin-bottom:14px;padding-bottom:10px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.top-item{
+  display:flex;align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);gap:12px;
+}
+.top-item:last-child{border-bottom:none;}
+.ti-rank{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;color:var(--muted);
+  width:24px;text-align:center;flex-shrink:0;
+}
+.ti-rank.gold{color:var(--y);}
+.ti-rank.silver{color:#94a3b8;}
+.ti-rank.bronze{color:#cd7c2f;}
+.ti-info{flex:1;}
+.ti-name{font-size:13px;font-weight:800;color:var(--text);margin-bottom:2px;}
+.ti-qty{font-size:11px;color:var(--muted);}
+.ti-rev{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;color:var(--y);letter-spacing:.5px;
+}
+/* progress bar */
+.ti-bar-wrap{width:100%;background:var(--bg4);border-radius:4px;height:4px;margin-top:5px;}
+.ti-bar{height:4px;border-radius:4px;background:var(--y);transition:width .6s ease;}
+
+/* ── RECENT ORDERS TABLE ── */
+.orders-table-wrap{overflow-x:auto;}
+.orders-table{width:100%;border-collapse:collapse;font-size:13px;}
+.orders-table th{
+  text-align:left;padding:10px 12px;
+  font-size:10px;font-weight:800;color:var(--muted);
+  letter-spacing:1px;text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+}
+.orders-table td{
+  padding:11px 12px;
+  border-bottom:1px solid var(--border2);
+  color:var(--text);vertical-align:middle;
+}
+.orders-table tr:last-child td{border-bottom:none;}
+.orders-table tr:hover td{background:rgba(255,255,255,.02);}
+.ord-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:16px;color:var(--y);letter-spacing:1px;
+}
+.ord-token{
+  background:var(--ydim);color:var(--y);
+  font-size:10px;font-weight:800;
+  padding:2px 8px;border-radius:10px;
+  border:1px solid var(--yborder);margin-left:6px;
+}
+.status-pill{
+  display:inline-flex;padding:3px 10px;border-radius:20px;
+  font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+}
+.s-Pending{background:rgba(249,115,22,.15);color:#fb923c;border:1px solid rgba(249,115,22,.3);}
+.s-Preparing{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3);}
+.s-Ready{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
+.s-Completed{background:rgba(100,100,100,.12);color:#888;border:1px solid #333;}
+.pay-badge{
+  font-size:11px;font-weight:700;color:var(--muted2);
+}
+.print-link{
+  background:var(--bg3);color:var(--y);
+  border:1px solid var(--border2);
+  padding:4px 10px;border-radius:6px;
+  font-size:11px;font-weight:800;cursor:pointer;
+  font-family:'Nunito',sans-serif;
+  text-decoration:none;transition:all .15s;
+}
+.print-link:hover{border-color:var(--y);}
+
+/* ── LOADING / EMPTY ── */
+.skeleton{
+  background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.2s infinite;
+  border-radius:8px;
+}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.loading-state{
+  text-align:center;padding:40px;color:var(--muted);
+}
+.ls-spin{
+  width:32px;height:32px;border:2.5px solid var(--border);
+  border-top-color:var(--y);border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 12px;
 }
 
-/* DASHBOARD CONTAINER */
-
-.dashboard{
-max-width:1200px;
-margin:auto;
+/* ── RESPONSIVE ── */
+@media(min-width:640px){
+  .stats-grid{grid-template-columns:repeat(3,1fr);}
 }
-
-/* TITLE */
-
-h1{
-margin-bottom:30px;
+@media(min-width:768px){
+  .body{padding:24px 32px;}
+  .stats-grid{grid-template-columns:repeat(6,1fr);}
+  .two-col{grid-template-columns:1fr 1fr;}
+  .nav{padding:0 32px;}
 }
-
-/* STATS LAYOUT */
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-margin-bottom:40px;
+@media(min-width:1024px){
+  .body{padding:28px 40px;}
+  .nav{padding:0 40px;}
 }
-
-/* CARDS */
-
-.card{
-padding:30px;
-border-radius:12px;
-color:white;
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
-transition:transform 0.2s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-}
-
-/* CARD COLORS */
-
-.ordersCard{
-background:linear-gradient(135deg,#ff4b2b,#ff416c);
-}
-
-.revenueCard{
-background:linear-gradient(135deg,#11998e,#38ef7d);
-}
-
-.topCard{
-background:linear-gradient(135deg,#667eea,#764ba2);
-}
-
-/* CARD TEXT */
-
-.card h2{
-margin:0;
-font-size:32px;
-}
-
-.card p{
-margin-top:10px;
-font-size:14px;
-}
-
-/* RECENT ORDERS SECTION */
-
-.recentOrders{
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* TABLE */
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-}
-
-th{
-text-align:left;
-padding:12px;
-border-bottom:2px solid #eee;
-}
-
-td{
-padding:12px;
-border-bottom:1px solid #eee;
-}
-
-/* ROW HOVER */
-
-tr:hover{
-background:#fafafa;
-}
-
 </style>
-
 </head>
-
 <body>
 
-<div class="dashboard">
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-icon">🥟</div>
+    <div>
+      <div class="nav-name">Hungry Hop</div>
+      <div class="nav-sub">Owner Dashboard</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="live-dot"><span class="ld"></span>Live</div>
+    <a class="nav-btn" href="/kitchen.html">🍳 Kitchen</a>
+    <a class="nav-btn" href="/customer.html">📺 Order Status</a>
+    <a class="nav-btn" href="/">🛒 POS</a>
+  </div>
+</nav>
 
-<h1>📊 Hungry Hop Dashboard</h1>
+<div class="body">
 
-<div class="stats">
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="filter-title">Dashboard</div>
+    <div class="filter-tabs">
+      <button class="ftab active" onclick="loadTab('today',this)">Today</button>
+      <button class="ftab" onclick="loadTab('week',this)">This Week</button>
+      <button class="ftab" onclick="loadTab('month',this)">This Month</button>
+    </div>
+    <button class="refresh-btn" id="refreshBtn" onclick="refreshAll()" title="Refresh">↻</button>
+  </div>
 
-<div class="card ordersCard">
-<h2 id="totalOrders">0</h2>
-<p>Total Orders</p>
-</div>
+  <!-- STAT CARDS -->
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-card sc-orders"><div class="stat-icon">🧾</div><div class="stat-value skeleton" style="height:32px;width:60px;"></div><div class="stat-label">Total Orders</div></div>
+    <div class="stat-card sc-revenue"><div class="stat-icon">💰</div><div class="stat-value skeleton" style="height:32px;width:80px;"></div><div class="stat-label">Revenue</div></div>
+    <div class="stat-card sc-cash"><div class="stat-icon">💵</div><div class="stat-value skeleton" style="height:32px;width:60px;"></div><div class="stat-label">Cash</div></div>
+    <div class="stat-card sc-upi"><div class="stat-icon">📱</div><div class="stat-value skeleton" style="height:32px;width:60px;"></div><div class="stat-label">UPI</div></div>
+    <div class="stat-card sc-pending"><div class="stat-icon">⏳</div><div class="stat-value skeleton" style="height:32px;width:40px;"></div><div class="stat-label">Pending</div></div>
+    <div class="stat-card sc-done"><div class="stat-icon">✅</div><div class="stat-value skeleton" style="height:32px;width:40px;"></div><div class="stat-label">Completed</div></div>
+  </div>
 
-<div class="card revenueCard">
-<h2 id="revenue">₹0</h2>
-<p>Total Revenue</p>
-</div>
+  <!-- WEEK CHART -->
+  <div class="chart-card">
+    <div class="cc-head">
+      <div class="cc-title">📈 Last 7 Days</div>
+      <div class="cc-legend">
+        <div class="cc-leg"><div class="cc-leg-dot" style="background:var(--y)"></div>Revenue</div>
+        <div class="cc-leg"><div class="cc-leg-dot" style="background:var(--blue)"></div>Orders</div>
+      </div>
+    </div>
+    <div class="bar-chart" id="barChart">
+      <div class="loading-state" style="width:100%"><div class="ls-spin"></div>Loading chart…</div>
+    </div>
+  </div>
 
-<div class="card topCard">
-<h2 id="topItem">-</h2>
-<p>Top Item</p>
-</div>
+  <!-- TOP ITEMS + RECENT ORDERS -->
+  <div class="two-col">
 
-</div>
+    <!-- TOP ITEMS -->
+    <div class="panel">
+      <div class="panel-title">🏆 Top Selling Items</div>
+      <div id="topItems">
+        <div class="loading-state"><div class="ls-spin"></div>Loading…</div>
+      </div>
+    </div>
 
-<div class="recentOrders">
+    <!-- PAYMENT SPLIT -->
+    <div class="panel">
+      <div class="panel-title">💳 Payment Split</div>
+      <div id="paymentSplit">
+        <div class="loading-state"><div class="ls-spin"></div>Loading…</div>
+      </div>
+    </div>
 
-<h2>🧾 Recent Orders</h2>
+  </div>
 
-<table>
-
-<thead>
-<tr>
-<th>Order Number</th>
-<th>Amount</th>
-</tr>
-</thead>
-
-<tbody id="ordersList">
-</tbody>
-
-</table>
-
-</div>
+  <!-- RECENT ORDERS -->
+  <div class="panel">
+    <div class="panel-title">📋 Recent Orders</div>
+    <div class="orders-table-wrap">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Items</th>
+            <th>Amount</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>Bill</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody">
+          <tr><td colspan="7"><div class="loading-state"><div class="ls-spin"></div>Loading orders…</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="dashboard.js"></script>
+<script>
+let currentTab = 'today';
 
+/* ══ SOCKET — live updates ══ */
+const socket = typeof io !== 'undefined' ? io({reconnection:true,reconnectionAttempts:Infinity}) : null;
+if (socket) {
+  socket.on('new-order',    () => refreshAll());
+  socket.on('order-updated',() => refreshAll());
+}
+
+/* ══ LOAD TAB ══ */
+window.loadTab = function(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  refreshAll();
+};
+
+async function refreshAll() {
+  const btn = document.getElementById('refreshBtn');
+  btn.classList.add('spinning');
+  await Promise.all([loadStats(), loadWeekChart(), loadOrders()]);
+  btn.classList.remove('spinning');
+}
+
+/* ══ STATS ══ */
+async function loadStats() {
+  try {
+    let endpoint = '/stats/today';
+    if (currentTab === 'month') endpoint = '/stats/month';
+
+    const res  = await fetch(endpoint);
+    const data = await res.json();
+
+    document.getElementById('statsGrid').innerHTML = `
+      <div class="stat-card sc-orders">
+        <div class="stat-icon">🧾</div>
+        <div class="stat-value">${data.totalOrders||0}</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-card sc-revenue">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">₹${data.totalRevenue||0}</div>
+        <div class="stat-label">Revenue</div>
+        ${data.avgOrder?`<div class="stat-sub">Avg ₹${data.avgOrder}/order</div>`:''}
+      </div>
+      <div class="stat-card sc-cash">
+        <div class="stat-icon">💵</div>
+        <div class="stat-value">₹${data.cashRevenue||0}</div>
+        <div class="stat-label">Cash</div>
+        <div class="stat-sub">${data.cashOrders||0} orders</div>
+      </div>
+      <div class="stat-card sc-upi">
+        <div class="stat-icon">📱</div>
+        <div class="stat-value">₹${data.upiRevenue||0}</div>
+        <div class="stat-label">UPI</div>
+        <div class="stat-sub">${data.upiOrders||0} orders</div>
+      </div>
+      <div class="stat-card sc-pending">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-value">${data.pendingOrders||0}</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-card sc-done">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value">${data.completedOrders||0}</div>
+        <div class="stat-label">Completed</div>
+      </div>`;
+
+    /* Top items */
+    if (data.topItems?.length) {
+      const maxQty = data.topItems[0].qty;
+      document.getElementById('topItems').innerHTML = data.topItems.map((item, i) => `
+        <div class="top-item">
+          <div class="ti-rank ${i===0?'gold':i===1?'silver':i===2?'bronze':''}">${i+1}</div>
+          <div class="ti-info">
+            <div class="ti-name">${item.name}</div>
+            <div class="ti-qty">${item.qty} sold</div>
+            <div class="ti-bar-wrap"><div class="ti-bar" style="width:${Math.round(item.qty/maxQty*100)}%"></div></div>
+          </div>
+          <div class="ti-rev">₹${item.revenue}</div>
+        </div>`).join('');
+    } else {
+      document.getElementById('topItems').innerHTML = `<div class="loading-state">No data yet</div>`;
+    }
+
+    /* Payment split */
+    const total = (data.cashRevenue||0) + (data.upiRevenue||0);
+    const cashPct = total > 0 ? Math.round((data.cashRevenue/total)*100) : 0;
+    const upiPct  = total > 0 ? Math.round((data.upiRevenue/total)*100) : 0;
+    document.getElementById('paymentSplit').innerHTML = `
+      <div style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-size:13px;font-weight:800;color:var(--text);">💵 Cash</span>
+          <span style="font-size:13px;font-weight:800;color:var(--green);">${cashPct}% · ₹${data.cashRevenue||0}</span>
+        </div>
+        <div style="background:var(--bg4);border-radius:6px;height:8px;">
+          <div style="background:var(--green);height:8px;border-radius:6px;width:${cashPct}%;transition:width .6s;"></div>
+        </div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-size:13px;font-weight:800;color:var(--text);">📱 UPI</span>
+          <span style="font-size:13px;font-weight:800;color:var(--purple);">${upiPct}% · ₹${data.upiRevenue||0}</span>
+        </div>
+        <div style="background:var(--bg4);border-radius:6px;height:8px;">
+          <div style="background:var(--purple);height:8px;border-radius:6px;width:${upiPct}%;transition:width .6s;"></div>
+        </div>
+      </div>
+      <div style="background:var(--bg3);border-radius:10px;padding:12px;border:1px solid var(--border);text-align:center;margin-top:20px;">
+        <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Total Revenue Today</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--y);letter-spacing:1px;">₹${data.totalRevenue||0}</div>
+      </div>`;
+  } catch(e) {
+    console.error('Stats error:', e);
+  }
+}
+
+/* ══ WEEK CHART ══ */
+async function loadWeekChart() {
+  try {
+    const res  = await fetch('/stats/week');
+    const days = await res.json();
+    const maxRev = Math.max(...days.map(d => d.revenue), 1);
+    document.getElementById('barChart').innerHTML = days.map(d => `
+      <div class="bar-group">
+        <div class="bar-wrap">
+          <div class="bar bar-rev" style="height:${Math.max(Math.round((d.revenue/maxRev)*100),4)}%;width:45%;margin-right:2px;" data-tip="₹${d.revenue}"></div>
+          <div class="bar bar-ord" style="height:${Math.max(Math.round((d.orders/(Math.max(...days.map(x=>x.orders),1)))*100),4)}%;width:45%;" data-tip="${d.orders} orders"></div>
+        </div>
+        <div class="bar-label">${d.date}</div>
+      </div>`).join('');
+  } catch(e) {
+    document.getElementById('barChart').innerHTML = `<div class="loading-state" style="width:100%">No data yet</div>`;
+  }
+}
+
+/* ══ RECENT ORDERS ══ */
+async function loadOrders() {
+  try {
+    const res    = await fetch('/orders');
+    const orders = await res.json();
+    const recent = orders.slice(0, 20);
+
+    if (!recent.length) {
+      document.getElementById('ordersBody').innerHTML =
+        `<tr><td colspan="7"><div class="loading-state">No orders yet</div></td></tr>`;
+      return;
+    }
+
+    document.getElementById('ordersBody').innerHTML = recent.map(o => {
+      const d = new Date(o.createdAt);
+      const time = d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+      const payIcon = o.paymentMode==='UPI'?'📱':o.paymentMode==='Card'?'💳':'💵';
+      const itemsStr = o.items.map(i=>`${i.name}(${i.qty||1})`).join(', ').slice(0,40)+(o.items.length>2?'…':'');
+      return `<tr>
+        <td>
+          <span class="ord-num">#${o.orderNumber}</span>
+          ${o.tokenNumber?`<span class="ord-token">${o.tokenNumber}</span>`:''}
+        </td>
+        <td style="font-size:12px;color:var(--muted2);max-width:180px;">${itemsStr}</td>
+        <td style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--y);">₹${o.total}</td>
+        <td><span class="pay-badge">${payIcon} ${o.paymentMode||'Cash'}</span></td>
+        <td><span class="status-pill s-${o.status}">${o.status}</span></td>
+        <td style="font-size:12px;color:var(--muted);">${time}</td>
+        <td><a class="print-link" href="/receipt-print/${o._id}?print=1" target="_blank">🖨️</a></td>
+      </tr>`;
+    }).join('');
+  } catch(e) {
+    document.getElementById('ordersBody').innerHTML =
+      `<tr><td colspan="7"><div class="loading-state">Failed to load</div></td></tr>`;
+  }
+}
+
+/* Auto-refresh every 30 seconds */
+setInterval(refreshAll, 30000);
+refreshAll();
+</script>
 </body>
-
 </html>
