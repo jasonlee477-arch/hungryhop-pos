@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const http = require("http");
 const { Server } = require("socket.io");
-const fetch = require("node-fetch");
 const path = require("path");
 
 const Order = require("./models/Order");
