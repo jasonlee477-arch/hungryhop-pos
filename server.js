@@ -3,7 +3,12 @@ const mongoose = require("mongoose");
 const http = require("http");
 const { Server } = require("socket.io");
 const path = require("path");
-
+require("dotenv").config();
+const twilio = require("twilio");
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
 const Order = require("./models/Order");
 const MenuItem = require("./models/MenuItem");
 
@@ -90,22 +95,24 @@ app.post("/order", async (req, res) => {
     io.emit("new-order", savedOrder);
     console.log("🔔 New order:", savedOrder.orderNumber, "| Token:", savedOrder.tokenNumber);
 
-    // n8n WhatsApp automation
-    try {
-      await fetch("https://poshungryhop.app.n8n.cloud/webhook/new-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderId:  savedOrder.orderNumber,
-          total:    savedOrder.total,
-          token:    savedOrder.tokenNumber,
-          items:    savedOrder.items.map(i => i.name || i)
-        })
-      });
-      console.log("📲 Sent to n8n");
-    } catch (err) {
-      console.log("⚠️ n8n error:", err.message);
-    }
+    // ✅ WhatsApp via Twilio
+try {
+  await client.messages.create({
+    from: "whatsapp:+14155238886", // Twilio sandbox
+    to: "whatsapp:+917006962007",  // YOUR NUMBER
+    body: `🔥 New Order #${savedOrder.orderNumber}
+
+Items:
+${savedOrder.items.map(i => `• ${i.name} x${i.qty || 1}`).join("\n")}
+
+Total: ₹${savedOrder.total}
+Token: ${savedOrder.tokenNumber || "-"}`
+  });
+
+  console.log("📲 WhatsApp sent");
+} catch (err) {
+  console.log("⚠️ WhatsApp error:", err.message);
+}
 
     res.json(savedOrder);
   } catch (err) {
